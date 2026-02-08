@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "EchoesOfGoo_Project.sln"
+    "dotnet.defaultSolution": "EchoesOfGoo_Project.slnx"
 }
