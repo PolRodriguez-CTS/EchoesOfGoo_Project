@@ -98,6 +98,10 @@ public class PlayerController : MonoBehaviour
         }
 
         _moveInput = _moveAction.ReadValue<Vector2>();
+        _animator.SetFloat("Horizontal", _moveInput.x);
+        _animator.SetFloat("Vertical", _moveInput.y);
+
+        
 
         Gravity();
 
@@ -185,7 +189,7 @@ public class PlayerController : MonoBehaviour
             _animationSpeed = 0;
         }
 
-        //_animator.SetFloat("Speed", _animationSpeed);
+        _animator.SetFloat("Speed", _animationSpeed);
         
         if (direction != Vector3.zero)
         {
@@ -245,7 +249,7 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
         float timer = 0;
-
+        
         while(timer < _dashTime)
         {
             _controller.Move(_lastMoveDirection.normalized * _dashSpeed * Time.deltaTime);
