@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour
     {
         if(_jumpTimeOutDelta <= 0)
         {
-            //_animator.SetBool("Jump", true);
+            _animator.SetBool("Jump", true);
 
             _playerGravity.y = Mathf.Sqrt(_jumpHeight * -2 * _gravity);
         }
@@ -281,13 +281,13 @@ public class PlayerController : MonoBehaviour
 
     void Gravity()
     {
-        //_animator.SetBool("Grounded", IsGrounded());
+        _animator.SetBool("Grounded", IsGrounded());
         if(IsGrounded())
         {
             _fallTimeOutDelta = fallTimeOut;
 
-            //_animator.SetBool("Jump", false);
-            //_animator.SetBool("Fall", false);
+            _animator.SetBool("Jump", false);
+            _animator.SetBool("Fall", false);
 
             if(_playerGravity.y < 0)
             {
@@ -310,7 +310,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                //_animator.SetBool("Fall", true);
+                _animator.SetBool("Fall", true);
             }
 
             _playerGravity.y += _gravity * Time.deltaTime;

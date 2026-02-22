@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 488840a2deeed6244b9fc2ab4915fa8e
+guid: e46bdf9f38480954dbc5471a804f1f97
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -20,10 +20,8 @@ ModelImporter:
     animationImportWarnings: "\nClip 'Rig_Argyllia|Rig_ArgylliaAction' has import
       animation warnings that might lower retargeting quality:\nNote: Activate translation
       DOF on avatar to improve retargeting quality.\n\t'Rodilla.R' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'Pie.R' is
-      inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Pecho'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Rodilla.L'
-      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Pie.L'
+      transforms and has rotation animation that will be discarded.\n\t'Pecho' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Rodilla.L'
       is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
@@ -38,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Argylia_Run
+      name: Argylia_RunBack
       takeName: Rig_Argyllia|Rig_ArgylliaAction
       internalID: -2919770008216804399
-      firstFrame: 5
-      lastFrame: 17
+      firstFrame: 0
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -54,9 +52,9 @@ ModelImporter:
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000

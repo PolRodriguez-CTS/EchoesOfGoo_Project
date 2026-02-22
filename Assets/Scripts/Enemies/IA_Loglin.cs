@@ -6,103 +6,110 @@ public class IALoglin : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
+    private Animator animator;
 
-    public enum State
-    {
-        Wandering,
-        Chase,
-        Attack
-    }
-
+    public enum State { Wandering, Chase, Attack }
+    [Header("Estado Actual")]
     public State currentState;
+    public bool hasBeenHit = false; // El interruptor de agresividad
 
-    [Header("Wandering")]
+    [Header("Rangos")]
     public float wanderingRadius = 6f;
-    public float minimumDistance = 3f;
+    public float chaseRange = 10f;
+    public float attackRange = 2.5f;
+    public float walkSpeed = 1.5f;
+    public float runSpeed = 4.0f;
 
-    [Header("Aggro / Chase")]
-    public float chaseRange = 8f;
-    public float chaseTime = 5f;
-
-    [Header("Attack")]
-    public float attackRange = 2f;
+    [Header("Ataque")]
     public float attackCooldown = 1.5f;
+    private float attackTimer;
 
-    private bool isAggro = false;
-    private float chaseTimer = 0f;
-    private float attackTimer = 0f;
+    [Header("Patrulla")]
+    public float waitTime = 2f;
+    private float waitTimer;
+    private bool isWaiting;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
+        animator = GetComponentInChildren<Animator>();
 
+        agent.updateRotation = true; // Aquí dejamos que NavMesh maneje la rotación para simplificar
         currentState = State.Wandering;
         PickRandomPoint();
     }
 
     void Update()
     {
+        if (player == null) return;
+
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         switch (currentState)
         {
-            // ---------------- WANDERING ----------------
-            case State.Wandering:
+            case State.Wandering: UpdateWandering(distanceToPlayer); break;
+            case State.Chase:     UpdateChase(distanceToPlayer); break;
+            case State.Attack:    UpdateAttack(distanceToPlayer); break;
+        }
 
-                if (isAggro && distanceToPlayer < chaseRange)
-                {
-                    currentState = State.Chase;
-                    chaseTimer = 0f;
-                }
+        UpdateAnimator();
+    }
 
-                if (!agent.pathPending && agent.remainingDistance < 0.2f)
-                {
-                    PickRandomPoint();
-                }
+    private void UpdateWandering(float dist)
+    {
+        agent.speed = walkSpeed;
 
-                break;
+        // LÓGICA CLAVE: Solo pasa a Chase si ha sido golpeado
+        if (hasBeenHit && dist < chaseRange)
+        {
+            currentState = State.Chase;
+            return;
+        }
 
-            // ---------------- CHASE ----------------
-            case State.Chase:
+        // Movimiento de patrulla normal
+        if (!agent.pathPending && agent.remainingDistance <= 0.2f)
+        {
+            if (!isWaiting) { isWaiting = true; waitTimer = 0f; }
+            waitTimer += Time.deltaTime;
+            if (waitTimer >= waitTime) { isWaiting = false; PickRandomPoint(); }
+        }
+    }
 
-                agent.SetDestination(player.position);
+    private void UpdateChase(float dist)
+    {
+        agent.speed = runSpeed;
+        agent.SetDestination(player.position);
 
-                chaseTimer += Time.deltaTime;
+        if (dist <= attackRange) currentState = State.Attack;
 
-                if (distanceToPlayer < attackRange)
-                {
-                    currentState = State.Attack;
-                }
+        // Si el jugador se aleja mucho, vuelve a patrullar pero sigue alerta (hasBeenHit sigue siendo true)
+        if (dist > chaseRange + 5f) currentState = State.Wandering;
+    }
 
-                if (chaseTimer >= chaseTime)
-                {
-                    isAggro = false;
-                    currentState = State.Wandering;
-                    PickRandomPoint();
-                }
+    private void UpdateAttack(float dist)
+    {
+        agent.SetDestination(player.position); // Sigue moviéndose hacia el jugador si intenta huir
 
-                break;
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= attackCooldown && dist <= attackRange)
+        {
+            animator.SetTrigger("Attack");
+            attackTimer = 0f;
+        }
 
-            // ---------------- ATTACK ----------------
-            case State.Attack:
+        if (dist > attackRange + 1f) currentState = State.Chase;
+    }
 
-                agent.SetDestination(transform.position); 
-
-                attackTimer += Time.deltaTime;
-
-                if (attackTimer >= attackCooldown)
-                {
-                    Attack();
-                    attackTimer = 0f;
-                }
-
-                if (distanceToPlayer > attackRange)
-                {
-                    currentState = State.Chase;
-                }
-
-                break;
+    // --- FUNCIÓN PÚBLICA PARA ACTIVARLO ---
+    // Llama a esta función desde tu script de "Vida" o "Daño"
+    public void TomarDaño()
+    {
+        if (!hasBeenHit)
+        {
+            hasBeenHit = true;
+            currentState = State.Chase;
+            Debug.Log("¡Enemigo pasivo provocado!");
         }
     }
 
@@ -110,27 +117,16 @@ public class IALoglin : MonoBehaviour
     {
         Vector3 randomDirection = Random.insideUnitSphere * wanderingRadius;
         randomDirection += transform.position;
-
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, wanderingRadius, NavMesh.AllAreas))
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomDirection, out hit, wanderingRadius, 1))
         {
-            // Asegura que no sea demasiado cerca
-            if (Vector3.Distance(transform.position, hit.position) > minimumDistance)
-            {
-                agent.SetDestination(hit.position);
-            }
+            agent.SetDestination(hit.position);
         }
     }
 
-    void Attack()
+    void UpdateAnimator()
     {
-        Debug.Log("Loglin ataca");
-        // Aquí iría animación + daño
-    }
-
-    // Llamar esto desde el arma del jugador
-    public void TakeDamage()
-    {
-        isAggro = true;
+        if (animator != null)
+            animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 }
-
