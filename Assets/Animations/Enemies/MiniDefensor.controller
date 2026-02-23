@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Melee_Attack1
+  m_Name: MiniDefensor_Attack1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2678768375956757075, guid: f64a644c463ab3f4ba09eb6d142b9379, type: 3}
+  m_Motion: {fileID: 1858470552560148485, guid: e8da4c9e740302e45bf6432fa7641f89, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -164,7 +164,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -2678768375956757075, guid: 7f10caadcf2c5c44ca48eba5318b7ffe, type: 3}
+    m_Motion: {fileID: 1858470552560148485, guid: ad2d82d692a8f324c960bd43b11f0f75, type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -233,7 +233,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Melee_Attack2
+  m_Name: MiniDefensor_Attack2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -247,7 +247,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2678768375956757075, guid: 21a6577148d5c3949afc00b6bb06af8a, type: 3}
+  m_Motion: {fileID: 1858470552560148485, guid: 678740241cbcad84daa23eb5cdb24c0d, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -322,7 +322,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Melee_Attack3
+  m_Name: MiniDefensor_Attack3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -336,7 +336,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2678768375956757075, guid: 16c96a3a0f3dbc443a5e46f5f88a7762, type: 3}
+  m_Motion: {fileID: 1858470552560148485, guid: ad2d82d692a8f324c960bd43b11f0f75, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
