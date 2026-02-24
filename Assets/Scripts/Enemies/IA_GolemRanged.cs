@@ -7,6 +7,7 @@ public class IA_GolemRanged : MonoBehaviour
     private NavMeshAgent agent;
     private Transform player;
     private Animator animator;
+    private Vector3 originPoint;
 
     public enum State { Wandering, Chase, Attack, Retreat }
     [Header("Status")]
@@ -14,12 +15,18 @@ public class IA_GolemRanged : MonoBehaviour
 
     [Header("Movement & Ranges")]
     public float wanderingRadius = 6f;
-    public float chaseRange = 15f;    // Distancia para empezar a perseguir
-    public float attackRange = 10f;   // Distancia para disparar
-    public float safeDistance = 5f;   // Si el jugador se acerca más, el Golem huye
+    public float maxDistanceDelta = 25f; // Límite para que no huya al infinito
+    public float chaseRange = 15f;    
+    public float attackRange = 10f;   
+    public float safeDistance = 5f;   
     public float rotationSpeed = 15f;
     public float walkSpeed = 2f;
     public float runSpeed = 4f;
+
+    [Header("Detection & FOV")]
+    public float eyeHeight = 1.6f;
+    public float viewAngle = 100f;
+    public float forwardOffset = 0.6f; 
 
     [Header("Ranged Attack")]
     public GameObject projectilePrefab;
@@ -37,8 +44,8 @@ public class IA_GolemRanged : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
+        originPoint = transform.position;
 
-        // Configuración para que el script controle la rotación manualmente
         agent.updateRotation = false; 
         agent.acceleration = 60f; 
         
@@ -51,13 +58,31 @@ public class IA_GolemRanged : MonoBehaviour
         if (player == null) return;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToOrigin = Vector3.Distance(transform.position, originPoint);
+
+        // Si se aleja demasiado de su casa por estar huyendo o persiguiendo, vuelve.
+        if (distanceToOrigin > maxDistanceDelta && currentState != State.Wandering)
+        {
+            ReturnToOrigin();
+        }
 
         switch (currentState)
         {
-            case State.Wandering: UpdateWandering(distanceToPlayer); break;
-            case State.Chase:     UpdateChase(distanceToPlayer); break;
-            case State.Attack:    UpdateAttack(distanceToPlayer); break;
-            case State.Retreat:   UpdateRetreat(distanceToPlayer); break;
+            case State.Wandering:
+            UpdateWandering(distanceToPlayer);
+            break;
+
+            case State.Chase:
+            UpdateChase(distanceToPlayer);
+            break;
+
+            case State.Attack:
+            UpdateAttack(distanceToPlayer);
+            break;
+
+            case State.Retreat:
+            UpdateRetreat(distanceToPlayer);
+            break;
         }
 
         ApplyManualRotation();
@@ -68,8 +93,8 @@ public class IA_GolemRanged : MonoBehaviour
     {
         agent.speed = walkSpeed;
 
-        // Detección simple por distancia
-        if (dist < chaseRange) 
+        // CAMBIO: Ahora solo detecta si CanSeePlayer es verdadero (Ángulo + Raycast)
+        if (CanSeePlayer(dist)) 
         { 
             isWaiting = false;
             currentState = State.Chase; 
@@ -96,14 +121,21 @@ public class IA_GolemRanged : MonoBehaviour
 
         if (dist <= attackRange) currentState = State.Attack;
         
-        // Si el jugador se aleja demasiado, vuelve a deambular
-        if (dist > chaseRange + 2f) currentState = State.Wandering;
+        // Si lo pierde de vista (paredes o espalda), vuelve a Wandering
+        if (!CanSeePlayer(dist) && dist > attackRange + 2f) ReturnToOrigin();
     }
 
     private void UpdateAttack(float dist)
     {
         agent.isStopped = true;
         
+        // Si el jugador se esconde tras una columna mientras el Golem apunta
+        if (!CanSeePlayer(dist))
+        {
+            currentState = State.Chase;
+            return;
+        }
+
         fireTimer += Time.deltaTime;
         if (fireTimer >= fireRate)
         {
@@ -120,21 +152,42 @@ public class IA_GolemRanged : MonoBehaviour
         agent.isStopped = false;
         agent.speed = runSpeed;
 
-        // Calcular punto de huida (dirección opuesta al jugador)
         Vector3 dirToPlayer = transform.position - player.position;
         Vector3 retreatPos = transform.position + dirToPlayer.normalized * 5f;
 
         agent.SetDestination(retreatPos);
 
-        // Si ya está a una distancia segura, vuelve a atacar
         if (dist > safeDistance + 2f) currentState = State.Attack;
+    }
+
+    // EL SISTEMA DE VISIÓN ADAPTADO
+    bool CanSeePlayer(float dist)
+    {
+        if (dist > chaseRange) return false;
+
+        Vector3 dirToPlayer = (player.position - transform.position).normalized;
+        float angle = Vector3.Angle(transform.forward, dirToPlayer);
+
+        if (angle < viewAngle / 2f)
+        {
+            Vector3 startPos = transform.position + (Vector3.up * eyeHeight) + (transform.forward * forwardOffset);
+            Vector3 targetPos = player.position + Vector3.up * 1.2f; // Apunta al pecho
+            Vector3 direction = (targetPos - startPos).normalized;
+
+            RaycastHit hit;
+            if (Physics.Raycast(startPos, direction, out hit, chaseRange))
+            {
+                Debug.DrawLine(startPos, hit.point, Color.cyan); // Línea cian en Scene
+
+                if (hit.collider.CompareTag("Player")) return true;
+            }
+        }
+        return false;
     }
 
     private void ApplyManualRotation()
     {
         Vector3 targetDir;
-
-        // Si está peleando, mira al jugador. Si camina, mira hacia donde va.
         if (currentState != State.Wandering)
             targetDir = (player.position - transform.position);
         else
@@ -148,7 +201,6 @@ public class IA_GolemRanged : MonoBehaviour
         }
     }
 
-    //Pendiente de optimizar
     public void LaunchProjectile()
     {
         if (projectilePrefab != null && shootPoint != null)
@@ -160,7 +212,7 @@ public class IA_GolemRanged : MonoBehaviour
     void PickRandomPoint()
     {
         Vector3 randomDirection = Random.insideUnitSphere * wanderingRadius;
-        randomDirection += transform.position;
+        randomDirection += originPoint; // Wandering alrededor de su zona
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randomDirection, out hit, wanderingRadius, 1))
         {
@@ -168,9 +220,26 @@ public class IA_GolemRanged : MonoBehaviour
         }
     }
 
+    void ReturnToOrigin() { currentState = State.Wandering; agent.SetDestination(originPoint); }
+
     void UpdateAnimator()
     {
         if (animator != null)
             animator.SetFloat("Speed", agent.velocity.magnitude);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // Visualizar FOV en Scene
+        Gizmos.color = Color.white;
+        Vector3 left = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward;
+        Vector3 right = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward;
+        Gizmos.DrawRay(transform.position + Vector3.up * eyeHeight, left * chaseRange);
+        Gizmos.DrawRay(transform.position + Vector3.up * eyeHeight, right * chaseRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, safeDistance);
     }
 }
