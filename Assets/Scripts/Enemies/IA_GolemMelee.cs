@@ -7,17 +7,25 @@ public class IA_GolemMelee : MonoBehaviour
     private NavMeshAgent agent;
     private Transform player;
     private Animator animator;
+    private Vector3 originPoint;
 
     public enum State { Wandering, Chase, Attack }
     public State currentState;
 
     [Header("Movement")]
-    public float wanderingRadius = 6f;
-    public float chaseRange = 8f;
+    public float wanderingRadius = 7f;
+    public float maxDistanceDelta = 25f; // Distancia máxima desde el origen
+    public float chaseRange = 15f;
     public float attackRange = 3f; 
-    public float rotationSpeed = 20f; // Giro rápido y fluido
-    public float walkSpeed = 1.5f;
+    public float rotationSpeed = 15f; // Giro rápido y fluido
+    public float walkSpeed = 2f;
     public float runSpeed = 4.0f;
+
+    [Header("Detection & FOV")]
+    public float eyeHeight = 1.6f;
+    public float viewAngle = 100f;
+    public float forwardOffset = 0.6f; // Para saltarse su propia colisión
+
 
     [Header("Wandering Settings")]
     public float waitTime = 2f;
@@ -39,6 +47,7 @@ public class IA_GolemMelee : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
+        originPoint = transform.position;
 
         // Configuración para evitar conflictos de rotación y permitir frenado en seco
         agent.updateRotation = false; 
@@ -51,6 +60,12 @@ public class IA_GolemMelee : MonoBehaviour
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distToOrigin = Vector3.Distance(transform.position, originPoint);
+        
+        if (distToOrigin > maxDistanceDelta && currentState != State.Wandering)
+            {
+                ReturnToOrigin();
+            }
 
         switch (currentState)
         {
@@ -79,7 +94,7 @@ public class IA_GolemMelee : MonoBehaviour
         agent.stoppingDistance = 0.2f; // Permitir que llegue al punto exacto
 
         // Detectar jugador
-        if (distanceToPlayer < chaseRange)
+        if (CanSeePlayer(distanceToPlayer))
         {
             isWaiting = false;
             currentState = State.Chase;
@@ -119,11 +134,10 @@ public class IA_GolemMelee : MonoBehaviour
         }
 
         // Perder al jugador
-        if (distanceToPlayer > chaseRange)
+        if (!CanSeePlayer(distanceToPlayer) && distanceToPlayer > attackRange + 2f)
         {
             isWaiting = false;
-            currentState = State.Wandering;
-            PickRandomPoint();
+            ReturnToOrigin();
         }
     }
 
@@ -192,6 +206,47 @@ public class IA_GolemMelee : MonoBehaviour
         }
     }
 
+    bool CanSeePlayer(float dist)
+{
+    if (dist > chaseRange) return false;
+
+    Vector3 dirToPlayer = (player.position - transform.position).normalized;
+
+    // USAMOS EL ÁNGULO
+    float angle = Vector3.Angle(transform.forward, dirToPlayer);
+
+    if (angle < viewAngle / 2f)
+    {
+        // AJUSTE CRÍTICO: El targetPos debe ser el centro del Player, no los pies.
+        // Si player.position es la base (pies), el rayo al suelo suele fallar.
+        Vector3 startPos = transform.position + (Vector3.up * eyeHeight) + (transform.forward * forwardOffset);
+        
+        // Apuntamos a 1 metro sobre la base del player (el pecho/cabeza)
+        Vector3 targetPos = player.position + Vector3.up * 1.2f; 
+        Vector3 direction = (targetPos - startPos).normalized;
+
+        RaycastHit hit;
+
+        // Lanzamos el rayo
+        if (Physics.Raycast(startPos, direction, out hit, chaseRange))
+        {
+            // Debug para ver el rayo en tiempo real
+            Debug.DrawLine(startPos, hit.point, Color.red);
+
+            if (hit.collider.CompareTag("Player")) 
+            {
+                return true; 
+            }
+            else 
+            {
+                // Si choca con otra cosa, imprime qué es para saber qué lo bloquea
+                // Debug.Log("Bloqueado por: " + hit.collider.name);
+            }
+        }
+    }
+    return false;
+}
+
     void Attack()
     {
         if (animator == null) return;
@@ -210,8 +265,10 @@ public class IA_GolemMelee : MonoBehaviour
         lastAttackTime = Time.time;
         
         // Siguiente paso del combo
-        comboStep = (comboStep + 1) % 3;
+        comboStep = (comboStep + 1) % 2;
     }
+
+    void ReturnToOrigin() { currentState = State.Wandering; agent.SetDestination(originPoint); }
 
     void UpdateAnimator()
     {
@@ -229,5 +286,12 @@ public class IA_GolemMelee : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, chaseRange);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, wanderingRadius);
+
+        //FOV
+        Gizmos.color = Color.white;
+        Vector3 left = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward;
+        Vector3 right = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward;
+        Gizmos.DrawRay(transform.position + Vector3.up * eyeHeight, left * chaseRange);
+        Gizmos.DrawRay(transform.position + Vector3.up * eyeHeight, right * chaseRange);
     }
 }
