@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8773c3f21437ca048876f289c4cd87d6
+guid: 4d45052a16e5c094691677d4c5312d21
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -17,15 +17,15 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Rig_Argyllia|Action' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'Pecho' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n\t'Pecho' has scale animation
-      that will be discarded.\n\nClip 'Rig_Argyllia|Rig_ArgylliaAction' has import
+    animationImportWarnings: "\nClip 'Rig_Argyllia|Rig_ArgylliaAction' has import
       animation warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'Pecho' is inbetween humanoid
-      transforms and has rotation animation that will be discarded.\n\t'Pecho' has
-      scale animation that will be discarded.\n"
+      DOF on avatar to improve retargeting quality.\n\t'Rodilla.R' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'Pie.R' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Pecho'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Hombro.R'
+      has scale animation that will be discarded.\n\t'Rodilla.L' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\t'Pie.L' is
+      inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -39,40 +39,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Rig_Argyllia|Action
-      takeName: Rig_Argyllia|Action
-      internalID: 7054043833415195035
-      firstFrame: 0
-      lastFrame: 86
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: ArgyliaGoo_Idle
+      name: ArgyliaGoo_Run
       takeName: Rig_Argyllia|Rig_ArgylliaAction
       internalID: -2919770008216804399
       firstFrame: 0
-      lastFrame: 87
+      lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
