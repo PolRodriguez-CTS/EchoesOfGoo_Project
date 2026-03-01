@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9216251804642370661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5493675962421069789}
+  - component: {fileID: 1276848938817616070}
+  - component: {fileID: 7006863437213161977}
+  m_Layer: 0
+  m_Name: GolemMelee
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5493675962421069789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9216251804642370661}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 386622019653702428}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1276848938817616070
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9216251804642370661}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &7006863437213161977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9216251804642370661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592922797f79b44429677db7f4e2a06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IA_GolemMelee
+  currentState: 0
+  wanderingRadius: 7
+  maxDistanceDelta: 25
+  chaseRange: 15
+  attackRange: 3
+  rotationSpeed: 15
+  walkSpeed: 2
+  runSpeed: 4
+  eyeHeight: 1.6
+  viewAngle: 100
+  forwardOffset: 0.6
+  waitTime: 2
+  attackCooldown: 1.5
+  stoppingDistanceBuffer: 0.5
+  comboStep: 0
+  comboResetTime: 3.5
+--- !u!1001 &204693678075213047
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5493675962421069789}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8579182547939021071, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c1fd8aafdfe207141bb550b616708919, type: 2}
+    - target: {fileID: -5711432146964278065, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1723821085197347828, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_Name
+      value: GolemsIdle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3039317009905720927, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096003736852077326, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c1fd8aafdfe207141bb550b616708919, type: 2}
+    - target: {fileID: 4097478028681550252, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c1fd8aafdfe207141bb550b616708919, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 26cd2e98f57304b43b707482e7329b7d, type: 2}
+    - target: {fileID: 6415242232129921560, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502323615515089661, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c1fd8aafdfe207141bb550b616708919, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+--- !u!4 &386622019653702428 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
+  m_PrefabInstance: {fileID: 204693678075213047}
+  m_PrefabAsset: {fileID: 0}
