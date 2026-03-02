@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f02b45ae79c192c4d95d9ee0b5c73135
+guid: a87f7457ccdadbd4b9e607772d587d6b
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,18 +31,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: InAir
-      takeName: Rig_Argyllia|Rig_ArgylliaAction
-      internalID: -2919770008216804399
+      name: Argyl_Idle
+      takeName: Scene
+      internalID: -623603649343465320
       firstFrame: 0
-      lastFrame: 34
+      lastFrame: 65
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
