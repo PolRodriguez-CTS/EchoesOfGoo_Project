@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
+    private Animator animator;
     private InputAction _basicATKAction;
     private InputAction _heavyATKAction;
 
@@ -35,6 +36,7 @@ public class PlayerAttack : MonoBehaviour
         _heavyATKAction = InputSystem.actions["Attack2"];
 
         _playerMovementScript = GetComponent<PlayerController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -42,6 +44,7 @@ public class PlayerAttack : MonoBehaviour
         if(_basicATKAction.WasPressedThisFrame() && !isCharging && !_playerMovementScript.isToggled)
         {
             Attack(_bATKDmg);
+            animator.SetTrigger("Attack");
             Debug.Log("Ataque normal");
         }
 
@@ -60,6 +63,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if(_timer >= _timerDuration)
             {
+                //animator.SetTrigger("A")
                 Debug.Log("Ejecutar ataque cargadoo");
                 Attack(_hATKDmg);
             }
