@@ -248,6 +248,9 @@ public class PlayerController : MonoBehaviour
     IEnumerator Dash()
     {
         isDashing = true;
+
+        _animator.SetTrigger("Dash");
+        
         float timer = 0;
         
         while(timer < _dashTime)
