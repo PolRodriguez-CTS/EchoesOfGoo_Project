@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bca26bf8ea91cf24e8480662f4055260
+guid: ee29e5f674f43084091566a636319cce
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Portal_Build
-      takeName: Portal|ArmatureAction
-      internalID: 6682031572078193528
+      name: Argyl_Dash
+      takeName: Scene
+      internalID: -623603649343465320
       firstFrame: 0
-      lastFrame: 57
+      lastFrame: 28
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
