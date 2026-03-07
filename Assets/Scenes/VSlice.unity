@@ -9588,9 +9588,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2591.5361
-  m_Range: 22.32
+  m_Color: {r: 1, g: 0.94493365, b: 0, a: 1}
+  m_Intensity: 2598.9048
+  m_Range: 26
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -9632,7 +9632,7 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.01, y: 0.01}
   m_BounceIntensity: 1
-  m_ColorTemperature: 4550
+  m_ColorTemperature: 5477
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -16843,13 +16843,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Directional Light
       objectReference: {fileID: 0}
+    - target: {fileID: 5089117652475191786, guid: 8dd48332b00edaf40a9f7648e9e6f4c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6965366162755582994, guid: 8dd48332b00edaf40a9f7648e9e6f4c9, type: 3}
       propertyPath: m_VolumetricDimmer
-      value: 2.64
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 6965366162755582994, guid: 8dd48332b00edaf40a9f7648e9e6f4c9, type: 3}
       propertyPath: m_VolumetricShadowDimmer
-      value: 0.934
+      value: 0.975
       objectReference: {fileID: 0}
     - target: {fileID: 7947773533452611257, guid: 8dd48332b00edaf40a9f7648e9e6f4c9, type: 3}
       propertyPath: m_Intensity
@@ -42877,6 +42881,30 @@ PrefabInstance:
       propertyPath: _thirdPersonCamera
       value: 
       objectReference: {fileID: 438045180}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _dashCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _dashCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _dashCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _dashCurve.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _dashCurve.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948867433482002639, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.547
+      objectReference: {fileID: 0}
     - target: {fileID: 8540872907346609697, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -63085,7 +63113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!199 &1409432757
 ParticleSystemRenderer:
   serializedVersion: 6

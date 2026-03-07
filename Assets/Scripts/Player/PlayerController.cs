@@ -5,6 +5,7 @@ using Unity.Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
+#region Variables
     //Components
     private CharacterController _controller;
     private Animator _animator;
@@ -37,11 +38,30 @@ public class PlayerController : MonoBehaviour
     float _jumpTimeOutDelta;
     float _fallTimeOutDelta;
 //----------------------------------------------------------------------------------------------------------------
+    /*
     [Header("Dash")]
     [SerializeField] private float _dashSpeed = 30;
     [SerializeField] private float _dashTime = 0.25f;
     private Vector3 _lastMoveDirection;
     private bool isDashing = false;
+
+
+    [Header("Dash Settings")]
+    [SerializeField] private AnimationCurve _dashCurve; // Configura una curva que baje de 1 a 0
+    [SerializeField] private float _dashDistance = 10f; // Es más intuitivo que usar velocidad
+    */
+
+    [Header("Sustained Boost")]
+    [SerializeField] private float _maxDashEnergy = 100;
+    [SerializeField] private float _energyConsumptionRate = 10f;
+    [SerializeField] private float _energyRecoveryRate = 5f;
+    private float _currentEnergy;
+
+    [SerializeField] private float _acceleration = 50f;
+    [SerializeField] private float _topSpeed = 25f;
+    private bool _isButtonHeld = false;
+
+
 //----------------------------------------------------------------------------------------------------------------
     [Header("Dash Cooldown")]
     [SerializeField] private float dashCooldown = 1.25f;
@@ -61,6 +81,10 @@ public class PlayerController : MonoBehaviour
     [Header("Push")]
     [SerializeField] private float _pushForce = 2;
 //----------------------------------------------------------------------------------------------------------------
+
+#endregion
+
+#region Awake
     void Awake()
     {
         _controller = GetComponent<CharacterController>();
@@ -75,6 +99,7 @@ public class PlayerController : MonoBehaviour
         _mainCamera = Camera.main.transform;
         _thirdPersonCamera.Prioritize();
     }
+#endregion
 
     void Start()
     {
@@ -92,39 +117,119 @@ public class PlayerController : MonoBehaviour
             return; 
         }
 
+        /*
         if(_aimAction.WasPressedThisFrame())
         {
             ToggleCamera();
         }
+        */
 
         _moveInput = _moveAction.ReadValue<Vector2>();
         _animator.SetFloat("Horizontal", _moveInput.x);
         _animator.SetFloat("Vertical", _moveInput.y);
 
-        
-
         Gravity();
 
+        /*
         if(!isToggled)
         {
             Movement();
         }
         else
         {
+            
             AimMovement();
+            
         }
-        
+        */
+
         if (_jumpAction.WasPressedThisFrame() && IsGrounded())
         {
             Jump();
         }
 
+/*
         if(_dashAction.WasPressedThisFrame() && _moveInput != Vector2.zero && !isDashing && !isDashOnCooldown)
         {
             StartCoroutine(Dash());
         }
+*/
+
+        HandleDashInput();
+        ApplyMovement(); // Aquí unificaremos el movimiento
+        HandleEnergy();
     }
 
+
+    void HandleDashInput()
+{
+    // Detectar si se mantiene el botón (asumiendo que _dashAction es "Sprint" o "Dash")
+    if (_dashAction.WasPressedThisFrame() && _currentEnergy > 10f)
+    {
+        _isButtonHeld = true;
+        _animator.SetBool("isDashing", true); // Usa un Bool en el Animator, no un Trigger
+    }
+
+    if (_dashAction.WasReleasedThisFrame() || _currentEnergy <= 0)
+    {
+        _isButtonHeld = false;
+        _animator.SetBool("isDashing", false);
+    }
+}
+
+void ApplyMovement()
+{
+    // 1. Calcular dirección de entrada
+    Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y);
+    Vector3 targetDirection = transform.forward; // Por defecto hacia adelante
+
+    if (inputDir.magnitude > 0.1f)
+    {
+        float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
+        targetDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+        
+        // Rotar el personaje hacia la dirección del dash/movimiento
+        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _smoothTime);
+        transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+    }
+
+    // 2. Lógica de Velocidad (Acelerar o Frenar)
+    float targetSpeed = _isButtonHeld ? _topSpeed : _movementSpeed;
+    if (inputDir.magnitude == 0 && !_isButtonHeld) targetSpeed = 0;
+
+    // Aceleración suave hacia la velocidad objetivo
+    float accelRate = _isButtonHeld ? _acceleration : _speedChangeRate;
+    speed = Mathf.MoveTowards(speed, targetSpeed, accelRate * Time.deltaTime);
+
+    // 3. Aplicar Gravedad (En Gravity Rush, el dash anula parte de la gravedad)
+    if (_isButtonHeld)
+    {
+        _playerGravity.y = Mathf.Lerp(_playerGravity.y, 0, Time.deltaTime * 5f); // Gravedad casi nula al dashear
+    }
+
+    // 4. Mover al controlador
+    _controller.Move(targetDirection * speed * Time.deltaTime + _playerGravity * Time.deltaTime);
+    
+    // Animación
+    _animator.SetFloat("Speed", speed);
+}
+
+void HandleEnergy()
+{
+    if (_isButtonHeld)
+    {
+        _currentEnergy -= _energyConsumptionRate * Time.deltaTime;
+        _currentEnergy = Mathf.Clamp(_currentEnergy, 0, _maxDashEnergy);
+    }
+    else
+    {
+        _currentEnergy += _energyRecoveryRate * Time.deltaTime;
+        _currentEnergy = Mathf.Clamp(_currentEnergy, 0, _maxDashEnergy);
+    }
+}
+
+
+/*
     void ToggleCamera()
     {
         isToggled = !isToggled;
@@ -150,15 +255,19 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(CameraBlendLock(0.5f));
     }
+*/
 
+
+/*
     IEnumerator CameraBlendLock(float duration)
     {
         isCameraBlending = true;
         yield return new WaitForSeconds(duration);
         isCameraBlending = false;
     }
-
-
+*/
+#region Movement
+/*
     void Movement()
     {
         if(isDashing) return;
@@ -214,37 +323,84 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
         _controller.Move(moveDirection.normalized * (speed * Time.deltaTime) + _playerGravity * Time.deltaTime);
     }
-
+*/
+#endregion
+/*
     void AimMovement()
-{
-    //if(isCameraBlending) return;
-
-    Vector3 direction = new Vector3(_moveInput.x, 0, _moveInput.y);
-
-    float mouseX = _lookInput.x * _cameraSensitivity * Time.deltaTime;
-    float mouseY = _lookInput.y * _cameraSensitivity * Time.deltaTime;
-
-    _xRotation -= mouseY;
-    _xRotation = Mathf.Clamp(_xRotation, -89, 89);
-
-    transform.Rotate(Vector3.up, mouseX);
-    _lookAtCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
-
-    Vector3 move = Vector3.zero;
-
-    if(direction != Vector3.zero)
     {
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
-        move = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-        move.Normalize();
+        //if(isCameraBlending) return;
 
-        _lastMoveDirection = move;
+        Vector3 direction = new Vector3(_moveInput.x, 0, _moveInput.y);
+
+        float mouseX = _lookInput.x * _cameraSensitivity * Time.deltaTime;
+        float mouseY = _lookInput.y * _cameraSensitivity * Time.deltaTime;
+
+        _xRotation -= mouseY;
+        _xRotation = Mathf.Clamp(_xRotation, -89, 89);
+
+        transform.Rotate(Vector3.up, mouseX);
+        _lookAtCamera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
+
+        Vector3 move = Vector3.zero;
+
+        if(direction != Vector3.zero)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
+            move = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+            move.Normalize();
+
+            _lastMoveDirection = move;
+        }
+
+        _controller.Move(move * (_movementSpeed * Time.deltaTime) +_playerGravity * Time.deltaTime);
     }
+*/
 
-    _controller.Move(move * (_movementSpeed * Time.deltaTime) +_playerGravity * Time.deltaTime);
-}
+/*
+    IEnumerator Dash()
+    {
+        isDashing = true;
+        
+        // 1. Calcular dirección exacta al inicio
+        Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y);
+        Vector3 dashDirection = _lastMoveDirection; 
+        
+        if (inputDir != Vector3.zero) {
+            float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
+            dashDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+        }
 
+        _animator.SetTrigger("Dash");
+        
+        float timer = 0;
+        // Guardamos la gravedad actual para "pausarla"
+        float originalGravityY = _playerGravity.y;
+        _playerGravity.y = 0; 
 
+        while(timer < _dashTime)
+        {
+            float normalizedTime = timer / _dashTime;
+            // 2. Usar una curva para que el movimiento sea fluido
+            float speedModifier = _dashCurve.length > 0 ? _dashCurve.Evaluate(normalizedTime) : 1f;
+            
+            Vector3 moveStep = dashDirection.normalized * (_dashSpeed * speedModifier);
+            
+            // 3. Aplicar el movimiento
+            _controller.Move(moveStep * Time.deltaTime);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // 4. Recuperar un poco de la inercia o resetear gravedad
+        _playerGravity.y = IsGrounded() ? -2f : 0f; 
+        
+        isDashing = false;
+        StartCoroutine(DashCoolDown());
+    }
+*/
+
+/*
     IEnumerator Dash()
     {
         isDashing = true;
@@ -264,13 +420,15 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
         StartCoroutine(DashCoolDown());
     }
-
+*/
+/*
     IEnumerator DashCoolDown()
     {
         isDashOnCooldown = true;
         yield return new WaitForSecondsRealtime(dashCooldown);
         isDashOnCooldown = false;
     }
+*/
 
     void Jump()
     {
@@ -341,10 +499,12 @@ public class PlayerController : MonoBehaviour
             rBody.linearVelocity = pushDirection * _pushForce / rBody.mass;
         }
     }
-    
+
+#region Gizmos
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(_sensor.position, _sensorRadius);
     }
+#endregion
 }
