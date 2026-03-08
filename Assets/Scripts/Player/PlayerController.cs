@@ -38,23 +38,11 @@ public class PlayerController : MonoBehaviour
     float _jumpTimeOutDelta;
     float _fallTimeOutDelta;
 //----------------------------------------------------------------------------------------------------------------
-    /*
-    [Header("Dash")]
-    [SerializeField] private float _dashSpeed = 30;
-    [SerializeField] private float _dashTime = 0.25f;
-    private Vector3 _lastMoveDirection;
-    private bool isDashing = false;
-
-
-    [Header("Dash Settings")]
-    [SerializeField] private AnimationCurve _dashCurve; // Configura una curva que baje de 1 a 0
-    [SerializeField] private float _dashDistance = 10f; // Es más intuitivo que usar velocidad
-    */
 
     [Header("Sustained Boost")]
     [SerializeField] private float _maxDashEnergy = 100;
-    [SerializeField] private float _energyConsumptionRate = 10f;
-    [SerializeField] private float _energyRecoveryRate = 5f;
+    [SerializeField] private float _energyConsumptionRate = 40f;
+    [SerializeField] private float _energyRecoveryRate = 20f;
     private float _currentEnergy;
 
     [SerializeField] private float _acceleration = 50f;
@@ -220,6 +208,7 @@ void HandleEnergy()
     {
         _currentEnergy -= _energyConsumptionRate * Time.deltaTime;
         _currentEnergy = Mathf.Clamp(_currentEnergy, 0, _maxDashEnergy);
+        
     }
     else
     {
@@ -325,6 +314,7 @@ void HandleEnergy()
     }
 */
 #endregion
+
 /*
     void AimMovement()
     {
@@ -356,49 +346,7 @@ void HandleEnergy()
     }
 */
 
-/*
-    IEnumerator Dash()
-    {
-        isDashing = true;
-        
-        // 1. Calcular dirección exacta al inicio
-        Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y);
-        Vector3 dashDirection = _lastMoveDirection; 
-        
-        if (inputDir != Vector3.zero) {
-            float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
-            dashDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-        }
 
-        _animator.SetTrigger("Dash");
-        
-        float timer = 0;
-        // Guardamos la gravedad actual para "pausarla"
-        float originalGravityY = _playerGravity.y;
-        _playerGravity.y = 0; 
-
-        while(timer < _dashTime)
-        {
-            float normalizedTime = timer / _dashTime;
-            // 2. Usar una curva para que el movimiento sea fluido
-            float speedModifier = _dashCurve.length > 0 ? _dashCurve.Evaluate(normalizedTime) : 1f;
-            
-            Vector3 moveStep = dashDirection.normalized * (_dashSpeed * speedModifier);
-            
-            // 3. Aplicar el movimiento
-            _controller.Move(moveStep * Time.deltaTime);
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        // 4. Recuperar un poco de la inercia o resetear gravedad
-        _playerGravity.y = IsGrounded() ? -2f : 0f; 
-        
-        isDashing = false;
-        StartCoroutine(DashCoolDown());
-    }
-*/
 
 /*
     IEnumerator Dash()
