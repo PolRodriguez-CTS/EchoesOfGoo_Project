@@ -42881,30 +42881,6 @@ PrefabInstance:
       propertyPath: _thirdPersonCamera
       value: 
       objectReference: {fileID: 438045180}
-    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
-      propertyPath: _dashCurve.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
-      propertyPath: _dashCurve.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
-      propertyPath: _dashCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
-      propertyPath: _dashCurve.m_Curve.Array.data[1].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
-      propertyPath: _dashCurve.m_Curve.Array.data[1].outSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7948867433482002639, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.547
-      objectReference: {fileID: 0}
     - target: {fileID: 8540872907346609697, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
       propertyPath: m_Name
       value: Player

@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     private Transform _mainCamera;
     public bool isToggled = false;
     [SerializeField] private CinemachineCamera _thirdPersonCamera;
-    [SerializeField] private CinemachineCamera _aimCamera;
+    //[SerializeField] private CinemachineCamera _aimCamera;
     private bool isCameraBlending;
 //----------------------------------------------------------------------------------------------------------------
     [Header("Push")]
