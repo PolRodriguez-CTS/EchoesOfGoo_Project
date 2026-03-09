@@ -111,22 +111,28 @@ public class PlayerMovement : MonoBehaviour
     #region Grappling Logic
     void HandleGrappleInput()
     {
-        if (_grapplingAction.WasPressedThisFrame())
+        // Usamos IsPressed para que sea más robusto
+        bool isButtonPressed = _grapplingAction.IsPressed();
+
+        // Si el botón se acaba de presionar y no estábamos grappeando
+        if (isButtonPressed && !_isGrappling)
         {
             StartGrapple();
         }
         
-        if (_grapplingAction.WasReleasedThisFrame())
+        // Si soltamos el botón
+        if (!isButtonPressed && _isGrappling)
         {
             StopGrapple();
         }
 
         if (_isGrappling)
         {
-            _lineRenderer.SetPosition(0, transform.position); // Actualiza origen del cable
-            ExecuteGrapple(_grapplePoint); // Aplica el tirón constante
+            // El origen del cable debe ser el "Muzzle" (punto de disparo) o la posición del player
+            _lineRenderer.SetPosition(0, transform.position); 
+            ExecuteGrapple(_grapplePoint);
 
-            if (Vector3.Distance(transform.position, _grapplePoint) < 2f)
+            if (Vector3.Distance(transform.position, _grapplePoint) < 2.5f)
             {
                 StopGrapple();
             }
@@ -135,13 +141,28 @@ public class PlayerMovement : MonoBehaviour
 
     void StartGrapple()
     {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(_mainCamera.position, _mainCamera.forward, out hit, _maxGrappleDistance, _grappableLayer))
+
+        // AÑADIMOS: Raycast hacia TODO, pero filtraremos después para ver por qué falla
+        if (Physics.Raycast(ray, out hit, _maxGrappleDistance, _grappableLayer, QueryTriggerInteraction.Ignore))
         {
+            // 1. Evitar engancharse a uno mismo o a algo pegado a los pies
+            if (hit.collider.gameObject == gameObject || Vector3.Distance(transform.position, hit.point) < 2.5f)
+            {
+                return;
+            }
+
+            Debug.Log("¡Enganchado arriba a: " + hit.collider.name + "!");
+            
             _grapplePoint = hit.point;
             _isGrappling = true;
             _lineRenderer.enabled = true;
             _lineRenderer.SetPosition(1, _grapplePoint);
+            
+            // Impulso inicial para romper la inercia del suelo
+            _playerGravity.y = 5f; 
         }
     }
 
@@ -154,10 +175,15 @@ public class PlayerMovement : MonoBehaviour
     public void ExecuteGrapple(Vector3 targetPoint)
     {
         Vector3 grappleDir = (targetPoint - transform.position).normalized;
-        _externalMomentum = grappleDir * _grappleSpeed;
         
-        // Despegar un poco del suelo para evitar fricción
-        if(IsGrounded()) _playerGravity.y = 2f; 
+        // Si estamos grappeando hacia algo que está por encima de nuestra cintura
+        if (targetPoint.y > transform.position.y + 1f) 
+        {
+            // Reducimos drásticamente el peso para que el tirón funcione
+            _playerGravity.y = Mathf.MoveTowards(_playerGravity.y, 0, Time.deltaTime * 100f);
+        }
+
+        _externalMomentum = grappleDir * _grappleSpeed;
     }
     #endregion
 
@@ -197,19 +223,23 @@ public class PlayerMovement : MonoBehaviour
         float accelRate = _isButtonHeld ? _acceleration : _speedChangeRate;
         speed = Mathf.MoveTowards(speed, targetSpeed, accelRate * Time.deltaTime);
 
-        // Inercia del momentum (Grappling/Dash previo)
+        // --- ARREGLO DE MOMENTUM ---
+        // Lerp más rápido para que no "flote" eternamente
         if (_externalMomentum.magnitude > 0.1f)
         {
-            _externalMomentum = Vector3.Lerp(_externalMomentum, Vector3.zero, Time.deltaTime * 3f);
+            _externalMomentum = Vector3.Lerp(_externalMomentum, Vector3.zero, Time.deltaTime * 2f);
         }
         else
         {
             _externalMomentum = Vector3.zero;
         }
 
-        // Mover final
-        Vector3 moveVector = (targetDirection * speed) + _externalMomentum + _playerGravity;
-        _controller.Move(moveVector * Time.deltaTime);
+        // --- ARREGLO DE MOVIMIENTO FINAL ---
+        // IMPORTANTE: _playerGravity YA tiene el Time.deltaTime acumulado de la función Gravity()
+        // No lo multipliques de nuevo por Time.deltaTime aquí abajo o será minúsculo.
+        Vector3 movement = (targetDirection * speed * Time.deltaTime) + (_externalMomentum * Time.deltaTime) + (_playerGravity * Time.deltaTime);
+        
+        _controller.Move(movement);
         
         _animator.SetFloat("Speed", speed);
     }
@@ -273,5 +303,16 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(_sensor.position, _sensorRadius);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(_sensor.position, _sensorRadius);
+
+        // Dibuja una línea roja en el editor para ver hacia dónde apunta el mouse
+        if (Camera.main != null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(ray.origin, ray.direction * _maxGrappleDistance);
+        }
     }
 }
