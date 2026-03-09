@@ -192,7 +192,7 @@ void ApplyMovement()
     // 3. Aplicar Gravedad (En Gravity Rush, el dash anula parte de la gravedad)
     if (_isButtonHeld)
     {
-        _playerGravity.y = Mathf.Lerp(_playerGravity.y, 0, Time.deltaTime * 5f); // Gravedad casi nula al dashear
+        _playerGravity.y = Mathf.Lerp(_playerGravity.y, 0, Time.deltaTime * 15f); // Gravedad casi nula al dashear
     }
 
     // 4. Mover al controlador
@@ -208,7 +208,6 @@ void HandleEnergy()
     {
         _currentEnergy -= _energyConsumptionRate * Time.deltaTime;
         _currentEnergy = Mathf.Clamp(_currentEnergy, 0, _maxDashEnergy);
-        
     }
     else
     {

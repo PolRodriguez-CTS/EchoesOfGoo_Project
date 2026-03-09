@@ -2906,6 +2906,48 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
   m_PrefabInstance: {fileID: 38281927}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &42900344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8540872907346609697, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+  m_PrefabInstance: {fileID: 889579359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &42900350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42900344}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c783f6052aa26e4dbff330b4e3eedbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementSpeed: 7.5
+  _smoothTime: 0.1
+  _speedChangeRate: 50
+  _sensor: {fileID: 891834577}
+  _sensorRadius: 0.35
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _jumpHeight: 2
+  _playerGravity: {x: 0, y: 0, z: 0}
+  _gravity: -15
+  jumpTimeOut: 0.05
+  fallTimeOut: 0.15
+  _maxDashEnergy: 100
+  _energyConsumptionRate: 40
+  _energyRecoveryRate: 20
+  _acceleration: 25
+  _topSpeed: 12.5
+  _grappleSpeed: 40
+  _maxGrappleDistance: 50
+  _grappableLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  _lineRenderer: {fileID: 0}
+  _thirdPersonCamera: {fileID: 438045180}
 --- !u!1001 &43900049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7894,6 +7936,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorTile
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1356231938954200017, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -7928,6 +7974,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 369f6a2e5a405b7419fcd85438a7b45c, type: 2}
     - target: {fileID: 7287555858917076947, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764494660615614014, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8258335371836982883, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
@@ -11198,7 +11248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202551495}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.019377343, y: 0.97694135, z: -0.10124706, w: 0.18697362}
+  m_LocalRotation: {x: 0.019377336, y: 0.9769414, z: -0.10124702, w: 0.18697362}
   m_LocalPosition: {x: -0.41298252, y: 2.3468955, z: 1.9260057}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -25139,11 +25189,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.18697362
+      value: 0.18697363
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.019377341
+      value: 0.019377338
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalRotation.y
@@ -25151,7 +25201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.10124706
+      value: -0.10124703
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -28226,6 +28276,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorTile
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1356231938954200017, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -28260,6 +28314,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 369f6a2e5a405b7419fcd85438a7b45c, type: 2}
     - target: {fileID: 7287555858917076947, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764494660615614014, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8258335371836982883, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
@@ -42878,9 +42936,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _topSpeed
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _acceleration
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
       propertyPath: _thirdPersonCamera
       value: 
       objectReference: {fileID: 438045180}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _energyRecoveryRate
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624422971485136145, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      propertyPath: _energyConsumptionRate
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8540872907346609697, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -42888,7 +42966,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8540872907346609697, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 42900350}
   m_SourcePrefab: {fileID: 100100000, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
 --- !u!1001 &890216604
 PrefabInstance:
@@ -43117,6 +43198,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
   m_PrefabInstance: {fileID: 890216604}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &891834577 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3177802249364112381, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+  m_PrefabInstance: {fileID: 889579359}
   m_PrefabAsset: {fileID: 0}
 --- !u!64 &891919397
 MeshCollider:
@@ -48899,6 +48985,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorTile
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1356231938954200017, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -48933,6 +49023,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 369f6a2e5a405b7419fcd85438a7b45c, type: 2}
     - target: {fileID: 7287555858917076947, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764494660615614014, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8258335371836982883, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
@@ -58819,9 +58913,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1233195327}
     m_Modifications:
+    - target: {fileID: 89835273095733324, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 481601484912535573, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3898192459434336020, guid: c4641d5212853454bbce666b981d7b52, type: 3}
       propertyPath: m_Name
       value: PiedrasUnion Variant (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898192459434336020, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3898192459434336020, guid: c4641d5212853454bbce666b981d7b52, type: 3}
       propertyPath: m_IsActive
@@ -58866,6 +58972,14 @@ PrefabInstance:
     - target: {fileID: 4418868855884006830, guid: c4641d5212853454bbce666b981d7b52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584442047570937496, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8231743963427169885, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -71187,7 +71301,15 @@ PrefabInstance:
     m_TransformParent: {fileID: 1233195327}
     m_Modifications:
     - target: {fileID: 89835273095733324, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 89835273095733324, guid: c4641d5212853454bbce666b981d7b52, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 481601484912535573, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 481601484912535573, guid: c4641d5212853454bbce666b981d7b52, type: 3}
@@ -71205,6 +71327,10 @@ PrefabInstance:
     - target: {fileID: 3898192459434336020, guid: c4641d5212853454bbce666b981d7b52, type: 3}
       propertyPath: m_Name
       value: PiedrasUnion Variant (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898192459434336020, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3898192459434336020, guid: c4641d5212853454bbce666b981d7b52, type: 3}
       propertyPath: m_IsActive
@@ -71249,6 +71375,14 @@ PrefabInstance:
     - target: {fileID: 4418868855884006830, guid: c4641d5212853454bbce666b981d7b52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584442047570937496, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8231743963427169885, guid: c4641d5212853454bbce666b981d7b52, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -73309,6 +73443,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorTile
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1356231938954200017, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -73343,6 +73481,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 369f6a2e5a405b7419fcd85438a7b45c, type: 2}
     - target: {fileID: 7287555858917076947, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764494660615614014, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8258335371836982883, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
@@ -74302,6 +74444,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorTile
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1356231938954200017, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -74336,6 +74482,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 369f6a2e5a405b7419fcd85438a7b45c, type: 2}
     - target: {fileID: 7287555858917076947, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764494660615614014, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8258335371836982883, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
@@ -96754,6 +96904,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorTile
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1356231938954200017, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -96784,6 +96938,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 369f6a2e5a405b7419fcd85438a7b45c, type: 2}
     - target: {fileID: 7287555858917076947, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764494660615614014, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8258335371836982883, guid: 169b7e85dad2eee48aae57ee755b4884, type: 3}
