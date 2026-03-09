@@ -156,6 +156,7 @@ public class PlayerController : MonoBehaviour
     {
         _isButtonHeld = true;
         _animator.SetBool("isDashing", true); // Usa un Bool en el Animator, no un Trigger
+        //_thirdPersonCamera.m_Lens.FieldOfView = 100f;
     }
 
     if (_dashAction.WasReleasedThisFrame() || _currentEnergy <= 0)
