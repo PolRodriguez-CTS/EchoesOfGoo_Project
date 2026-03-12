@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    private float currentHealth;
-    private float maxHealth;
+    protected float currentHealth;
+    protected float maxHealth;
 
     void Start()
     {
@@ -14,7 +14,8 @@ public class HealthSystem : MonoBehaviour
     {
         
     }
-    void InitialHealth(float maxHealth)
+
+    public void InitialHealth(float maxHealth)
     {
         currentHealth = maxHealth;
     }
@@ -32,6 +33,4 @@ public class HealthSystem : MonoBehaviour
     {
         Debug.Log(this + "ha muerto");
     }
-
-    
 }

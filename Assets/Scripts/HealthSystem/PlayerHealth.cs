@@ -2,15 +2,21 @@ using UnityEngine;
 
 public class PlayerHealth : HealthSystem
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private float playerMaxHealth = 100;
     void Start()
     {
-        
+        InitialHealth(playerMaxHealth);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("Vida player:" + currentHealth);
     }
+
+    
+    public void Damaged(float damage)
+    {
+        TakeDamage(damage);
+    }
+
 }

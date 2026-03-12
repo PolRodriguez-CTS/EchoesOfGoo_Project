@@ -49,15 +49,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _topSpeed = 25f;
     private bool _isButtonHeld = false;
 
-
-//----------------------------------------------------------------------------------------------------------------
-    [Header("Dash Cooldown")]
-    [SerializeField] private float dashCooldown = 1.25f;
-    private bool isDashOnCooldown = false;
 //----------------------------------------------------------------------------------------------------------------
     [Header("Camera")]
     [SerializeField] private Vector2 _lookInput;
-    [SerializeField] private float _cameraSensitivity = 10;
+    //[SerializeField] private float _cameraSensitivity = 10;
     float _xRotation;
     [SerializeField] Transform _lookAtCamera;
     private Transform _mainCamera;
@@ -66,10 +61,6 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] private CinemachineCamera _aimCamera;
     private bool isCameraBlending;
 //----------------------------------------------------------------------------------------------------------------
-    [Header("Push")]
-    [SerializeField] private float _pushForce = 2;
-//----------------------------------------------------------------------------------------------------------------
-
 #endregion
 
 #region Awake
@@ -136,87 +127,85 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
-/*
-        if(_dashAction.WasPressedThisFrame() && _moveInput != Vector2.zero && !isDashing && !isDashOnCooldown)
-        {
-            StartCoroutine(Dash());
-        }
-*/
-
         HandleDashInput();
         ApplyMovement(); // Aquí unificaremos el movimiento
         HandleEnergy();
     }
 
 
+#region Movement
+
+
+
     void HandleDashInput()
-{
-    // Detectar si se mantiene el botón (asumiendo que _dashAction es "Sprint" o "Dash")
-    if (_dashAction.WasPressedThisFrame() && _currentEnergy > 10f)
     {
-        _isButtonHeld = true;
-        _animator.SetBool("isDashing", true); // Usa un Bool en el Animator, no un Trigger
-        //_thirdPersonCamera.m_Lens.FieldOfView = 100f;
+        // Detectar si se mantiene el botón (asumiendo que _dashAction es "Sprint" o "Dash")
+        if (_dashAction.WasPressedThisFrame() && _currentEnergy > 10f)
+        {
+            _isButtonHeld = true;
+            _animator.SetBool("isDashing", true); // Usa un Bool en el Animator, no un Trigger
+            //_thirdPersonCamera.m_Lens.FieldOfView = 100f;
+        }
+
+        if (_dashAction.WasReleasedThisFrame() || _currentEnergy <= 0)
+        {
+            _isButtonHeld = false;
+            _animator.SetBool("isDashing", false);
+        }
     }
 
-    if (_dashAction.WasReleasedThisFrame() || _currentEnergy <= 0)
+    void ApplyMovement()
     {
-        _isButtonHeld = false;
-        _animator.SetBool("isDashing", false);
-    }
-}
+        // 1. Calcular dirección de entrada
+        Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y);
+        Vector3 targetDirection = transform.forward; // Por defecto hacia adelante
 
-void ApplyMovement()
-{
-    // 1. Calcular dirección de entrada
-    Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y);
-    Vector3 targetDirection = transform.forward; // Por defecto hacia adelante
+        if (inputDir.magnitude > 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
+            targetDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+            
+            // Rotar el personaje hacia la dirección del dash/movimiento
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _smoothTime);
+            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+        }
 
-    if (inputDir.magnitude > 0.1f)
-    {
-        float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
-        targetDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+        // 2. Lógica de Velocidad (Acelerar o Frenar)
+        float targetSpeed = _isButtonHeld ? _topSpeed : _movementSpeed;
+        if (inputDir.magnitude == 0 && !_isButtonHeld) targetSpeed = 0;
+
+        // Aceleración suave hacia la velocidad objetivo
+        float accelRate = _isButtonHeld ? _acceleration : _speedChangeRate;
+        speed = Mathf.MoveTowards(speed, targetSpeed, accelRate * Time.deltaTime);
+
+        // 3. Aplicar Gravedad (En Gravity Rush, el dash anula parte de la gravedad)
+        if (_isButtonHeld)
+        {
+            _playerGravity.y = Mathf.Lerp(_playerGravity.y, 0, Time.deltaTime * 15f); // Gravedad casi nula al dashear
+        }
+
+        // 4. Mover al controlador
+        _controller.Move(targetDirection * speed * Time.deltaTime + _playerGravity * Time.deltaTime);
         
-        // Rotar el personaje hacia la dirección del dash/movimiento
-        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _smoothTime);
-        transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+        // Animación
+        _animator.SetFloat("Speed", speed);
     }
 
-    // 2. Lógica de Velocidad (Acelerar o Frenar)
-    float targetSpeed = _isButtonHeld ? _topSpeed : _movementSpeed;
-    if (inputDir.magnitude == 0 && !_isButtonHeld) targetSpeed = 0;
-
-    // Aceleración suave hacia la velocidad objetivo
-    float accelRate = _isButtonHeld ? _acceleration : _speedChangeRate;
-    speed = Mathf.MoveTowards(speed, targetSpeed, accelRate * Time.deltaTime);
-
-    // 3. Aplicar Gravedad (En Gravity Rush, el dash anula parte de la gravedad)
-    if (_isButtonHeld)
+    void HandleEnergy()
     {
-        _playerGravity.y = Mathf.Lerp(_playerGravity.y, 0, Time.deltaTime * 15f); // Gravedad casi nula al dashear
+        if (_isButtonHeld)
+        {
+            _currentEnergy -= _energyConsumptionRate * Time.deltaTime;
+            _currentEnergy = Mathf.Clamp(_currentEnergy, 0, _maxDashEnergy);
+        }
+        else
+        {
+            _currentEnergy += _energyRecoveryRate * Time.deltaTime;
+            _currentEnergy = Mathf.Clamp(_currentEnergy, 0, _maxDashEnergy);
+        }
     }
 
-    // 4. Mover al controlador
-    _controller.Move(targetDirection * speed * Time.deltaTime + _playerGravity * Time.deltaTime);
-    
-    // Animación
-    _animator.SetFloat("Speed", speed);
-}
-
-void HandleEnergy()
-{
-    if (_isButtonHeld)
-    {
-        _currentEnergy -= _energyConsumptionRate * Time.deltaTime;
-        _currentEnergy = Mathf.Clamp(_currentEnergy, 0, _maxDashEnergy);
-    }
-    else
-    {
-        _currentEnergy += _energyRecoveryRate * Time.deltaTime;
-        _currentEnergy = Mathf.Clamp(_currentEnergy, 0, _maxDashEnergy);
-    }
-}
-
+#endregion
 
 /*
     void ToggleCamera()
@@ -255,65 +244,6 @@ void HandleEnergy()
         isCameraBlending = false;
     }
 */
-#region Movement
-/*
-    void Movement()
-    {
-        if(isDashing) return;
-
-        Vector3 direction = new Vector3(_moveInput.x, 0, _moveInput.y);
-        float targetSpeed = _movementSpeed;
-
-        if(direction == Vector3.zero)
-        {
-            targetSpeed = 0;
-        }
-
-        float currentSpeed = new Vector3(_controller.velocity.x, 0, _controller.velocity.z).magnitude;
-
-        if(currentSpeed < targetSpeed || currentSpeed > targetSpeed)
-        {
-            speed = Mathf.MoveTowards(speed, targetSpeed * direction.magnitude, _speedChangeRate * Time.deltaTime);
-        }
-        else
-        {
-            speed = targetSpeed;
-        }
-
-        _animationSpeed = Mathf.Lerp(_animationSpeed, targetSpeed, _speedChangeRate * Time.deltaTime);
-
-        if(_animationSpeed < 0.05f)
-        {
-            _animationSpeed = 0;
-        }
-
-        _animator.SetFloat("Speed", _animationSpeed);
-        
-        if (direction != Vector3.zero)
-        {
-            targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
-            float horizontalSpeed = new Vector3(_controller.velocity.x, 0, _controller.velocity.z).magnitude;
-            bool isIdle = horizontalSpeed < 0.1f && speed < 0.1f;
-
-            if(isIdle)
-            {
-                transform.rotation = Quaternion.Euler(0, targetAngle, 0);
-                _turnSmoothVelocity = 0f;
-            }
-            else
-            {
-                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _smoothTime);
-                transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-            }
-
-            _lastMoveDirection = (Quaternion.Euler(0, targetAngle, 0) * Vector3.forward).normalized;
-        }
-
-        Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-        _controller.Move(moveDirection.normalized * (speed * Time.deltaTime) + _playerGravity * Time.deltaTime);
-    }
-*/
-#endregion
 
 /*
     void AimMovement()
@@ -343,38 +273,6 @@ void HandleEnergy()
         }
 
         _controller.Move(move * (_movementSpeed * Time.deltaTime) +_playerGravity * Time.deltaTime);
-    }
-*/
-
-
-
-/*
-    IEnumerator Dash()
-    {
-        isDashing = true;
-
-        _animator.SetTrigger("Dash");
-        
-        float timer = 0;
-        
-        while(timer < _dashTime)
-        {
-            _controller.Move(_lastMoveDirection.normalized * _dashSpeed * Time.deltaTime);
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        
-        isDashing = false;
-        StartCoroutine(DashCoolDown());
-    }
-*/
-/*
-    IEnumerator DashCoolDown()
-    {
-        isDashOnCooldown = true;
-        yield return new WaitForSecondsRealtime(dashCooldown);
-        isDashOnCooldown = false;
     }
 */
 
@@ -429,23 +327,6 @@ void HandleEnergy()
     bool IsGrounded()
     {
         return Physics.CheckSphere(_sensor.position, _sensorRadius, _groundLayer);
-    }
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.transform.gameObject.tag == "Pushable")
-        {
-            //Rigidbody rBody = hit.transform.GetComponent<Rigidbody>();
-
-            Rigidbody rBody = hit.collider.attachedRigidbody;
-            if (rBody == null || rBody.isKinematic)
-            {
-                return;
-            }
-
-            Vector3 pushDirection = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-            rBody.linearVelocity = pushDirection * _pushForce / rBody.mass;
-        }
     }
 
 #region Gizmos

@@ -35,7 +35,10 @@ public class IA_GolemMelee : MonoBehaviour
     [Header("Attack Settings")]
     public float attackCooldown = 1.5f;
     private float attackTimer;
-    public float stoppingDistanceBuffer = 0.5f; 
+    public float stoppingDistanceBuffer = 0.5f;
+    [SerializeField] private Transform attackHitbox;
+    [SerializeField] private float attackHitboxRange;
+    [SerializeField] private float attackDamage;
 
     [Header("Combo Settings")]
     public int comboStep = 0;
@@ -269,6 +272,23 @@ public class IA_GolemMelee : MonoBehaviour
     }
 
     void ReturnToOrigin() { currentState = State.Wandering; agent.SetDestination(originPoint); }
+
+    void PlayerDamage()
+    {
+        
+        Collider[] reachedObjects = Physics.OverlapSphere(attackHitbox.position, attackHitboxRange);
+        foreach(Collider col in reachedObjects)
+        {
+            if(col.CompareTag("Player"))
+            {
+                PlayerHealth _playerHealthScript = col.gameObject.GetComponent<PlayerHealth>();
+                if (_playerHealthScript != null)
+                {
+                    _playerHealthScript.Damaged(attackDamage);
+                }
+            }
+        }
+    }
 
     void UpdateAnimator()
     {

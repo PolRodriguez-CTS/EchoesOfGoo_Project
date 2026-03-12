@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4429600246108935475}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.019377341, y: 0.9769414, z: -0.10124706, w: 0.18697362}
+  m_LocalRotation: {x: 0.019377679, y: 0.97694147, z: -0.10125005, w: 0.18697135}
   m_LocalPosition: {x: -14.6029825, y: 2.1478956, z: 9.346006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.834, y: 158.331, z: 0}
 --- !u!114 &8765603615862594497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,15 +91,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineOrbitalFollow
-  TargetOffset: {x: 0, y: 0.87, z: 0}
+  TargetOffset: {x: 0, y: 2.6, z: 0}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 3, z: 1}
+    PositionDamping: {x: 0, y: 2, z: 0}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   OrbitStyle: 0
-  Radius: 3
+  Radius: 4
   Orbits:
     Top:
       Radius: 2
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineRotationComposer
   Composition:
-    ScreenPosition: {x: 0, y: 0.45}
+    ScreenPosition: {x: 0, y: 0.5}
     DeadZone:
       Enabled: 1
       Size: {x: 0.8, y: 0.8}

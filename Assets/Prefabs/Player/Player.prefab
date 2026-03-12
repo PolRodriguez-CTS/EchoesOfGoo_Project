@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 234196598833021143}
   - component: {fileID: 4624422971485136145}
   - component: {fileID: 8719169375190584086}
-  - component: {fileID: 7653304550884503562}
+  - component: {fileID: 223295425980013077}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -378,18 +378,14 @@ MonoBehaviour:
   jumpTimeOut: 0.05
   fallTimeOut: 0.15
   _maxDashEnergy: 100
-  _energyConsumptionRate: 10
-  _energyRecoveryRate: 5
-  _acceleration: 50
-  _topSpeed: 25
-  dashCooldown: 1.25
+  _energyConsumptionRate: 40
+  _energyRecoveryRate: 20
+  _acceleration: 200
+  _topSpeed: 12.5
   _lookInput: {x: 0, y: 0}
-  _cameraSensitivity: 10
   _lookAtCamera: {fileID: 6901770724051596551}
   isToggled: 0
   _thirdPersonCamera: {fileID: 0}
-  _aimCamera: {fileID: 0}
-  _pushForce: 2
 --- !u!114 &8719169375190584086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,7 +402,7 @@ MonoBehaviour:
   _attackRadius: 0.5
   _hATKDmg: 2
   _timerDuration: 1
---- !u!114 &7653304550884503562
+--- !u!114 &223295425980013077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -415,15 +411,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8540872907346609697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98920d39ab20cb648be91c7ad973faea, type: 3}
+  m_Script: {fileID: 11500000, guid: afba2240aaa817043bfec3ad197e2ad4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Blink
-  characterMesh: {fileID: 1016053402203973656}
-  blinkShapeIndex: 0
-  closeDuration: 0.05
-  openDuration: 0.15
-  minWaitTime: 2
-  maxWaitTime: 5
+  m_EditorClassIdentifier: 
 --- !u!1001 &7271101363946133319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -551,11 +541,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4279846494852073891}
   m_SourcePrefab: {fileID: 100100000, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
---- !u!137 &1016053402203973656 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7706110884207132511, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
-  m_PrefabInstance: {fileID: 7271101363946133319}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5833073690541756953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5468749046682942114, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
