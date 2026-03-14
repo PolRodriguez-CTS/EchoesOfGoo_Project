@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class IA_GolemMelee : MonoBehaviour
+public class IA_GolemMelee : MonoBehaviour, IAtacante
 {
     private NavMeshAgent agent;
     private Transform player;
@@ -273,9 +273,8 @@ public class IA_GolemMelee : MonoBehaviour
 
     void ReturnToOrigin() { currentState = State.Wandering; agent.SetDestination(originPoint); }
 
-    void PlayerDamage()
+    public void PlayerDamage()
     {
-        
         Collider[] reachedObjects = Physics.OverlapSphere(attackHitbox.position, attackHitboxRange);
         foreach(Collider col in reachedObjects)
         {
@@ -313,5 +312,9 @@ public class IA_GolemMelee : MonoBehaviour
         Vector3 right = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward;
         Gizmos.DrawRay(transform.position + Vector3.up * eyeHeight, left * chaseRange);
         Gizmos.DrawRay(transform.position + Vector3.up * eyeHeight, right * chaseRange);
+
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(attackHitbox.position, attackHitboxRange);
     }
 }
