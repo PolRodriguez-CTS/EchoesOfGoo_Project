@@ -334,6 +334,7 @@ MonoBehaviour:
     m_Value:
     - {fileID: 11400000, guid: 404820c4cf36ad944862fa59c56064f0, type: 2}
     - {fileID: 11400000, guid: 2384dbf2c1c420f45a792fbc315fbfb1, type: 2}
+    - {fileID: 11400000, guid: 15bb7fdd4fd0eec42b169cbd053dec46, type: 2}
 --- !u!114 &-8154907456075696316
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1255,11 +1256,6 @@ MonoBehaviour:
   m_RayMaxIterationsRT:
     m_OverrideState: 1
     m_Value: 48
-  adaptiveProbeVolumesLayerMask:
-    m_OverrideState: 1
-    m_Value:
-      serializedVersion: 0
-      m_Bits: 1
 --- !u!114 &-1437582235394409639
 MonoBehaviour:
   m_ObjectHideFlags: 3
