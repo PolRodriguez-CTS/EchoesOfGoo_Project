@@ -13,6 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
+  - _EMISSIVE_COLOR_MAP
   - _MASKMAP
   - _NORMALMAP
   - _NORMALMAP_TANGENT_SPACE
@@ -58,7 +59,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
-        m_Texture: {fileID: 2800000, guid: c03b8f04fd8a7284b8a96345b95e2ef5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 993d500bbd00a10448bf0b233c00c09c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -90,7 +91,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveColorMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: aa0f4ac8f285d144887bd788ea8f3be1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emissive_Tex:
@@ -114,11 +115,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c03b8f04fd8a7284b8a96345b95e2ef5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 993d500bbd00a10448bf0b233c00c09c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
-        m_Texture: {fileID: 2800000, guid: b146c8461505cdd4a98aa91d3c57e32c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4f7d39115422ec94f949d5f9186b1c03, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap_Sampler:
@@ -126,7 +127,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 3cbc76f2c65eaf749b656b871db93d0b, type: 3}
+        m_Texture: {fileID: 2800000, guid: e3875593eb139ed49bab6a0edc6c244b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapForMatCap:
@@ -225,7 +226,7 @@ Material:
     - _ATDistance: 1
     - _AddPrecomputedVelocity: 0
     - _Add_Antipodean_RimLight: 0
-    - _AlbedoAffectEmissive: 0
+    - _AlbedoAffectEmissive: 1
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 0
     - _AlphaCutoffPostpass: 0.5
@@ -293,7 +294,7 @@ Material:
     - _EMISSIVE: 0
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
-    - _EmissiveIntensity: 2.3
+    - _EmissiveIntensity: 260
     - _EmissiveIntensityUnit: 0
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
@@ -357,8 +358,8 @@ Material:
     - _MatCap: 0
     - _MaterialID: 1
     - _Metallic: 0
-    - _MetallicRemapMax: 0.79816514
-    - _MetallicRemapMin: 0.7110092
+    - _MetallicRemapMax: 1
+    - _MetallicRemapMin: 0.91284406
     - _Nearest_Distance: 0.5
     - _NormalMapSpace: 0
     - _NormalScale: 0.31
@@ -401,8 +402,8 @@ Material:
     - _Set_SystemShadowsToBase: 1
     - _ShadeColor_Step: 0
     - _Smoothness: 0.5
-    - _SmoothnessRemapMax: 0.68807316
-    - _SmoothnessRemapMin: 0.48623854
+    - _SmoothnessRemapMax: 0.61958003
+    - _SmoothnessRemapMin: 0.41774538
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularOcclusionMode: 1
@@ -454,7 +455,7 @@ Material:
     - _UVDetail: 0
     - _UVEmissive: 0
     - _Unlit_Intensity: 0
-    - _UseEmissiveIntensity: 0
+    - _UseEmissiveIntensity: 1
     - _UseShadowThreshold: 0
     - _Use_1stAs2nd: 0
     - _Use_BaseAs1st: 1
@@ -481,8 +482,8 @@ Material:
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissiveColor: {r: 0, g: 0, b: 0, a: 2.3}
-    - _EmissiveColorLDR: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
+    - _EmissiveColor: {r: 194.74509, g: 194.74509, b: 194.74509, a: 260}
+    - _EmissiveColorLDR: {r: 0.88031507, g: 0.88031507, b: 0.88031507, a: 1}
     - _Emissive_Color: {r: 0.3077861, g: 0.3077861, b: 0.3077861, a: 1}
     - _FirstShadeMaskColor: {r: 0, g: 1, b: 1, a: 1}
     - _HighColor: {r: 0, g: 0, b: 0, a: 1}
