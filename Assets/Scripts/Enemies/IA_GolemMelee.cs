@@ -1,14 +1,15 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class IA_GolemMelee : MonoBehaviour, IAtacante
+[RequireComponent(typeof(NavMeshAgent), typeof (Rigidbody))]
+public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 {
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
     private Transform player;
     private Animator animator;
-    private Rigidbody _rb;
+    private Rigidbody _rigidBody;
     private Vector3 originPoint;
     public enum State { Wandering, Chase, Attack }
     public State currentState;
@@ -26,7 +27,6 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
     public float eyeHeight = 1.6f;
     public float viewAngle = 100f;
     public float forwardOffset = 0.6f; // Para saltarse su propia colisión
-
 
     [Header("Wandering Settings")]
     public float waitTime = 2f;
@@ -46,16 +46,25 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
     public float comboResetTime = 3.5f;
     private float lastAttackTime;
 
-    void Start()
+    [Header ("Knockback")]
+    [Range(0.001f, 0.1f)] [SerializeField] private float stillThreshold = 0.05f;
+
+    void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _rigidBody = GetComponent<Rigidbody>();
+        _agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
         originPoint = transform.position;
+    }
+
+    void Start()
+    {
+        
 
         // Configuración para evitar conflictos de rotación y permitir frenado en seco
-        agent.updateRotation = false; 
-        agent.acceleration = 100f; 
+        _agent.updateRotation = false; 
+        _agent.acceleration = 100f; 
 
         currentState = State.Wandering;
         PickRandomPoint();
@@ -93,9 +102,9 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
 
     private void UpdateWanderingState(float distanceToPlayer)
     {
-        agent.isStopped = false;
-        agent.speed = walkSpeed;
-        agent.stoppingDistance = 0.2f; // Permitir que llegue al punto exacto
+        _agent.isStopped = false;
+        _agent.speed = walkSpeed;
+        _agent.stoppingDistance = 0.2f; // Permitir que llegue al punto exacto
 
         // Detectar jugador
         if (CanSeePlayer(distanceToPlayer))
@@ -106,7 +115,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
         }
 
         // Lógica de patrulla con espera
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
         {
             if (!isWaiting)
             {
@@ -126,10 +135,10 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
 
     private void UpdateChaseState(float distanceToPlayer)
     {
-        agent.isStopped = false;
-        agent.speed = runSpeed;
-        agent.stoppingDistance = attackRange - 0.5f; 
-        agent.SetDestination(player.position);
+        _agent.isStopped = false;
+        _agent.speed = runSpeed;
+        _agent.stoppingDistance = attackRange - 0.5f; 
+        _agent.SetDestination(player.position);
 
         // Atacar de inmediato si entra en rango
         if (distanceToPlayer <= attackRange)
@@ -149,7 +158,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
     {
         // Clavar los pies mientras esté en rango de ataque
         if (distanceToPlayer <= attackRange)
-            agent.isStopped = true;
+            _agent.isStopped = true;
 
         attackTimer += Time.deltaTime;
 
@@ -162,7 +171,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
         // Si el jugador se aleja lo suficiente, volver a perseguir
         if (distanceToPlayer > attackRange + stoppingDistanceBuffer)
         {
-            agent.isStopped = false;
+            _agent.isStopped = false;
             currentState = State.Chase;
         }
     }
@@ -175,9 +184,9 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
         {
             targetDirection = (player.position - transform.position).normalized;
         }
-        else if (agent.velocity.sqrMagnitude > 0.1f)
+        else if (_agent.velocity.sqrMagnitude > 0.1f)
         {
-            targetDirection = agent.velocity.normalized;
+            targetDirection = _agent.velocity.normalized;
         }
 
         if (targetDirection != Vector3.zero)
@@ -206,7 +215,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randomDirection, out hit, wanderingRadius, NavMesh.AllAreas))
         {
-            agent.SetDestination(hit.position);
+            _agent.SetDestination(hit.position);
         }
     }
 
@@ -272,7 +281,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
         comboStep = (comboStep + 1) % 2;
     }
 
-    void ReturnToOrigin() { currentState = State.Wandering; agent.SetDestination(originPoint); }
+    void ReturnToOrigin() { currentState = State.Wandering; _agent.SetDestination(originPoint); }
 
     public void PlayerDamage()
     {
@@ -290,25 +299,42 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
         }
     }
 
+    public void GetKnockedBack(Vector3 force)
+    {
+        StartCoroutine(ApplyKnockback(force));
+    }
+
     private IEnumerator ApplyKnockback(Vector3 force)
     {
         yield return null;
-        agent.enabled = false;
+        _agent.enabled = false;
 
-        _rb.useGravity = true;
-        _rb.isKinematic = false;
-        _rb.AddForce(force);
+        _rigidBody.useGravity = true;
+        _rigidBody.isKinematic = false;
+        _rigidBody.AddForce(force);
 
         yield return new WaitForFixedUpdate();
         float knockBackTime = Time.time;
-        //yield return new WaitUntil(() => _rb.linearVelocity.magnitude < )
+        yield return new WaitUntil(() => _rigidBody.linearVelocity.magnitude < stillThreshold);
+        yield return new WaitForSeconds(0.25f);
+
+        _rigidBody.linearVelocity = Vector3.zero;
+        _rigidBody.angularVelocity = Vector3.zero;
+        _rigidBody.useGravity = false;
+        _rigidBody.isKinematic = true;
+
+        _agent.Warp(transform.position);
+        _agent.enabled = true;
+
+        yield return null;
     }
+
 
     void UpdateAnimator()
     {
         if (animator == null) return;
         // El parámetro "Speed" debe mover el Blend Tree de Idle a Run
-        animator.SetFloat("Speed", agent.velocity.magnitude);
+        animator.SetFloat("Speed", _agent.velocity.magnitude);
     }
 
     // Opcional: Para ver el rango en el editor
@@ -332,4 +358,6 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(attackHitbox.position, attackHitboxRange);
     }
+
+    
 }

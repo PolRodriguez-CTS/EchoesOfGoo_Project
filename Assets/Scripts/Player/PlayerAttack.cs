@@ -15,6 +15,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float _attackRadius;
 
     private int _bATKDmg = 1;
+    public KnockbackConfig knockbackConfig;
 
     [Header("Heavy ATK")]
     [SerializeField] private int _hATKDmg = 2;
@@ -91,21 +92,16 @@ public class PlayerAttack : MonoBehaviour
                     _enemyHealthScript.Damaged(DmgDealed);
                 }
             }
+            
             if(item.TryGetComponent(out IKnockbackeable knockbackeable))
             {
-                /*
-                Vector3 force
-                knockbackeable.GetKnockedBack(force);
-                */
-            }
+                Debug.Log("Se aplica knockback");
+                Vector3 direction = (item.transform.position - transform.position).normalized;
+                float distance = Vector3.Distance(transform.position, item.transform.position);
 
-                //EnemyHealth enemyHealth = item.gameObject.GetComponent<EnemyHealth>();
-                //EnemyHitFlash enemy = item.gameObject.GetComponent<EnemyHitFlash>();
-                /*if(enemyHealth != null)
-                {
-                    enemyHealth.TakeDamage(DmgDealed);
-                    enemy.GetComponent<EnemyHitFlash>().TakeDamage();
-                }*/
+                Vector3 force = knockbackConfig.GetKnockbackStrength(direction, distance);
+                knockbackeable.GetKnockedBack(force);
+            }
 
             //Para los muros
             if(item.gameObject.tag == "Breakable" && DmgDealed == _hATKDmg)
@@ -115,8 +111,6 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
-
-    
 
     void OnDrawGizmos()
     {
