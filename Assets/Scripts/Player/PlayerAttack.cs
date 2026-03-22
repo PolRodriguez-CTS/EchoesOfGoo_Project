@@ -41,7 +41,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if(_basicATKAction.WasPressedThisFrame() && !isCharging && !_playerMovementScript)
+        if(_basicATKAction.WasPressedThisFrame() && !isCharging)
         {
             Attack(_bATKDmg);
             animator.SetTrigger("Attack");

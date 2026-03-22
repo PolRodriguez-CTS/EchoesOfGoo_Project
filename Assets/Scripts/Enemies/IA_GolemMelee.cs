@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,8 +8,8 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
     private NavMeshAgent agent;
     private Transform player;
     private Animator animator;
+    private Rigidbody _rb;
     private Vector3 originPoint;
-
     public enum State { Wandering, Chase, Attack }
     public State currentState;
 
@@ -287,6 +288,20 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
                 }
             }
         }
+    }
+
+    private IEnumerator ApplyKnockback(Vector3 force)
+    {
+        yield return null;
+        agent.enabled = false;
+
+        _rb.useGravity = true;
+        _rb.isKinematic = false;
+        _rb.AddForce(force);
+
+        yield return new WaitForFixedUpdate();
+        float knockBackTime = Time.time;
+        //yield return new WaitUntil(() => _rb.linearVelocity.magnitude < )
     }
 
     void UpdateAnimator()

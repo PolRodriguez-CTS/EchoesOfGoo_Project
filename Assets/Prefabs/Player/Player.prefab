@@ -372,6 +372,9 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  _maxChargeTime: 0.6
+  _extraJumpForce: 1
+  _chargeGravityScale: 0.15
   _jumpHeight: 2
   _playerGravity: {x: 0, y: 0, z: 0}
   _gravity: -15
@@ -382,9 +385,6 @@ MonoBehaviour:
   _energyRecoveryRate: 20
   _acceleration: 200
   _topSpeed: 12.5
-  _lookInput: {x: 0, y: 0}
-  _lookAtCamera: {fileID: 6901770724051596551}
-  isToggled: 0
   _thirdPersonCamera: {fileID: 0}
 --- !u!114 &8719169375190584086
 MonoBehaviour:
@@ -489,7 +489,7 @@ PrefabInstance:
     - target: {fileID: 2788943867344286557, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 642236ad318baeb4ca0b648f1179c4ed, type: 2}
+      objectReference: {fileID: 2100000, guid: 27c9eff753aa1b442a27fac1456b8485, type: 2}
     - target: {fileID: 4927681123758099539, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
