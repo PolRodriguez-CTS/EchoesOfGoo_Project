@@ -282,7 +282,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante
             if(col.CompareTag("Player"))
             {
                 PlayerHealth _playerHealthScript = col.gameObject.GetComponent<PlayerHealth>();
-                if (_playerHealthScript != null)
+                if(_playerHealthScript != null)
                 {
                     _playerHealthScript.Damaged(attackDamage);
                 }

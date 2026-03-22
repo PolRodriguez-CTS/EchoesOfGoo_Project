@@ -18,5 +18,4 @@ public class PlayerHealth : HealthSystem
     {
         TakeDamage(damage);
     }
-
 }

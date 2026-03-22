@@ -63,7 +63,6 @@ public class PlayerAttack : MonoBehaviour
         {
             if(_timer >= _timerDuration)
             {
-                //animator.SetTrigger("A")
                 Debug.Log("Ejecutar ataque cargadoo");
                 Attack(_hATKDmg);
             }
@@ -77,14 +76,6 @@ public class PlayerAttack : MonoBehaviour
             _timer = 0;
             isCharging = false;
         }
-
-        /*
-        if(_basicATKAction.WasPressedThisFrame() && _playerMovementScript.isToggled)
-        {
-            Debug.Log("Disparo");
-            ShootSlime2();
-        }
-        */
     }
 
     private void Attack(int DmgDealed)
@@ -94,6 +85,20 @@ public class PlayerAttack : MonoBehaviour
         {
             if(item.gameObject.layer == 6)
             {
+                EnemyHealth _enemyHealthScript = item.gameObject.GetComponent<EnemyHealth>();
+                if(_enemyHealthScript != null)
+                {
+                    _enemyHealthScript.Damaged(DmgDealed);
+                }
+            }
+            if(item.TryGetComponent(out IKnockbackeable knockbackeable))
+            {
+                /*
+                Vector3 force
+                knockbackeable.GetKnockedBack(force);
+                */
+            }
+
                 //EnemyHealth enemyHealth = item.gameObject.GetComponent<EnemyHealth>();
                 //EnemyHitFlash enemy = item.gameObject.GetComponent<EnemyHitFlash>();
                 /*if(enemyHealth != null)
@@ -101,7 +106,6 @@ public class PlayerAttack : MonoBehaviour
                     enemyHealth.TakeDamage(DmgDealed);
                     enemy.GetComponent<EnemyHitFlash>().TakeDamage();
                 }*/
-            }
 
             //Para los muros
             if(item.gameObject.tag == "Breakable" && DmgDealed == _hATKDmg)
@@ -112,36 +116,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    /*
-    private void ShootSlime2()
-    {
-    Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-    RaycastHit hit;
-
-    Vector3 targetPoint;
-
-    if (Physics.Raycast(ray, out hit))
-        targetPoint = hit.point;
-    else
-        targetPoint = ray.GetPoint(100);
-
-    Vector3 direction = (targetPoint - _shootSpawn.position).normalized;
-
-    GameObject currentBullet = Instantiate(
-        _bulletPrefab,
-        _shootSpawn.position,
-        Quaternion.identity
-    );
-
-    Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
-    rb.linearVelocity = Vector3.zero;
-
-    // Fuerza combinada (horizontal + vertical)
-    Vector3 force = direction * _shotForce + Vector3.up * upwardForce;
-
-    rb.AddForce(force, ForceMode.Impulse);
-    }
-    */
+    
 
     void OnDrawGizmos()
     {
