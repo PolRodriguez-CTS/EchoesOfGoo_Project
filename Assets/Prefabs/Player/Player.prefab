@@ -249,12 +249,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7192304710328051871}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000042840842, y: -0.000000029802326, z: 0.000000047497455, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.59800005, z: 0.54900026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5833073690541756953}
+  m_Father: {fileID: 3703449444109166025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8537966281173841337
 GameObject:
@@ -322,6 +322,7 @@ Transform:
   m_Children:
   - {fileID: 7161459358174507180}
   - {fileID: 3177802249364112381}
+  - {fileID: 5839242992566194303}
   - {fileID: 6901770724051596551}
   - {fileID: 3660459330335697422}
   - {fileID: 6245387673003900478}
@@ -400,7 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   _attackHitBox: {fileID: 5839242992566194303}
   _attackRadius: 0.5
-  _hATKDmg: 2
+  knockbackConfig: {fileID: 0}
   _timerDuration: 1
 --- !u!114 &223295425980013077
 MonoBehaviour:
@@ -527,9 +528,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3987810831604914813}
-    - targetCorrespondingSourceObject: {fileID: -5468749046682942114, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5839242992566194303}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
       insertIndex: -1
@@ -541,11 +539,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4279846494852073891}
   m_SourcePrefab: {fileID: 100100000, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
---- !u!4 &5833073690541756953 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -5468749046682942114, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
-  m_PrefabInstance: {fileID: 7271101363946133319}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6991098537963358438 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8796238987429601375, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}

@@ -14,11 +14,11 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform _attackHitBox;
     [SerializeField] private float _attackRadius;
 
-    private int _bATKDmg = 1;
+    private int _bATKDmg = 20;
     public KnockbackConfig knockbackConfig;
 
     [Header("Heavy ATK")]
-    [SerializeField] private int _hATKDmg = 2;
+    private int _hATKDmg = 40;
     [SerializeField] private float _timerDuration = 1f;
     private float _timer = 0;
     private bool isCharging = false;
@@ -101,6 +101,12 @@ public class PlayerAttack : MonoBehaviour
 
                 Vector3 force = knockbackConfig.GetKnockbackStrength(direction, distance);
                 knockbackeable.GetKnockedBack(force);
+            }
+
+            if(item.TryGetComponent(out IRageable rageable))
+            {
+                IALoglin loglinScript = item.gameObject.GetComponent<IALoglin>();
+                loglinScript.Raged();
             }
 
             //Para los muros

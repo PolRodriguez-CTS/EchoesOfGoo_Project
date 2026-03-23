@@ -1,8 +1,9 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class IALoglin : MonoBehaviour
+public class IALoglin : MonoBehaviour, IRageable
 {
     private NavMeshAgent agent;
     private Transform player;
@@ -29,13 +30,21 @@ public class IALoglin : MonoBehaviour
     private float waitTimer;
     private bool isWaiting;
 
+    [Header("Attack Settings")]
+    [SerializeField] private Transform attackHitbox;
+    [SerializeField] private float attackHitboxRange;
+    [SerializeField] private float attackDamage;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
 
-        agent.updateRotation = true; // Aquí dejamos que NavMesh maneje la rotación para simplificar
+        agent.updateRotation = true; 
+        // TIP: Ajusta el stoppingDistance para que no colisionen físicamente
+        agent.stoppingDistance = attackRange - 0.2f; 
+        
         currentState = State.Wandering;
         PickRandomPoint();
     }
@@ -78,19 +87,30 @@ public class IALoglin : MonoBehaviour
 
     private void UpdateChase(float dist)
     {
+        agent.isStopped = false; // Nos aseguramos de que pueda moverse
         agent.speed = runSpeed;
         agent.SetDestination(player.position);
 
-        if (dist <= attackRange) currentState = State.Attack;
+        if (dist <= attackRange) 
+        {
+            currentState = State.Attack;
+        }
 
-        // Si el jugador se aleja mucho, vuelve a patrullar pero sigue alerta (hasBeenHit sigue siendo true)
         if (dist > chaseRange + 5f) currentState = State.Wandering;
     }
 
     private void UpdateAttack(float dist)
     {
-        agent.SetDestination(player.position); // Sigue moviéndose hacia el jugador si intenta huir
+        // 1. Mantener el destino actualizado pero dejar que stoppingDistance haga su magia
+        agent.SetDestination(player.position);
 
+        // 2. Rotación manual: Si está cerca y parado, que siga mirando al jugador
+        if (dist <= agent.stoppingDistance + 0.5f)
+        {
+            LookAtPlayer();
+        }
+
+        // 3. Lógica de ataque
         attackTimer += Time.deltaTime;
         if (attackTimer >= attackCooldown && dist <= attackRange)
         {
@@ -98,18 +118,46 @@ public class IALoglin : MonoBehaviour
             attackTimer = 0f;
         }
 
-        if (dist > attackRange + 1f) currentState = State.Chase;
+        // 4. Volver a Chase si el jugador se escapa
+        if (dist > attackRange + 0.5f) 
+        {
+            currentState = State.Chase;
+        }
+    }
+
+    private void LookAtPlayer()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0; // Evitamos que el enemigo se incline hacia arriba/abajo
+        if (direction != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
     }
 
     // --- FUNCIÓN PÚBLICA PARA ACTIVARLO ---
     // Llama a esta función desde tu script de "Vida" o "Daño"
-    public void TomarDaño()
+    public void Raged()
     {
-        if (!hasBeenHit)
+        hasBeenHit = true;
+        currentState = State.Chase;
+        Debug.Log("¡Enemigo pasivo provocado!");
+    }
+
+    public void PlayerDamage()
+    {
+        Collider[] reachedObjects = Physics.OverlapSphere(attackHitbox.position, attackHitboxRange);
+        foreach(Collider col in reachedObjects)
         {
-            hasBeenHit = true;
-            currentState = State.Chase;
-            Debug.Log("¡Enemigo pasivo provocado!");
+            if(col.CompareTag("Player"))
+            {
+                PlayerHealth _playerHealthScript = col.gameObject.GetComponent<PlayerHealth>();
+                if(_playerHealthScript != null)
+                {
+                    _playerHealthScript.Damaged(attackDamage);
+                }
+            }
         }
     }
 
@@ -128,5 +176,11 @@ public class IALoglin : MonoBehaviour
     {
         if (animator != null)
             animator.SetFloat("Speed", agent.velocity.magnitude);
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(attackHitbox.position, attackHitboxRange);
     }
 }

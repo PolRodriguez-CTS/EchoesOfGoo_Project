@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyHealth : HealthSystem
 {
-private float EnemyMaxHealth = 100;
+[SerializeField] private float EnemyMaxHealth = 100;
     void Start()
     {
         InitialHealth(EnemyMaxHealth);
