@@ -307,6 +307,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     private IEnumerator ApplyKnockback(Vector3 force)
     {
         yield return null;
+        _agent.isStopped = true;
         _agent.enabled = false;
 
         _rigidBody.useGravity = true;
@@ -328,7 +329,6 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
         yield return null;
     }
-
 
     void UpdateAnimator()
     {
@@ -354,10 +354,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         Gizmos.DrawRay(transform.position + Vector3.up * eyeHeight, left * chaseRange);
         Gizmos.DrawRay(transform.position + Vector3.up * eyeHeight, right * chaseRange);
 
-
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(attackHitbox.position, attackHitboxRange);
     }
-
-    
 }
