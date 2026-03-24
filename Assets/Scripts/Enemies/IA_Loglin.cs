@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class IALoglin : MonoBehaviour, IRageable
+public class IALoglin : MonoBehaviour, IRageable, IAtacante
 {
     private NavMeshAgent agent;
     private Transform player;
@@ -43,7 +43,7 @@ public class IALoglin : MonoBehaviour, IRageable
 
         agent.updateRotation = true; 
         // TIP: Ajusta el stoppingDistance para que no colisionen físicamente
-        agent.stoppingDistance = attackRange - 0.2f; 
+        agent.stoppingDistance = attackRange; 
         
         currentState = State.Wandering;
         PickRandomPoint();
