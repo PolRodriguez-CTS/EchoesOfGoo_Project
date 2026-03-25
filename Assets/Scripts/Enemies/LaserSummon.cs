@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class AnimationBridge : MonoBehaviour
+public class LaserSummon : MonoBehaviour
 {
-    private IAtacante scriptPadre;
+    private ILasear scriptPadre;
 
     void Start()
     {
         // Busca CUALQUIER script en el padre que use la interfaz IAtacante
-        scriptPadre = GetComponentInParent<IAtacante>();
+        scriptPadre = GetComponentInParent<ILasear>();
 
         if (scriptPadre == null)
         {
@@ -16,11 +16,11 @@ public class AnimationBridge : MonoBehaviour
     }
 
     // Esta es la función que pones en el Evento de Animación (FBX)
-    public void PlayerDamage()
+    public void Laser()
     {
         if (scriptPadre != null)
         {
-            scriptPadre.PlayerDamage(); 
+            scriptPadre.Laser();
         }
     }
 }

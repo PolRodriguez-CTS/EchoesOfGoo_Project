@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class IA_GolemRanged : MonoBehaviour
+public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
 {
     private NavMeshAgent agent;
     private Transform player;
     private Animator animator;
+    private Rigidbody _rigidBody;
     private Vector3 originPoint;
 
     public enum State { Wandering, Chase, Attack, Retreat }
@@ -25,12 +26,13 @@ public class IA_GolemRanged : MonoBehaviour
 
     [Header("Detection & FOV")]
     public float eyeHeight = 1.6f;
-    public float viewAngle = 100f;
+    public float viewAngle = 200;
     public float forwardOffset = 0.6f; 
 
     [Header("Ranged Attack")]
-    public GameObject projectilePrefab;
-    public Transform shootPoint;      
+    public GameObject laserBeam;
+    public Transform shootPoint;
+    private float attackDamage = 30;
     public float fireRate = 2f;
     private float fireTimer;
 
@@ -41,6 +43,7 @@ public class IA_GolemRanged : MonoBehaviour
 
     void Start()
     {
+        _rigidBody = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
@@ -125,6 +128,8 @@ public class IA_GolemRanged : MonoBehaviour
         if (!CanSeePlayer(dist) && dist > attackRange + 2f) ReturnToOrigin();
     }
 
+    private float laserTime = 0.5f;
+    private float laserTimer;
     private void UpdateAttack(float dist)
     {
         agent.isStopped = true;
@@ -139,8 +144,17 @@ public class IA_GolemRanged : MonoBehaviour
         fireTimer += Time.deltaTime;
         if (fireTimer >= fireRate)
         {
-            animator.SetTrigger("Attack"); 
-            fireTimer = 0;
+            laserTimer += Time.deltaTime;
+            
+
+
+
+            if(laserTimer >= laserTime)
+            {
+                animator.SetTrigger("Attack");
+                fireTimer = 0;
+                laserTimer = 0;
+            }
         }
 
         if (dist < safeDistance) currentState = State.Retreat;
@@ -201,11 +215,30 @@ public class IA_GolemRanged : MonoBehaviour
         }
     }
 
-    public void LaunchProjectile()
+    public void Laser()
     {
-        if (projectilePrefab != null && shootPoint != null)
+        if (laserBeam != null && shootPoint != null)
         {
-            Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
+        // 1. Instanciamos y guardamos la referencia
+        GameObject tempLaser = Instantiate(laserBeam, shootPoint.position, shootPoint.rotation);
+        
+        // 2. Lógica de DAÑO inmediata (Raycast)
+        RaycastHit hit;
+        // Usamos la misma lógica que tu CanSeePlayer pero para hacer daño
+        if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit, attackRange - 1))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                // Buscamos el script de vida del jugador
+                PlayerHealth _playerHealthScript = hit.collider.GetComponent<PlayerHealth>();
+                if (_playerHealthScript != null)
+                {
+                    _playerHealthScript.Damaged(attackDamage);
+                }
+            }
+        }
+            // 3. Destruimos la COPIA (tempLaser), no el prefab (laserBeam)
+            Destroy(tempLaser, 1.5f);
         }
     }
 

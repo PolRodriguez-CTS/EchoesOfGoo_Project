@@ -2,7 +2,5 @@ using UnityEngine;
 
 public interface IAtacante
 {
-    void PlayerDamage()
-    {}
-
+    void PlayerDamage(){}
 }

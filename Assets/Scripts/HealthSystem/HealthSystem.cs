@@ -10,11 +10,6 @@ public class HealthSystem : MonoBehaviour
         InitialHealth(maxHealth);
     }
 
-    void Update()
-    {
-        
-    }
-
     public void InitialHealth(float maxHealth)
     {
         currentHealth = maxHealth;
@@ -22,15 +17,5 @@ public class HealthSystem : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-
-        if(currentHealth <= 0)
-        {
-            Death();
-        }
-    }
-
-    void Death()
-    {
-        Debug.Log(this + "ha muerto");
     }
 }
