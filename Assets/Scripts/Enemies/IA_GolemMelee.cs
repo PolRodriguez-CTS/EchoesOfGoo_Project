@@ -60,8 +60,6 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     void Start()
     {
-        
-
         // Configuración para evitar conflictos de rotación y permitir frenado en seco
         _agent.updateRotation = false; 
         _agent.acceleration = 100f; 
@@ -301,10 +299,10 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     public void GetKnockedBack(Vector3 force)
     {
-        StartCoroutine(ApplyKnockback(force));
+        //StartCoroutine(ApplyKnockback(force));
     }
 
-    private IEnumerator ApplyKnockback(Vector3 force)
+    /*private IEnumerator ApplyKnockback(Vector3 force)
     {
         yield return null;
         _agent.isStopped = true;
@@ -328,7 +326,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         _agent.enabled = true;
 
         yield return null;
-    }
+    }*/
 
     void UpdateAnimator()
     {
@@ -356,5 +354,15 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(attackHitbox.position, attackHitboxRange);
+    }
+
+    public void ImpulsoTesteo(Vector3 fuerza)
+    {
+        _agent.enabled = false;
+        _agent.isStopped = true;
+
+        _rigidBody.isKinematic = false;
+        _rigidBody.useGravity = true;
+        _rigidBody.AddForce(fuerza, ForceMode.Impulse);
     }
 }

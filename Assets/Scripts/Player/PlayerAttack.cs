@@ -95,12 +95,20 @@ public class PlayerAttack : MonoBehaviour
             
             if(item.TryGetComponent(out IKnockbackeable knockbackeable))
             {
-                Debug.Log("Se aplica knockback");
+                /*Debug.Log("Se aplica knockback");
                 Vector3 direction = (item.transform.position - transform.position).normalized;
                 float distance = Vector3.Distance(transform.position, item.transform.position);
 
                 Vector3 force = knockbackConfig.GetKnockbackStrength(direction, distance);
                 knockbackeable.GetKnockedBack(force);
+                */
+                Vector3 fuerzaTesteo = new Vector3(10, 0, 0);
+
+                //item.gameObject.Rigidbody.AddForce(fuerzaTesteo, ForceMode.Impulse);
+
+                IA_GolemMelee _enemyScript = item.gameObject.GetComponent<IA_GolemMelee>();
+                _enemyScript.ImpulsoTesteo(fuerzaTesteo);
+                Debug.Log("Impulso aplciado");
             }
 
             if(item.TryGetComponent(out IRageable rageable))
@@ -110,11 +118,13 @@ public class PlayerAttack : MonoBehaviour
             }
 
             //Para los muros
+            /*
             if(item.gameObject.tag == "Breakable" && DmgDealed == _hATKDmg)
             {
                 //Break _break = item.gameObject.GetComponent<Break>();
                 //_break.BreakTheThing();
             }
+            */
         }
     }
 
