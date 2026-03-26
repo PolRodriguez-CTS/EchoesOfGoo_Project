@@ -480,6 +480,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GolemMelee
       objectReference: {fileID: 0}
+    - target: {fileID: 9216251804642370661, guid: c69939197122122429ebac69a49048c7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5165790552059539702, guid: c69939197122122429ebac69a49048c7, type: 3}
     m_RemovedGameObjects:

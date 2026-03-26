@@ -32,7 +32,7 @@ private Animator animator;
 
     public void Death()
     {
-        //Destroy(gameObject);
-        animator.SetTrigger("isDead");
+        Destroy(gameObject);
+        //animator.SetTrigger("isDead");
     }
 }

@@ -69,20 +69,32 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante
     {
         agent.speed = walkSpeed;
 
-        // LÓGICA CLAVE: Solo pasa a Chase si ha sido golpeado
-        if (hasBeenHit && dist < chaseRange)
-        {
-            currentState = State.Chase;
-            return;
+    // 1. Detección de jugador (Mantenemos tu lógica de hasBeenHit)
+    if (hasBeenHit && dist < chaseRange)
+    {
+        isWaiting = false; // Resetear por si acaso
+        currentState = State.Chase;
+        return;
+    }
+
+    // 2. Lógica de Patrulla
+    // Añadimos comprobación de que el agente no esté calculando el camino
+    if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.1f)
+    {
+        if (!isWaiting) 
+        { 
+            isWaiting = true; 
+            waitTimer = 0f; 
         }
 
-        // Movimiento de patrulla normal
-        if (!agent.pathPending && agent.remainingDistance <= 0.2f)
-        {
-            if (!isWaiting) { isWaiting = true; waitTimer = 0f; }
-            waitTimer += Time.deltaTime;
-            if (waitTimer >= waitTime) { isWaiting = false; PickRandomPoint(); }
+        waitTimer += Time.deltaTime;
+
+        if (waitTimer >= waitTime) 
+        { 
+            isWaiting = false; 
+            PickRandomPoint(); 
         }
+    }
     }
 
     private void UpdateChase(float dist)
