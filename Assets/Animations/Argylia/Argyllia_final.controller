@@ -187,7 +187,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -623603649343465320, guid: 64485af26ee6ac5488e35dbad3d3b494, type: 3}
+  m_Motion: {fileID: -623603649343465320, guid: 2ec608a53bf6cf340b37d707958853c2, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -202,7 +202,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -623603649343465320, guid: a87f7457ccdadbd4b9e607772d587d6b, type: 3}
+    m_Motion: {fileID: -623603649343465320, guid: 5aab701aebb33274c8729b8e54ea563b, type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -210,7 +210,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -623603649343465320, guid: 6251d2e472b2350498e77047cd24ebaa, type: 3}
+    m_Motion: {fileID: -623603649343465320, guid: a8e6048efb5a1934386e91d4b45413e9, type: 3}
     m_Threshold: 0.1
     m_Position: {x: 0, y: 1}
     m_TimeScale: 2
@@ -279,7 +279,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Argyl
+  m_Name: Argyllia_final
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Speed
@@ -420,7 +420,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -623603649343465320, guid: 4946a2fd0fd12c242a144bf580bdc9c6, type: 3}
+  m_Motion: {fileID: -623603649343465320, guid: b254661a5319abf4e84f816a6a29e8a1, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -447,7 +447,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -623603649343465320, guid: e3795e12426ca9f49b3c82460f69fe88, type: 3}
+  m_Motion: {fileID: -623603649343465320, guid: 7cdd6b81c7de92d4abccf45ba18c43ed, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -491,7 +491,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
-  m_ExitTime: 0.53846157
+  m_ExitTime: 0.2
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
