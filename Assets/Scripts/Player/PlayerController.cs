@@ -87,10 +87,10 @@ public class PlayerController : MonoBehaviour
         _animator.SetFloat("Horizontal", _moveInput.x);
         _animator.SetFloat("Vertical", _moveInput.y);
 
-        Gravity();           // 1. Calcula la caída y timers
-        HandleJumpInput();   // 2. Gestiona el salto (suelo y aire)
+        Gravity2();           // 1. Calcula la caída y timers
+        HandleJumpInput2();   // 2. Gestiona el salto (suelo y aire)
         HandleDashInput();   // 3. Gestiona el dash
-        ApplyMovement();     // 4. Mueve al personaje
+        ApplyMovement2();     // 4. Mueve al personaje
         HandleEnergy();      // 5. Recupera energía
     }
 
@@ -135,6 +135,34 @@ public class PlayerController : MonoBehaviour
         _animator.SetFloat("Speed", speed);
     }
 
+    void ApplyMovement2()
+    {
+        Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y).normalized;
+        Vector3 targetDirection = transform.forward;
+
+        if (inputDir.magnitude > 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _smoothTime);
+            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+            targetDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+        }
+
+        float targetSpeed = _isButtonHeld ? _topSpeed : (inputDir.magnitude > 0 ? _movementSpeed : 0);
+        float accelRate = _isButtonHeld ? _acceleration : _speedChangeRate;
+        speed = Mathf.MoveTowards(speed, targetSpeed, accelRate * Time.deltaTime);
+
+        // Si estamos dasheando, la gravedad cae muy lento (estilo Gravity Rush)
+        Vector3 gravityToApply = _playerGravity;
+    if (_isButtonHeld && _playerGravity.y < 0) 
+    {
+        gravityToApply.y *= 0.1f;
+    }
+
+    _controller.Move(targetDirection * speed * Time.deltaTime + gravityToApply * Time.deltaTime);
+    _animator.SetFloat("Speed", speed);
+    }
+
     void HandleEnergy()
     {
         float rate = _isButtonHeld ? -_energyConsumptionRate : _energyRecoveryRate;
@@ -177,6 +205,46 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    void HandleJumpInput2()
+{
+    // 1. PRIMER SALTO (Modificado para permitir saltar si está en el suelo O haciendo dash)
+    bool canStartJump = IsGrounded() || _isButtonHeld;
+
+    if (_jumpAction.WasPressedThisFrame() && canStartJump)
+    {
+        if (_jumpTimeOutDelta <= 0) 
+        {
+            // Si saltamos mientras dasheamos en el aire, forzamos que pueda hacer el doble salto después
+            Jump(_jumpHeight);
+            _canDoubleJump = true; 
+            
+            // Opcional: Si quieres que el dash se cancele al saltar, descomenta la siguiente línea:
+            // _isButtonHeld = false; 
+        }
+    }
+    // 2. INICIAR CARGA DE SEGUNDO SALTO (Solo si no estamos haciendo dash o si ya saltamos una vez)
+    else if (_jumpAction.WasPressedThisFrame() && !IsGrounded() && _canDoubleJump)
+    {
+        _isChargingJump = true;
+        _canDoubleJump = false;
+        _chargeTimeCounter = 0;
+    }
+
+    // 3. PROCESAR CARGA
+    if (_isChargingJump)
+    {
+        if (_jumpAction.IsPressed() && _chargeTimeCounter < _maxChargeTime)
+        {
+            _chargeTimeCounter += Time.deltaTime;
+            _playerGravity.y = Mathf.Lerp(_playerGravity.y, _gravity * _chargeGravityScale, Time.deltaTime * 10f);
+        }
+        else
+        {
+            ReleaseChargedJump();
+        }
+    }
+}
 
     void Jump(float height)
     {
@@ -230,6 +298,38 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    void Gravity2()
+{
+    bool grounded = IsGrounded();
+    _animator.SetBool("Grounded", grounded);
+
+    if (grounded)
+    {
+        _fallTimeOutDelta = fallTimeOut;
+        _animator.SetBool("Jump", false);
+        _animator.SetBool("Fall", false);
+
+        // Solo reseteamos la gravedad si NO acabamos de saltar
+        if (_playerGravity.y < 0) _playerGravity.y = -2f;
+
+        if (_jumpTimeOutDelta >= 0) _jumpTimeOutDelta -= Time.deltaTime;
+        
+        _isChargingJump = false;
+        _canDoubleJump = true;
+    }
+    else
+    {
+        _jumpTimeOutDelta = jumpTimeOut;
+        if (_fallTimeOutDelta >= 0) _fallTimeOutDelta -= Time.deltaTime;
+        else _animator.SetBool("Fall", true);
+
+        if (!_isChargingJump)
+        {
+            _playerGravity.y += _gravity * Time.deltaTime;
+        }
+    }
+}
 
     bool IsGrounded()
     {
