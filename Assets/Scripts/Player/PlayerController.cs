@@ -53,9 +53,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _topSpeed = 25f;
     private bool _isButtonHeld = false;
 
+    [Header("External Boost")]
+    private Vector3 _externalImpulse;
+    private float _impulseTimeDelta;
+
     [Header("Camera")]
     private Transform _mainCamera;
     [SerializeField] private CinemachineCamera _thirdPersonCamera;
+    [SerializeField] private float _baseFOV = 60f;
+    [SerializeField] private float _dashFOV = 90f;
+    [SerializeField] private float _fovSmoothSpeed = 10f;
     #endregion
 
     #region Awake & Start
@@ -88,10 +95,12 @@ public class PlayerController : MonoBehaviour
         _animator.SetFloat("Vertical", _moveInput.y);
 
         Gravity2();           // 1. Calcula la caída y timers
-        HandleJumpInput2();   // 2. Gestiona el salto (suelo y aire)
+        HandleJumpInput3();   // 2. Gestiona el salto (suelo y aire)
         HandleDashInput();   // 3. Gestiona el dash
         ApplyMovement2();     // 4. Mueve al personaje
         HandleEnergy();      // 5. Recupera energía
+
+        HandleSpeedEffects();
     }
 
     #region Movement & Dash
@@ -110,6 +119,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void HandleSpeedEffects()
+    {
+        // 1. EFECTO DE CÁMARA (FOV)
+        // Cinemachine usa 'Lens.FieldOfView' en la nueva versión
+        float targetFOV = _isButtonHeld ? _dashFOV : _baseFOV;
+        _thirdPersonCamera.Lens.FieldOfView = Mathf.Lerp(
+            _thirdPersonCamera.Lens.FieldOfView, 
+            targetFOV, 
+            Time.deltaTime * _fovSmoothSpeed
+        );
+    }
+
+/*
     void ApplyMovement()
     {
         Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y).normalized;
@@ -134,7 +156,7 @@ public class PlayerController : MonoBehaviour
         _controller.Move(targetDirection * speed * Time.deltaTime + gravityToApply * Time.deltaTime);
         _animator.SetFloat("Speed", speed);
     }
-
+*/
     void ApplyMovement2()
     {
         Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y).normalized;
@@ -152,15 +174,26 @@ public class PlayerController : MonoBehaviour
         float accelRate = _isButtonHeld ? _acceleration : _speedChangeRate;
         speed = Mathf.MoveTowards(speed, targetSpeed, accelRate * Time.deltaTime);
 
+        // --- LÓGICA DE IMPULSO EXTERNO ---
+        Vector3 finalMovement = targetDirection * speed;
+
+        if (_impulseTimeDelta > 0)
+        {
+            // Sumamos el impulso al movimiento actual
+            finalMovement += _externalImpulse;
+            // Reducimos el tiempo del impulso
+            _impulseTimeDelta -= Time.deltaTime;
+        }
+
         // Si estamos dasheando, la gravedad cae muy lento (estilo Gravity Rush)
         Vector3 gravityToApply = _playerGravity;
-    if (_isButtonHeld && _playerGravity.y < 0) 
-    {
-        gravityToApply.y *= 0.1f;
-    }
+        if (_isButtonHeld && _playerGravity.y < 0) 
+        {
+            gravityToApply.y *= 0.1f;
+        }
 
-    _controller.Move(targetDirection * speed * Time.deltaTime + gravityToApply * Time.deltaTime);
-    _animator.SetFloat("Speed", speed);
+        _controller.Move(finalMovement * Time.deltaTime + gravityToApply * Time.deltaTime);
+        _animator.SetFloat("Speed", speed);
     }
 
     void HandleEnergy()
@@ -237,6 +270,54 @@ public class PlayerController : MonoBehaviour
         if (_jumpAction.IsPressed() && _chargeTimeCounter < _maxChargeTime)
         {
             _chargeTimeCounter += Time.deltaTime;
+            _playerGravity.y = Mathf.Lerp(_playerGravity.y, _gravity * _chargeGravityScale, Time.deltaTime * 10f);
+        }
+        else
+        {
+            ReleaseChargedJump();
+        }
+    }
+}
+
+
+void HandleJumpInput3()
+{
+    // 1. LÓGICA DE SALTO INICIAL (Suelo o Dash)
+    if (_jumpAction.WasPressedThisFrame())
+    {
+        // Si estamos en el suelo O estamos haciendo dash pero AÚN no hemos saltado en el aire
+        if (IsGrounded() || (_isButtonHeld && _canDoubleJump))
+        {
+            // Solo saltamos si el cooldown de suelo terminó (o si estamos en el aire por dash)
+            if (!IsGrounded() || _jumpTimeOutDelta <= 0)
+            {
+                Jump(_jumpHeight);
+                
+                // IMPORTANTE: Si saltamos desde el dash, 
+                // marcamos que el SIGUIENTE click será para el doble salto cargado
+                if (!IsGrounded()) 
+                {
+                    _canDoubleJump = true; 
+                }
+            }
+        }
+        // 2. LÓGICA DE CARGA DE SEGUNDO SALTO
+        // Si ya estamos en el aire (y no acabamos de hacer el primer salto de dash en este mismo frame)
+        else if (!IsGrounded() && _canDoubleJump)
+        {
+            _isChargingJump = true;
+            _canDoubleJump = false;
+            _chargeTimeCounter = 0;
+        }
+    }
+
+    // 3. PROCESAR CARGA (Se mantiene igual)
+    if (_isChargingJump)
+    {
+        if (_jumpAction.IsPressed() && _chargeTimeCounter < _maxChargeTime)
+        {
+            _chargeTimeCounter += Time.deltaTime;
+            // Flotación durante carga
             _playerGravity.y = Mathf.Lerp(_playerGravity.y, _gravity * _chargeGravityScale, Time.deltaTime * 10f);
         }
         else
@@ -336,6 +417,12 @@ public class PlayerController : MonoBehaviour
         return Physics.CheckSphere(_sensor.position, _sensorRadius, _groundLayer);
     }
     #endregion
+
+    public void ApplyExternalImpulse(Vector3 force, float duration)
+    {
+        _externalImpulse = force;
+        _impulseTimeDelta = duration;
+    }
 
     #region Gizmos
     void OnDrawGizmos()
