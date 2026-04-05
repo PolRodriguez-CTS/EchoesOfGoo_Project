@@ -277,6 +277,9 @@ MonoBehaviour:
   _acceleration: 200
   _topSpeed: 12.5
   _thirdPersonCamera: {fileID: 0}
+  _baseFOV: 60
+  _dashFOV: 90
+  _fovSmoothSpeed: 10
 --- !u!114 &8719169375190584086
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class PlayerHealth : HealthSystem
 
     void Update()
     {
-        Debug.Log("Vida player:" + currentHealth);
+        //Debug.Log("Vida player:" + currentHealth);
     }
 
     

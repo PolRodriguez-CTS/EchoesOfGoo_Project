@@ -57,6 +57,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 _externalImpulse;
     private float _impulseTimeDelta;
 
+    [Header("External Impulse Settings")]
+    [SerializeField] private float _impulseDeceleration = 5f; // Cuánto "aire" frena el impulso (más alto = frena antes)
+    private bool _isImpulseActive = false; // Para saber si estamos bajo el efecto de un turbo
+
     [Header("Camera")]
     private Transform _mainCamera;
     [SerializeField] private CinemachineCamera _thirdPersonCamera;
