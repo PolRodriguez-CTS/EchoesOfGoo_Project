@@ -4,7 +4,6 @@ public class SpeedBoost : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float _boostForce = 15f; // Fuerza adicional
-    [SerializeField] private float _boostDuration = 0.5f; // Cuánto dura el impulso
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,7 +14,7 @@ public class SpeedBoost : MonoBehaviour
             Vector3 boostDirection = transform.forward;
             
             // Llamamos a un método público en el player
-            player.ApplyExternalImpulse(boostDirection * _boostForce, _boostDuration);
+            player.ApplyExternalImpulse(boostDirection * _boostForce);
         }
     }
 

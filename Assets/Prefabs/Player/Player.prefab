@@ -268,7 +268,7 @@ MonoBehaviour:
   _chargeGravityScale: 0.15
   _jumpHeight: 2
   _playerGravity: {x: 0, y: 0, z: 0}
-  _gravity: -15
+  _gravity: -23
   jumpTimeOut: 0.05
   fallTimeOut: 0.15
   _maxDashEnergy: 100
@@ -276,6 +276,7 @@ MonoBehaviour:
   _energyRecoveryRate: 20
   _acceleration: 200
   _topSpeed: 12.5
+  _impulseDeceleration: 5
   _thirdPersonCamera: {fileID: 0}
   _baseFOV: 60
   _dashFOV: 90
