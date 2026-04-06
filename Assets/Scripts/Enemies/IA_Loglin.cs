@@ -92,21 +92,21 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante, IKnockbackeable
     // 2. Lógica de Patrulla
     // Añadimos comprobación de que el agente no esté calculando el camino
     if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance + 0.1f)
-    {
-        if (!isWaiting) 
-        { 
-            isWaiting = true; 
-            waitTimer = 0f; 
-        }
+        {
+            if (!isWaiting) 
+            { 
+                isWaiting = true; 
+                waitTimer = 0f; 
+            }
 
-        waitTimer += Time.deltaTime;
+            waitTimer += Time.deltaTime;
 
-        if (waitTimer >= waitTime) 
-        { 
-            isWaiting = false; 
-            PickRandomPoint(); 
+            if (waitTimer >= waitTime) 
+            { 
+                isWaiting = false; 
+                PickRandomPoint(); 
+            }
         }
-    }
     }
 
     private void UpdateChase(float dist)

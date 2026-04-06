@@ -185,7 +185,6 @@ MonoBehaviour:
   attackDamage: 0
   comboStep: 0
   comboResetTime: 3.5
-  stillThreshold: 0.05
 --- !u!1001 &204693678075213047
 PrefabInstance:
   m_ObjectHideFlags: 0
