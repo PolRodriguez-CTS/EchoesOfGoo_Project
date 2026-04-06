@@ -1,17 +1,15 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent), typeof (Rigidbody))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 {
     private NavMeshAgent _agent;
     private Transform player;
     private Animator animator;
-    private Rigidbody _rigidBody;
     private Vector3 originPoint;
-    public enum State { Wandering, Chase, Attack }
+    public enum State { Wandering, Chase, Attack, Stunned }
     public State currentState;
 
     [Header("Movement")]
@@ -46,12 +44,8 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     public float comboResetTime = 3.5f;
     private float lastAttackTime;
 
-    [Header ("Knockback")]
-    [Range(0.001f, 0.1f)] [SerializeField] private float stillThreshold = 0.05f;
-
     void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
@@ -60,8 +54,6 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     void Start()
     {
-        
-
         // Configuración para evitar conflictos de rotación y permitir frenado en seco
         _agent.updateRotation = false; 
         _agent.acceleration = 100f; 
@@ -83,14 +75,20 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         switch (currentState)
         {
             case State.Wandering:
-                UpdateWanderingState(distanceToPlayer);
-                break;
+            UpdateWanderingState(distanceToPlayer);
+            break;
+
             case State.Chase:
-                UpdateChaseState(distanceToPlayer);
-                break;
+            UpdateChaseState(distanceToPlayer);
+            break;
+
             case State.Attack:
-                UpdateAttackState(distanceToPlayer);
-                break;
+            UpdateAttackState(distanceToPlayer);
+            break;
+
+            case State.Stunned:
+            HandleStun();
+            break;
         }
 
         // Aplicamos la rotación manual para que sea instantánea al cambiar de dirección
@@ -299,35 +297,36 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         }
     }
 
-    public void GetKnockedBack(Vector3 force)
+    float stunTimer;
+    void HandleStun()
     {
-        StartCoroutine(ApplyKnockback(force));
+        stunTimer -= Time.deltaTime;
+        //si llega a cero se reactiva el agent y cambia de estado
+        if(stunTimer <= 0)
+        {
+            _agent.enabled = true;
+            currentState = State.Chase;
+        }
     }
 
-    private IEnumerator ApplyKnockback(Vector3 force)
+    public void GetKnockedBack(Vector3 force, float duration)
     {
-        yield return null;
-        _agent.isStopped = true;
+        currentState = State.Stunned;
+        stunTimer = duration;
         _agent.enabled = false;
+        StartCoroutine(ApplyKnockback(force, duration));
+    }
 
-        _rigidBody.useGravity = true;
-        _rigidBody.isKinematic = false;
-        _rigidBody.AddForce(force);
-
-        yield return new WaitForFixedUpdate();
-        float knockBackTime = Time.time;
-        yield return new WaitUntil(() => _rigidBody.linearVelocity.magnitude < stillThreshold);
-        yield return new WaitForSeconds(0.25f);
-
-        _rigidBody.linearVelocity = Vector3.zero;
-        _rigidBody.angularVelocity = Vector3.zero;
-        _rigidBody.useGravity = false;
-        _rigidBody.isKinematic = true;
-
-        _agent.Warp(transform.position);
-        _agent.enabled = true;
-
-        yield return null;
+    private IEnumerator ApplyKnockback(Vector3 force, float duration)
+    {
+        float elapsed = 0;
+        while(elapsed < duration)
+        {
+            Vector3 knockForce = Vector3.Lerp(force, Vector3.zero, elapsed / duration);
+            transform.position += knockForce * Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 
     void UpdateAnimator()

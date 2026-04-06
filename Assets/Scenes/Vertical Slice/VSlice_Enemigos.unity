@@ -416,18 +416,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3633240971069775928, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5165790552059539702, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5165790552059539702, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: shootPoint
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5493675962421069789, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.23
@@ -468,14 +456,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6034157717037271398, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 26cd2e98f57304b43b707482e7329b7d, type: 2}
-    - target: {fileID: 8134491894072656336, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9216251804642370661, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_Name
       value: GolemMelee
@@ -484,15 +464,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5165790552059539702, guid: c69939197122122429ebac69a49048c7, type: 3}
-    m_RemovedGameObjects:
-    - {fileID: 3987716586846512455, guid: c69939197122122429ebac69a49048c7, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9216251804642370661, guid: c69939197122122429ebac69a49048c7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 791694891}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c69939197122122429ebac69a49048c7, type: 3}
 --- !u!1 &202551495
 GameObject:
@@ -581,8 +556,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202551495}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.030324267, y: 0.96930933, z: -0.15844494, w: 0.18551299}
-  m_LocalPosition: {x: 6.629357, y: 1.8205273, z: 11.431341}
+  m_LocalRotation: {x: 0.016991816, y: 0.9781529, z: -0.08878261, w: 0.18720552}
+  m_LocalPosition: {x: 6.629357, y: 0.82052743, z: 11.431341}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -883,7 +858,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8205273
+      value: 0.82052743
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalPosition.z
@@ -891,19 +866,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.185513
+      value: 0.18720554
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.030324263
+      value: 0.016991818
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.96930933
+      value: 0.9781529
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.15844494
+      value: -0.08878261
       objectReference: {fileID: 0}
     - target: {fileID: 4178065270036144346, guid: 7ee0cf0bf8a8c634882eddc991e73811, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -962,48 +937,6 @@ Transform:
   - {fileID: 920396095}
   m_Father: {fileID: 1175136112}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &663821916 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2147775653972857179, guid: c69939197122122429ebac69a49048c7, type: 3}
-  m_PrefabInstance: {fileID: 192003117}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &791694884 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9216251804642370661, guid: c69939197122122429ebac69a49048c7, type: 3}
-  m_PrefabInstance: {fileID: 192003117}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &791694891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 791694884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592922797f79b44429677db7f4e2a06f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  wanderingRadius: 7
-  maxDistanceDelta: 25
-  chaseRange: 15
-  attackRange: 3
-  rotationSpeed: 15
-  walkSpeed: 2
-  runSpeed: 4
-  eyeHeight: 1.6
-  viewAngle: 100
-  forwardOffset: 0.6
-  waitTime: 2
-  attackCooldown: 1.5
-  stoppingDistanceBuffer: 0.5
-  attackHitbox: {fileID: 663821916}
-  attackHitboxRange: 0
-  attackDamage: 0
-  comboStep: 0
-  comboResetTime: 3.5
-  stillThreshold: 0.05
 --- !u!1001 &889579359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2465,7 +2398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2988577936941259413, guid: 4339ce2ef31b73b4b907baaec9a27079, type: 3}
       propertyPath: m_Name
-      value: GolemRanged_
+      value: GolemRanged
       objectReference: {fileID: 0}
     - target: {fileID: 2988577936941259413, guid: 4339ce2ef31b73b4b907baaec9a27079, type: 3}
       propertyPath: m_IsActive

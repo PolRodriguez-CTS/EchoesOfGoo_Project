@@ -1,16 +1,17 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
+public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear, IKnockbackeable
 {
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
     private Transform player;
     private Animator animator;
     private Rigidbody _rigidBody;
     private Vector3 originPoint;
 
-    public enum State { Wandering, Chase, Attack, Retreat }
+    public enum State { Wandering, Chase, Attack, Retreat, Stunned }
     [Header("Status")]
     public State currentState;
 
@@ -44,13 +45,13 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody>();
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
         originPoint = transform.position;
 
-        agent.updateRotation = false; 
-        agent.acceleration = 60f; 
+        _agent.updateRotation = false; 
+        _agent.acceleration = 60f; 
         
         currentState = State.Wandering;
         PickRandomPoint();
@@ -86,6 +87,10 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
             case State.Retreat:
             UpdateRetreat(distanceToPlayer);
             break;
+
+            case State.Stunned:
+            HandleStun();
+            break;
         }
 
         ApplyManualRotation();
@@ -94,7 +99,7 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
 
     private void UpdateWandering(float dist)
     {
-        agent.speed = walkSpeed;
+        _agent.speed = walkSpeed;
 
         // CAMBIO: Ahora solo detecta si CanSeePlayer es verdadero (Ángulo + Raycast)
         if (CanSeePlayer(dist)) 
@@ -104,7 +109,7 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
             return; 
         }
 
-        if (!agent.pathPending && agent.remainingDistance <= 0.2f)
+        if (!_agent.pathPending && _agent.remainingDistance <= 0.2f)
         {
             if (!isWaiting) { isWaiting = true; waitTimer = 0f; }
             waitTimer += Time.deltaTime;
@@ -118,9 +123,9 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
 
     private void UpdateChase(float dist)
     {
-        agent.isStopped = false;
-        agent.speed = runSpeed;
-        agent.SetDestination(player.position);
+        _agent.isStopped = false;
+        _agent.speed = runSpeed;
+        _agent.SetDestination(player.position);
 
         if (dist <= attackRange) currentState = State.Attack;
         
@@ -132,7 +137,7 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
     private float laserTimer;
     private void UpdateAttack(float dist)
     {
-        agent.isStopped = true;
+        _agent.isStopped = true;
         
         // Si el jugador se esconde tras una columna mientras el Golem apunta
         if (!CanSeePlayer(dist))
@@ -163,13 +168,13 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
 
     private void UpdateRetreat(float dist)
     {
-        agent.isStopped = false;
-        agent.speed = runSpeed;
+        _agent.isStopped = false;
+        _agent.speed = runSpeed;
 
         Vector3 dirToPlayer = transform.position - player.position;
         Vector3 retreatPos = transform.position + dirToPlayer.normalized * 5f;
 
-        agent.SetDestination(retreatPos);
+        _agent.SetDestination(retreatPos);
 
         if (dist > safeDistance + 2f) currentState = State.Attack;
     }
@@ -205,7 +210,7 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
         if (currentState != State.Wandering)
             targetDir = (player.position - transform.position);
         else
-            targetDir = agent.velocity;
+            targetDir = _agent.velocity;
 
         if (targetDir.sqrMagnitude > 0.1f)
         {
@@ -249,16 +254,48 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randomDirection, out hit, wanderingRadius, 1))
         {
-            agent.SetDestination(hit.position);
+            _agent.SetDestination(hit.position);
         }
     }
 
-    void ReturnToOrigin() { currentState = State.Wandering; agent.SetDestination(originPoint); }
+    void ReturnToOrigin() { currentState = State.Wandering; _agent.SetDestination(originPoint); }
+
+    float stunTimer;
+    void HandleStun()
+    {
+        stunTimer -= Time.deltaTime;
+        //si llega a cero se reactiva el agent y cambia de estado
+        if(stunTimer <= 0)
+        {
+            _agent.enabled = true;
+            currentState = State.Chase;
+        }
+    }
+
+    public void GetKnockedBack(Vector3 force, float duration)
+    {
+        currentState = State.Stunned;
+        stunTimer = duration;
+        _agent.enabled = false;
+        StartCoroutine(ApplyKnockback(force, duration));
+    }
+
+    private IEnumerator ApplyKnockback(Vector3 force, float duration)
+    {
+        float elapsed = 0;
+        while(elapsed < duration)
+        {
+            Vector3 knockForce = Vector3.Lerp(force, Vector3.zero, elapsed / duration);
+            transform.position += knockForce * Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
 
     void UpdateAnimator()
     {
         if (animator != null)
-            animator.SetFloat("Speed", agent.velocity.magnitude);
+            animator.SetFloat("Speed", _agent.velocity.magnitude);
     }
 
     private void OnDrawGizmosSelected()

@@ -1,15 +1,15 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class IALoglin : MonoBehaviour, IRageable, IAtacante
+public class IALoglin : MonoBehaviour, IRageable, IAtacante, IKnockbackeable
 {
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
     private Transform player;
     private Animator animator;
 
-    public enum State { Wandering, Chase, Attack }
+    public enum State { Wandering, Chase, Attack, Stunned }
     [Header("Estado Actual")]
     public State currentState;
     public bool hasBeenHit = false; // El interruptor de agresividad
@@ -37,13 +37,13 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
 
-        agent.updateRotation = true; 
+        _agent.updateRotation = true; 
         // TIP: Ajusta el stoppingDistance para que no colisionen físicamente
-        agent.stoppingDistance = attackRange; 
+        _agent.stoppingDistance = attackRange; 
         
         currentState = State.Wandering;
         PickRandomPoint();
@@ -57,9 +57,21 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante
 
         switch (currentState)
         {
-            case State.Wandering: UpdateWandering(distanceToPlayer); break;
-            case State.Chase:     UpdateChase(distanceToPlayer); break;
-            case State.Attack:    UpdateAttack(distanceToPlayer); break;
+            case State.Wandering: 
+            UpdateWandering(distanceToPlayer); 
+            break;
+            
+            case State.Chase:     
+            UpdateChase(distanceToPlayer); 
+            break;
+            
+            case State.Attack:    
+            UpdateAttack(distanceToPlayer); 
+            break;
+            
+            case State.Stunned:
+            HandleStun();
+            break;
         }
 
         UpdateAnimator();
@@ -67,7 +79,7 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante
 
     private void UpdateWandering(float dist)
     {
-        agent.speed = walkSpeed;
+        _agent.speed = walkSpeed;
 
     // 1. Detección de jugador (Mantenemos tu lógica de hasBeenHit)
     if (hasBeenHit && dist < chaseRange)
@@ -79,7 +91,7 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante
 
     // 2. Lógica de Patrulla
     // Añadimos comprobación de que el agente no esté calculando el camino
-    if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.1f)
+    if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance + 0.1f)
     {
         if (!isWaiting) 
         { 
@@ -99,9 +111,9 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante
 
     private void UpdateChase(float dist)
     {
-        agent.isStopped = false; // Nos aseguramos de que pueda moverse
-        agent.speed = runSpeed;
-        agent.SetDestination(player.position);
+        _agent.isStopped = false; // Nos aseguramos de que pueda moverse
+        _agent.speed = runSpeed;
+        _agent.SetDestination(player.position);
 
         if (dist <= attackRange) 
         {
@@ -114,10 +126,10 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante
     private void UpdateAttack(float dist)
     {
         // 1. Mantener el destino actualizado pero dejar que stoppingDistance haga su magia
-        agent.SetDestination(player.position);
+        _agent.SetDestination(player.position);
 
         // 2. Rotación manual: Si está cerca y parado, que siga mirando al jugador
-        if (dist <= agent.stoppingDistance + 0.5f)
+        if (dist <= _agent.stoppingDistance + 0.5f)
         {
             LookAtPlayer();
         }
@@ -180,14 +192,46 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randomDirection, out hit, wanderingRadius, 1))
         {
-            agent.SetDestination(hit.position);
+            _agent.SetDestination(hit.position);
+        }
+    }
+
+    float stunTimer;
+    void HandleStun()
+    {
+        stunTimer -= Time.deltaTime;
+        //si llega a cero se reactiva el agent y cambia de estado
+        if(stunTimer <= 0)
+        {
+            _agent.enabled = true;
+            currentState = State.Chase;
+        }
+    }
+
+    public void GetKnockedBack(Vector3 force, float duration)
+    {
+        currentState = State.Stunned;
+        stunTimer = duration;
+        _agent.enabled = false;
+        StartCoroutine(ApplyKnockback(force, duration));
+    }
+
+    private IEnumerator ApplyKnockback(Vector3 force, float duration)
+    {
+        float elapsed = 0;
+        while(elapsed < duration)
+        {
+            Vector3 knockForce = Vector3.Lerp(force, Vector3.zero, elapsed / duration);
+            transform.position += knockForce * Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
         }
     }
 
     void UpdateAnimator()
     {
         if (animator != null)
-            animator.SetFloat("Speed", agent.velocity.magnitude);
+            animator.SetFloat("Speed", _agent.velocity.magnitude);
     }
 
     void OnDrawGizmos()

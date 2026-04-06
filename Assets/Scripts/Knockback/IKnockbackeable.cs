@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IKnockbackeable
 {
-    void GetKnockedBack (Vector3 force);
+    void GetKnockedBack (Vector3 force, float duration);
 }

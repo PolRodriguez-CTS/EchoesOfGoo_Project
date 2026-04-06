@@ -31,37 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5493675962421069789}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3987716586846512455
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2849619987024820537}
-  m_Layer: 0
-  m_Name: Ranged_BeamPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2849619987024820537
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3987716586846512455}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.71, z: 1.054}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5493675962421069789}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9216251804642370661
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +44,7 @@ GameObject:
   - component: {fileID: 4333717991227263564}
   - component: {fileID: 5617036802590730164}
   - component: {fileID: 3684216843033058288}
-  - component: {fileID: 5165790552059539702}
+  - component: {fileID: 7092657158574963092}
   m_Layer: 6
   m_Name: GolemMelee
   m_TagString: Untagged
@@ -98,7 +67,6 @@ Transform:
   m_Children:
   - {fileID: 386622019653702428}
   - {fileID: 2147775653972857179}
-  - {fileID: 2849619987024820537}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &1276848938817616070
@@ -186,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyMaxHealth: 100
---- !u!114 &5165790552059539702
+--- !u!114 &7092657158574963092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,25 +163,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 9216251804642370661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54e24cce9fc681f479360af14e653f63, type: 3}
+  m_Script: {fileID: 11500000, guid: 592922797f79b44429677db7f4e2a06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  wanderingRadius: 6
+  wanderingRadius: 7
   maxDistanceDelta: 25
   chaseRange: 15
-  attackRange: 10
-  safeDistance: 5
+  attackRange: 3
   rotationSpeed: 15
   walkSpeed: 2
   runSpeed: 4
   eyeHeight: 1.6
-  viewAngle: 200
+  viewAngle: 180
   forwardOffset: 0.6
-  laserBeam: {fileID: 5981956667065704350, guid: af19df20e7b76064a884155f32331d30, type: 3}
-  shootPoint: {fileID: 2849619987024820537}
-  fireRate: 2
   waitTime: 2
+  attackCooldown: 1.5
+  stoppingDistanceBuffer: 0.5
+  attackHitbox: {fileID: 2147775653972857179}
+  attackHitboxRange: 0
+  attackDamage: 0
+  comboStep: 0
+  comboResetTime: 3.5
+  stillThreshold: 0.05
 --- !u!1001 &204693678075213047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -292,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5711432146964278065, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5571136712706058359, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -368,7 +340,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -993973253195287257, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -682010637703258171, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -545,7 +517,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 44c56fa2bfdd0784185a74b964a802f5, type: 2}
+      objectReference: {fileID: 9100000, guid: 26cd2e98f57304b43b707482e7329b7d, type: 2}
     - target: {fileID: 6176128091589671087, guid: 4ed32d6addd1c384892a28e3cf3f1664, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0.000002291866

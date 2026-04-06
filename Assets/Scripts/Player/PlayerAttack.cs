@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +14,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float _attackRadius;
 
     private int _bATKDmg = 20;
-    public KnockbackConfig knockbackConfig;
 
     [Header("Heavy ATK")]
     private int _hATKDmg = 40;
@@ -95,12 +93,14 @@ public class PlayerAttack : MonoBehaviour
             
             if(item.TryGetComponent(out IKnockbackeable knockbackeable))
             {
-                Debug.Log("Se aplica knockback");
-                Vector3 direction = (item.transform.position - transform.position).normalized;
-                float distance = Vector3.Distance(transform.position, item.transform.position);
+                Vector3 direction = (item.transform.position - transform.position);
+                direction.y = 0;
+                direction = direction.normalized;
 
-                Vector3 force = knockbackConfig.GetKnockbackStrength(direction, distance);
-                knockbackeable.GetKnockedBack(force);
+                float force = 30f;
+                float duration = 0.2f;
+
+                knockbackeable.GetKnockedBack(direction * force, duration);
             }
 
             if(item.TryGetComponent(out IRageable rageable))
