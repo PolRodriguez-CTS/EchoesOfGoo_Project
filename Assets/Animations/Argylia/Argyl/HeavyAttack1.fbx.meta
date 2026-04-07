@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7cdd6b81c7de92d4abccf45ba18c43ed
+guid: 30d8917e33dd2f84a8c3f8e40959521e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,18 +31,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Argylia_Air_def
+      name: Argyl_HeavyAtk1
       takeName: Scene
       internalID: -623603649343465320
-      firstFrame: 0
-      lastFrame: 40
+      firstFrame: 1
+      lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -117,7 +117,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

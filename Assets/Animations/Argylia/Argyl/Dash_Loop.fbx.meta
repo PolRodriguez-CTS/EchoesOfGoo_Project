@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a8e6048efb5a1934386e91d4b45413e9
+guid: dab6a9b90ab657b449ee9b91b523e280
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -22,7 +22,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Argylia_Run_def
+      name: Argyl_Dash
       takeName: Scene
       internalID: -623603649343465320
-      firstFrame: 0
-      lastFrame: 24
+      firstFrame: 1
+      lastFrame: 42.87
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -58,7 +58,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 15.65
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -117,10 +117,10 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
-    rootMotionBoneName: 
+    globalScale: 0.5
+    rootMotionBoneName: Cintura
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

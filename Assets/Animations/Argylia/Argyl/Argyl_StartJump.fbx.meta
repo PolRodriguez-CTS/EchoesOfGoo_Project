@@ -1,0 +1,454 @@
+fileFormatVersion: 2
+guid: 25d44a719e5aba641a2140804a5a3ff4
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Scene' has import animation warnings that might
+      lower retargeting quality:\nNote: Activate translation DOF on avatar to improve
+      retargeting quality.\n\t'Pecho' is inbetween humanoid transforms and has rotation
+      animation that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Argyl_StartJump
+      takeName: Scene
+      internalID: -623603649343465320
+      firstFrame: 0
+      lastFrame: 16
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.5
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Argyl_Run(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Brazo_Mecanico
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Bufanda
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Cuerpo
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Hair
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Ojos
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Rig_Argyllia
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Position
+      parentName: Rig_Argyllia
+      position: {x: -0, y: 7.105427e-16, z: -0.0001539257}
+      rotation: {x: 0.49995014, y: 0.5000498, z: 0.5000499, w: 0.49995014}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: Cintura
+      parentName: Position
+      position: {x: 0.000000010246174, y: 0.011826241, z: -0.00004588738}
+      rotation: {x: -0.00000020861626, y: -1, z: 0.00033730268, w: 0.000000029802322}
+      scale: {x: 0.99999845, y: 1.0000001, z: 0.9999989}
+    - name: Muslo.R
+      parentName: Cintura
+      position: {x: 0.00000025484275, y: -0.00009547225, z: -0.0012699736}
+      rotation: {x: -0.7799792, y: -0.032219745, z: 0.6236752, w: -0.040293287}
+      scale: {x: 1.000082, y: 1.0000013, z: 1.0000038}
+    - name: Rodilla.R
+      parentName: Muslo.R
+      position: {x: 2.2351741e-10, y: 0.005198291, z: 1.862645e-10}
+      rotation: {x: 0.13187768, y: -0.0690787, z: 0.009212491, w: 0.98881316}
+      scale: {x: 0.9999872, y: 1.000016, z: 0.99999714}
+    - name: Tobillo.R
+      parentName: Rodilla.R
+      position: {x: -0, y: 0.0032091518, z: 3.5390257e-10}
+      rotation: {x: -0.013920208, y: -0.9552153, z: 0.045530792, w: -0.29205653}
+      scale: {x: 1.0000961, y: 1.000008, z: 0.9999058}
+    - name: Pie.R
+      parentName: Tobillo.R
+      position: {x: 1.11758706e-10, y: 0.0012041469, z: -3.7252902e-11}
+      rotation: {x: 0.020055842, y: 0.6848036, z: -0.018858645, w: 0.7282075}
+      scale: {x: 0.99995613, y: 1.0000039, z: 1.0000435}
+    - name: Foot.R
+      parentName: Pie.R
+      position: {x: -2.2351741e-10, y: 0.0013885808, z: -3.7252902e-11}
+      rotation: {x: -0.580685, y: 0.36010236, z: -0.3181686, w: -0.6571909}
+      scale: {x: 0.99962413, y: 1.0003711, z: 0.99999726}
+    - name: Cintura.001
+      parentName: Cintura
+      position: {x: 2.0107165e-10, y: 0.0017349899, z: 2.0540368e-12}
+      rotation: {x: 0.004943673, y: -0.000099867255, z: 0.000000540568, w: 0.9999878}
+      scale: {x: 1.0000033, y: 0.99999905, z: 1.0000012}
+    - name: Pecho
+      parentName: Cintura.001
+      position: {x: -1.3969838e-10, y: 0.0025209584, z: 8.381903e-11}
+      rotation: {x: -0.000000044703484, y: 0.0000000746586, z: 0.000000029412774, w: 1}
+      scale: {x: 1.000004, y: 1.0000006, z: 1.0000019}
+    - name: Hombro.R
+      parentName: Pecho
+      position: {x: -1.11758706e-10, y: 0.0029024514, z: -0.00079426816}
+      rotation: {x: 0.08421446, y: -0.624384, z: 0.7735842, w: 0.067972146}
+      scale: {x: 1.0000029, y: 1.0000037, z: 1.0000046}
+    - name: Brazo.R
+      parentName: Hombro.R
+      position: {x: -2.2351741e-10, y: 0.0009953913, z: 1.4901161e-10}
+      rotation: {x: 0.04869388, y: -0.833061, z: 0.103438996, w: 0.5412382}
+      scale: {x: 0.9999972, y: 0.9999993, z: 0.99999934}
+    - name: Antebrazo.R
+      parentName: Brazo.R
+      position: {x: -3.72529e-10, y: 0.0028031766, z: -8.0093737e-10}
+      rotation: {x: 0.03413255, y: -0.3926397, z: 0.014584038, w: 0.9189431}
+      scale: {x: 0.9999908, y: 1.0000027, z: 1.0000134}
+    - name: "Mu\xF1eca.R"
+      parentName: Antebrazo.R
+      position: {x: -4.0978193e-10, y: 0.0033520996, z: -3.9115547e-10}
+      rotation: {x: -0.02364407, y: 0.17154652, z: -0.004118185, w: -0.9848837}
+      scale: {x: 0.9999934, y: 1.000002, z: 1.0000132}
+    - name: Pinky.R
+      parentName: "Mu\xF1eca.R"
+      position: {x: -0.0004235811, y: 0.0016678222, z: 0.000019734427}
+      rotation: {x: 0.018072892, y: -0.6959871, z: 0.017625673, w: 0.71761036}
+      scale: {x: 0.9999989, y: 1.0000007, z: 1.0000019}
+    - name: Pinky2.R
+      parentName: Pinky.R
+      position: {x: -0.000000001117587, y: 0.00038319736, z: -1.4901161e-10}
+      rotation: {x: -0.0000000074505797, y: -0.000000059604638, z: -0.00000006519257, w: 1}
+      scale: {x: 1.0000026, y: 1.0000021, z: 0.9999993}
+    - name: Anular.R
+      parentName: "Mu\xF1eca.R"
+      position: {x: -0.00012015163, y: 0.0017349793, z: 0.000008316469}
+      rotation: {x: 0.0073553286, y: -0.6960606, z: 0.0071299365, w: 0.71790993}
+      scale: {x: 0.9999987, y: 1.0000004, z: 1.0000027}
+    - name: Anular2.R
+      parentName: Anular.R
+      position: {x: -3.72529e-10, y: 0.00038319916, z: 4.4703483e-10}
+      rotation: {x: -0.0000006030313, y: -0.9998958, z: 0.014433543, w: -0.000044226643}
+      scale: {x: 0.99999785, y: 0.99999785, z: 0.9999986}
+    - name: Corazon.R
+      parentName: "Mu\xF1eca.R"
+      position: {x: 0.00019899778, y: 0.0017518249, z: -0.00000710099}
+      rotation: {x: -0.007744639, y: -0.71779746, z: 0.007983894, w: -0.6961632}
+      scale: {x: 0.9999969, y: 0.99999887, z: 1.0000029}
+    - name: Corazon2.R
+      parentName: Corazon.R
+      position: {x: -1.5366822e-10, y: 0.00036283038, z: 0}
+      rotation: {x: -4.6566118e-10, y: 1, z: -0.0002847779, w: -0.00000005960463}
+      scale: {x: 1.0000006, y: 0.9999994, z: 0.999999}
+    - name: Indice.R
+      parentName: "Mu\xF1eca.R"
+      position: {x: 0.00047995299, y: 0.0016969768, z: -0.000025093565}
+      rotation: {x: -0.020260952, y: -0.71753794, z: 0.02088925, w: -0.69591135}
+      scale: {x: 0.9999974, y: 1.0000007, z: 1.0000046}
+    - name: Indice2.R
+      parentName: Indice.R
+      position: {x: -5.122274e-11, y: 0.00034299074, z: -4.842877e-10}
+      rotation: {x: -0.00000015646215, y: 0.9999012, z: -0.014059751, w: 0.00000011920926}
+      scale: {x: 1.0000049, y: 1.0000008, z: 1.000001}
+    - name: Pulgar.R
+      parentName: "Mu\xF1eca.R"
+      position: {x: 0.0005410545, y: 0.00083666545, z: -0.00001656113}
+      rotation: {x: -0.25236306, y: -0.6690479, z: 0.25979722, w: -0.64899397}
+      scale: {x: 0.9999974, y: 1.0000004, z: 1.0000043}
+    - name: Pulgar2.R
+      parentName: Pulgar.R
+      position: {x: 4.6566128e-12, y: 0.00040117642, z: -7.4505804e-11}
+      rotation: {x: 0.000000014901156, y: 0.99180293, z: -0.12777732, w: 0.000000059604623}
+      scale: {x: 1.0000033, y: 0.99999076, z: 1.000015}
+    - name: Cabeza
+      parentName: Pecho
+      position: {x: 5.5879353e-11, y: 0.0031983533, z: 0}
+      rotation: {x: 0.000000044703484, y: -0.0000000746586, z: -0.000000029412774, w: 1}
+      scale: {x: 1.0000025, y: 1.0000001, z: 1.0000013}
+    - name: Oreja.R
+      parentName: Cabeza
+      position: {x: -1.8160788e-10, y: 0.0012764554, z: -0.0010484788}
+      rotation: {x: 0.0000001519725, y: -0.82188755, z: 0.5696499, w: 0.00000024001935}
+      scale: {x: 1.000004, y: 1.0000031, z: 1.0000031}
+    - name: Oreja.L
+      parentName: Cabeza
+      position: {x: -4.679896e-10, y: 0.0012972257, z: 0.0009178889}
+      rotation: {x: 0.56093735, y: 0.000000042942705, z: 0.000000026428324, w: 0.82785827}
+      scale: {x: 1.0000007, y: 1.0000013, z: 1.0000013}
+    - name: Hombro.L
+      parentName: Pecho
+      position: {x: -1.3504177e-10, y: 0.002918203, z: 0.0006969477}
+      rotation: {x: 0.7671407, y: -0.068543226, z: 0.08315177, w: 0.6323629}
+      scale: {x: 1.0000006, y: 1.0000029, z: 1.0000013}
+    - name: Brazo.L
+      parentName: Hombro.L
+      position: {x: 3.259629e-10, y: 0.0009953915, z: 9.49949e-10}
+      rotation: {x: 0.048454605, y: 0.8343119, z: -0.1035506, w: 0.53930795}
+      scale: {x: 1.0000031, y: 1.0000046, z: 1.0000038}
+    - name: Antebrazo.L
+      parentName: Brazo.L
+      position: {x: -5.9604643e-10, y: 0.00280318, z: 1.4901161e-10}
+      rotation: {x: 0.032049824, y: 0.375566, z: -0.012996722, w: 0.92615014}
+      scale: {x: 0.99998975, y: 1.0000015, z: 1.0000157}
+    - name: "Mu\xF1eca.L"
+      parentName: Antebrazo.L
+      position: {x: -2.9802322e-10, y: 0.002998873, z: 2.9802322e-10}
+      rotation: {x: 0.026607487, y: 0.14151585, z: -0.003805115, w: 0.98957103}
+      scale: {x: 0.99999577, y: 1.000004, z: 1.0000069}
+    - name: Pinky.L
+      parentName: "Mu\xF1eca.L"
+      position: {x: 0.0003155718, y: 0.0013983129, z: -0.000021184906}
+      rotation: {x: -0.024471456, y: -0.72993475, z: 0.026170252, w: -0.6825772}
+      scale: {x: 1.0000063, y: 1.0000013, z: 0.99999815}
+    - name: Pinky2.L
+      parentName: Pinky.L
+      position: {x: 7.4505804e-11, y: 0.00025879795, z: 7.0780515e-10}
+      rotation: {x: 0.000000100582824, y: -0.000000059604638, z: -0.00000001862645, w: 1}
+      scale: {x: 1.0000023, y: 1.0000014, z: 0.9999996}
+    - name: Anular.L
+      parentName: "Mu\xF1eca.L"
+      position: {x: 0.00009430818, y: 0.0014148405, z: -0.0000063316334}
+      rotation: {x: -0.009022277, y: -0.73034006, z: 0.009648048, w: -0.682956}
+      scale: {x: 1.0000061, y: 1, z: 0.9999985}
+    - name: Anular2.L
+      parentName: Anular.L
+      position: {x: -2.2351741e-10, y: 0.00028028298, z: -0.0000000010803342}
+      rotation: {x: -0.00000010151417, y: 0.9998959, z: -0.014433329, w: 0.00000020861627}
+      scale: {x: 1.0000029, y: 1.0000029, z: 1.0000035}
+    - name: Corazon.L
+      parentName: "Mu\xF1eca.L"
+      position: {x: -0.00013727605, y: 0.0014795589, z: 0.0000092148775}
+      rotation: {x: 0.005958358, y: -0.6829929, z: 0.005571509, w: 0.73037946}
+      scale: {x: 1.0000062, y: 1.0000014, z: 1.0000029}
+    - name: Corazon2.L
+      parentName: Corazon.L
+      position: {x: -0, y: 0.00024031429, z: 1.11758706e-10}
+      rotation: {x: -0.000000028405339, y: -1, z: 0.0002848627, w: 0.000000059604645}
+      scale: {x: 1.0000032, y: 1.000002, z: 1.0000015}
+    - name: Indice.L
+      parentName: "Mu\xF1eca.L"
+      position: {x: -0.0003421954, y: 0.001401513, z: 0.000022971162}
+      rotation: {x: 0.01909027, y: -0.6827822, z: 0.017851232, w: 0.7301544}
+      scale: {x: 1.0000063, y: 1.0000006, z: 1.0000004}
+    - name: Indice2.L
+      parentName: Indice.L
+      position: {x: -0, y: 0.00023880696, z: -7.45058e-10}
+      rotation: {x: 0.000000106170745, y: -0.9999012, z: 0.0140594775, w: -0.00000020861621}
+      scale: {x: 1.0000043, y: 1.0000013, z: 1.0000011}
+    - name: Pulgar.L
+      parentName: "Mu\xF1eca.L"
+      position: {x: -0.00034832297, y: 0.00073947833, z: 0.000023382547}
+      rotation: {x: 0.25752753, y: -0.63916385, z: 0.24038558, w: 0.6836401}
+      scale: {x: 1.0000066, y: 1.0000011, z: 1.000001}
+    - name: Pulgar2.L
+      parentName: Pulgar.L
+      position: {x: 3.72529e-10, y: 0.0003051785, z: 6.705522e-10}
+      rotation: {x: -0.000000029802326, y: -0.99180293, z: 0.12777713, w: -0.0000002384186}
+      scale: {x: 0.9999994, y: 0.99998534, z: 1.0000117}
+    - name: arma
+      parentName: "Mu\xF1eca.L"
+      position: {x: 0.001791497, y: 0.0013187313, z: -0.00050585496}
+      rotation: {x: -0.041879557, y: -0.0049185157, z: -0.71256685, w: -0.700336}
+      scale: {x: 0.99999934, y: 0.9999997, z: 1.0000067}
+    - name: Goo
+      parentName: Hombro.L
+      position: {x: -0.00049121014, y: 0.0012573871, z: 0.0001242215}
+      rotation: {x: 0.00089524675, y: -0.6320777, z: 0.77490413, w: 0.0007302612}
+      scale: {x: 1.0000026, y: 1.0000021, z: 1.0000035}
+    - name: Muslo.L
+      parentName: Cintura
+      position: {x: -0.000000255723, y: -0.00009374436, z: 0.0012898591}
+      rotation: {x: -0.62879235, y: -0.03997109, z: 0.7758693, w: -0.03239149}
+      scale: {x: 1.0000825, y: 1.0000032, z: 1.0000052}
+    - name: Rodilla.L
+      parentName: Muslo.L
+      position: {x: -2.654269e-10, y: 0.00519829, z: -1.4901161e-10}
+      rotation: {x: 0.13193399, y: 0.06274241, z: -0.008367476, w: 0.98923546}
+      scale: {x: 0.9999992, y: 1.0000023, z: 1.0000012}
+    - name: Tobillo.L
+      parentName: Rodilla.L
+      position: {x: -3.259629e-11, y: 0.0032091518, z: 5.5879353e-11}
+      rotation: {x: 0.013920374, y: -0.9552151, z: 0.045530785, w: 0.29205713}
+      scale: {x: 1.000085, y: 1.0000088, z: 0.99991536}
+    - name: Pie.L
+      parentName: Tobillo.L
+      position: {x: 2.2351741e-10, y: 0.0012041462, z: 1.4901161e-10}
+      rotation: {x: 0.020055879, y: -0.68480426, z: 0.018858755, w: 0.72820693}
+      scale: {x: 0.99995565, y: 1.000004, z: 1.0000451}
+    - name: Foot.L
+      parentName: Pie.L
+      position: {x: -5.2154064e-10, y: 0.0013885801, z: -1.862645e-10}
+      rotation: {x: -0.5806841, y: -0.3601011, z: 0.31816995, w: -0.65719175}
+      scale: {x: 0.9996086, y: 1.0003898, z: 1.0000106}
+    - name: PieIK.R
+      parentName: Rig_Argyllia
+      position: {x: -0.0013566285, y: 0.0025321275, z: 0.0052723456}
+      rotation: {x: 3.5527137e-15, y: -0.000000059604645, z: 1, w: 1.7763568e-15}
+      scale: {x: 1, y: 0.9999986, z: 0.9999986}
+    - name: PieIK.L
+      parentName: Rig_Argyllia
+      position: {x: 0.001185521, y: -0.0022558682, z: 0.003855087}
+      rotation: {x: 0.00000016117525, y: -0.00000005960464, z: 1, w: 5.3290705e-15}
+      scale: {x: 1, y: 0.9999986, z: 0.9999986}
+    - name: MusloIK.R
+      parentName: Rig_Argyllia
+      position: {x: 0.00030238225, y: 0.0110565685, z: 0.00730424}
+      rotation: {x: 0.000000029802326, y: -0.011045598, z: 4.6566134e-10, w: 0.999939}
+      scale: {x: 1, y: 1.0000013, z: 1.0000012}
+    - name: MusloIK.L
+      parentName: Rig_Argyllia
+      position: {x: 0.0022661164, y: 0.010007081, z: 0.006407008}
+      rotation: {x: 0.000000029802326, y: 0.01104575, z: -0, w: 0.999939}
+      scale: {x: 1, y: 1.0000013, z: 1.0000012}
+    - name: Rodillera
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Ropa
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Ropa_Tela
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Slime
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Slime.001
+      parentName: Argyl_Run(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071067, y: -0.000000030908616, z: 0.000000030908623, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 0.5
+    rootMotionBoneName: Cintura
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

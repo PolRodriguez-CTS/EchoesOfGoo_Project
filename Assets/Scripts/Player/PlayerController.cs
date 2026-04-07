@@ -132,41 +132,41 @@ public class PlayerController : MonoBehaviour
     }
 
     void ApplyMovement2()
-{
-    Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y).normalized;
-    Vector3 targetDirection = transform.forward;
-
-    if (inputDir.magnitude > 0.1f)
     {
-        float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
-        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _smoothTime);
-        transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
-        targetDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+        Vector3 inputDir = new Vector3(_moveInput.x, 0, _moveInput.y).normalized;
+        Vector3 targetDirection = transform.forward;
+
+        if (inputDir.magnitude > 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg + _mainCamera.eulerAngles.y;
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, _smoothTime);
+            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+            targetDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
+        }
+
+        float targetSpeed = _isButtonHeld ? _topSpeed : (inputDir.magnitude > 0 ? _movementSpeed : 0);
+        float accelRate = _isButtonHeld ? _acceleration : _speedChangeRate;
+        speed = Mathf.MoveTowards(speed, targetSpeed, accelRate * Time.deltaTime);
+
+        // --- LÓGICA DE IMPULSO EXTERNO SUAVE ---
+        _externalImpulse = Vector3.Lerp(_externalImpulse, Vector3.zero, _impulseDeceleration * Time.deltaTime);
+
+        if (_externalImpulse.sqrMagnitude < 0.1f) 
+        {
+            _externalImpulse = Vector3.zero;
+            _isImpulseActive = false; 
+        }
+
+        // --- MOVIMIENTO FINAL ---
+        // 1. Calculamos el movimiento horizontal (Caminado/Dash + Impulso Externo)
+        Vector3 horizontalMovement = (targetDirection * speed) + _externalImpulse;
+
+        // 2. Aplicamos el movimiento total sumando la gravedad (que ya se calculó en Gravity2)
+        // USAMOS (movimiento horizontal + gravedad vertical) * Time.deltaTime
+        _controller.Move((horizontalMovement + _playerGravity) * Time.deltaTime);
+        
+        _animator.SetFloat("Speed", speed);
     }
-
-    float targetSpeed = _isButtonHeld ? _topSpeed : (inputDir.magnitude > 0 ? _movementSpeed : 0);
-    float accelRate = _isButtonHeld ? _acceleration : _speedChangeRate;
-    speed = Mathf.MoveTowards(speed, targetSpeed, accelRate * Time.deltaTime);
-
-    // --- LÓGICA DE IMPULSO EXTERNO SUAVE ---
-    _externalImpulse = Vector3.Lerp(_externalImpulse, Vector3.zero, _impulseDeceleration * Time.deltaTime);
-
-    if (_externalImpulse.sqrMagnitude < 0.1f) 
-    {
-        _externalImpulse = Vector3.zero;
-        _isImpulseActive = false; 
-    }
-
-    // --- MOVIMIENTO FINAL ---
-    // 1. Calculamos el movimiento horizontal (Caminado/Dash + Impulso Externo)
-    Vector3 horizontalMovement = (targetDirection * speed) + _externalImpulse;
-
-    // 2. Aplicamos el movimiento total sumando la gravedad (que ya se calculó en Gravity2)
-    // USAMOS (movimiento horizontal + gravedad vertical) * Time.deltaTime
-    _controller.Move((horizontalMovement + _playerGravity) * Time.deltaTime);
-    
-    _animator.SetFloat("Speed", speed);
-}
 
     void HandleEnergy()
     {
