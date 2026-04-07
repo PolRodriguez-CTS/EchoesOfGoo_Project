@@ -20,14 +20,26 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float _timerDuration = 1f;
     private float _timer = 0;
     private bool isCharging = false;
-    
-    /*
-    [Header("Shoot")]
-    [SerializeField] private Transform _shootSpawn;
-    [SerializeField] private GameObject _bulletPrefab;
-    private float _shotForce = 15f;
-    private float upwardForce = 10f;
-    */
+
+    [Header("Timer")]
+    private float attackTimer;
+    private float attackCooldown = 0.4f;
+
+    private float heavyAttackTimer;
+    private float heavyAttackCooldown = 1.5f;
+
+    [Header("Weapons")]
+    [SerializeField] private GameObject Slime;
+    [SerializeField] private GameObject Bate;
+    [SerializeField] private GameObject Glove;
+    [SerializeField] private GameObject Hammer;
+    [SerializeField] private GameObject Anchor;
+
+    [Header("ComboStep")]
+    private int _comboCount = 0;
+    private float _lastClickTime;
+    private float _comboTimer; // El contador local
+    [SerializeField] private float _comboResetTime = 1f;
 
     void Awake()
     {
@@ -40,41 +52,58 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if(_basicATKAction.WasPressedThisFrame() && !isCharging)
+        //Ataque fuerte
+        heavyAttackTimer += Time.deltaTime;
+
+        // 1. Manejo del Reset del Combo
+    if (_comboCount > 0)
+    {
+        _comboTimer -= Time.deltaTime;
+        if (_comboTimer <= 0)
         {
-            Attack(_bATKDmg);
-            animator.SetTrigger("Attack");
-            Debug.Log("Ataque normal");
+            _comboCount = 0;
+            animator.SetInteger("ComboStep", 0);
+            Debug.Log("Combo reseteado por inactividad");
         }
+    }
 
-        if(_heavyATKAction.IsPressed())
+    // 2. Manejo del Cooldown de Ataque
+    attackTimer += Time.deltaTime;
+
+    if(_basicATKAction.WasPressedThisFrame() && !isCharging && attackTimer >= attackCooldown)
+    {
+        ExecuteBasicAttack();
+    }
+
+        if(_heavyATKAction.IsPressed() && heavyAttackTimer >= heavyAttackCooldown)
         {
-            isCharging = true;
-            _timer += Time.deltaTime;
-
-            if(_timer >= _timerDuration)
-            {
-                Debug.Log("Ataque cargado");
-            }
+            Attack(_hATKDmg);
+            animator.SetTrigger("ExecuteHeavy");
+            heavyAttackTimer = 0;
         }
+    }
 
-        if(_heavyATKAction.WasReleasedThisFrame())
-        {
-            if(_timer >= _timerDuration)
-            {
-                Debug.Log("Ejecutar ataque cargadoo");
-                Attack(_hATKDmg);
-            }
+    void ExecuteBasicAttack()
+    {
+        // Bloqueo: Si el Animator está en transición, ignoramos el click para no repetir Atk1
+        if (animator.IsInTransition(0)) return;
 
-            if(_timer < _timerDuration)
-            {
-                Debug.Log("Cancelar animación");
-                _timer = 0;
-            }
+        // 1. Limpiamos triggers acumulados del spam
+        animator.ResetTrigger("Attack");
 
-            _timer = 0;
-            isCharging = false;
-        }
+        // 2. Aplicamos daño
+        Attack(_bATKDmg);
+        
+        // 3. Seteamos el paso ANTES del trigger
+        animator.SetInteger("ComboStep", _comboCount);
+        animator.SetTrigger("Attack");
+
+        // 4. Lógica de tiempos y contador
+        _comboCount++; 
+        if (_comboCount >= 4) _comboCount = 0; 
+
+        _comboTimer = _comboResetTime; 
+        attackTimer = 0; // El cooldown (0.1) ahora empezará DESDE aquí
     }
 
     private void Attack(int DmgDealed)
@@ -107,13 +136,6 @@ public class PlayerAttack : MonoBehaviour
             {
                 IALoglin loglinScript = item.gameObject.GetComponent<IALoglin>();
                 loglinScript.Raged();
-            }
-
-            //Para los muros
-            if(item.gameObject.tag == "Breakable" && DmgDealed == _hATKDmg)
-            {
-                //Break _break = item.gameObject.GetComponent<Break>();
-                //_break.BreakTheThing();
             }
         }
     }

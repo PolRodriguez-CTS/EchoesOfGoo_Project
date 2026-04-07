@@ -198,6 +198,8 @@ public class PlayerController : MonoBehaviour
                 _isChargingJump = true;
                 _canDoubleJump = false; // CRUCIAL: Bloqueamos cualquier otro salto extra inmediatamente
                 _chargeTimeCounter = 0;
+
+                _animator.SetBool("isDoubleJumpCharging", true);
             }
         }
 
@@ -230,11 +232,14 @@ public class PlayerController : MonoBehaviour
         if (!_isChargingJump) return;
         _isChargingJump = false;
 
+        _animator.SetBool("isDoubleJumpCharging", false);
+        _animator.SetTrigger("DoubleJump"); // Asegúrate de tener este Trigger en el Animator
+
         float chargePercent = _chargeTimeCounter / _maxChargeTime;
         float finalJumpHeight = _jumpHeight + (_extraJumpForce * chargePercent);
         
         _playerGravity.y = Mathf.Sqrt(finalJumpHeight * -2f * _gravity);
-        _animator.SetTrigger("DoubleJump"); // Asegúrate de tener este Trigger en el Animator
+        
     }
 
     void Gravity2()
