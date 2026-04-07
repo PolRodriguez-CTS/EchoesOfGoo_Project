@@ -23,7 +23,7 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("Timer")]
     private float attackTimer;
-    private float attackCooldown = 0.4f;
+    private float attackCooldown = 0.3f;
 
     private float heavyAttackTimer;
     private float heavyAttackCooldown = 1.5f;
@@ -41,6 +41,9 @@ public class PlayerAttack : MonoBehaviour
     private float _comboTimer; // El contador local
     [SerializeField] private float _comboResetTime = 1f;
 
+
+    private WeaponReferences _weaponReferences;
+
     void Awake()
     {
         _basicATKAction = InputSystem.actions["Attack1"];
@@ -48,6 +51,17 @@ public class PlayerAttack : MonoBehaviour
 
         _playerMovementScript = GetComponent<PlayerController>();
         animator = GetComponentInChildren<Animator>();
+        _weaponReferences = GetComponentInChildren<WeaponReferences>();
+    }
+
+    void Start()
+    {
+        /*
+        Hide(_weaponReferences.anchorParts);
+        Hide(_weaponReferences.gloveParts);
+        Hide(_weaponReferences.hammerParts);
+        Hide(_weaponReferences.bateParts);
+        */
     }
 
     void Update()
@@ -77,9 +91,11 @@ public class PlayerAttack : MonoBehaviour
 
         if(_heavyATKAction.IsPressed() && heavyAttackTimer >= heavyAttackCooldown)
         {
+            //Show(_weaponReferences.hammerParts);
             Attack(_hATKDmg);
             animator.SetTrigger("ExecuteHeavy");
             heavyAttackTimer = 0;
+            //Hide(_weaponReferences.hammerParts);
         }
     }
 
@@ -99,8 +115,7 @@ public class PlayerAttack : MonoBehaviour
         animator.SetTrigger("Attack");
 
         // 4. Lógica de tiempos y contador
-        _comboCount++; 
-        if (_comboCount >= 4) _comboCount = 0; 
+        _comboCount = (_comboCount + 1) % 2;
 
         _comboTimer = _comboResetTime; 
         attackTimer = 0; // El cooldown (0.1) ahora empezará DESDE aquí
@@ -137,6 +152,22 @@ public class PlayerAttack : MonoBehaviour
                 IALoglin loglinScript = item.gameObject.GetComponent<IALoglin>();
                 loglinScript.Raged();
             }
+        }
+    }
+
+    void Show(GameObject[] _weapon)
+    {
+        foreach (var part in _weapon)
+        {
+            part.SetActive(true);
+        }
+    }
+
+    void Hide(GameObject[] _weapon)
+    {
+        foreach (var part in _weapon)
+        {
+            part.SetActive(false);
         }
     }
 
