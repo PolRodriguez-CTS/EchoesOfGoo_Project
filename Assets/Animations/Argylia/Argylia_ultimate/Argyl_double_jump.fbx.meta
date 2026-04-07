@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b254661a5319abf4e84f816a6a29e8a1
+guid: b34164e1a88bf1b429a92aa62d3842a6
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Argylia_Land_def
+      name: Argyl_double_jump
       takeName: Scene
       internalID: -623603649343465320
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 12
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -117,7 +117,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.005
+    globalScale: 0.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

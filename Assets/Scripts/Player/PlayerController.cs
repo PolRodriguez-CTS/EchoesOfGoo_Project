@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump & Gravity")]
     [SerializeField] private float _jumpHeight = 2.5f;
+    [SerializeField] private float _doubleJumpHeight = 3;
     [SerializeField] private Vector3 _playerGravity;
     [SerializeField] private float _gravity = -15f;
     public float jumpTimeOut = 0.1f;
@@ -194,15 +195,16 @@ public class PlayerController : MonoBehaviour
             // CASO B: Estoy en el aire y tengo el doble salto disponible
             else if (_canDoubleJump)
             {
-                // Iniciamos la carga del segundo salto
-                _isChargingJump = true;
+                Jump(_doubleJumpHeight);
+                _animator.SetTrigger("DoubleJump");
+                //_isChargingJump = true;
                 _canDoubleJump = false; // CRUCIAL: Bloqueamos cualquier otro salto extra inmediatamente
-                _chargeTimeCounter = 0;
+                //_chargeTimeCounter = 0;
 
-                _animator.SetBool("isDoubleJumpCharging", true);
+                //_animator.SetBool("isDoubleJumpCharging", true);
             }
         }
-
+/*
         // 2. PROCESAR LA CARGA (Mientras se mantiene presionado)
         if (_isChargingJump)
         {
@@ -218,6 +220,7 @@ public class PlayerController : MonoBehaviour
                 ReleaseChargedJump();
             }
         }
+*/
     }
 
     void Jump(float height)
@@ -227,7 +230,7 @@ public class PlayerController : MonoBehaviour
         _playerGravity.y = Mathf.Sqrt(height * -2f * _gravity);
     }
 
-    void ReleaseChargedJump()
+/*    void ReleaseChargedJump()
     {
         if (!_isChargingJump) return;
         _isChargingJump = false;
@@ -245,6 +248,7 @@ public class PlayerController : MonoBehaviour
         float finalJumpHeight = _jumpHeight + (_extraJumpForce * chargePercent);
         _playerGravity.y = Mathf.Sqrt(finalJumpHeight * -2f * _gravity);
     }
+*/
 
     void Gravity2()
     {
