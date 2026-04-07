@@ -232,14 +232,18 @@ public class PlayerController : MonoBehaviour
         if (!_isChargingJump) return;
         _isChargingJump = false;
 
+        // 1. Limpiamos estados contradictorios
         _animator.SetBool("isDoubleJumpCharging", false);
-        _animator.SetTrigger("DoubleJump"); // Asegúrate de tener este Trigger en el Animator
+        _animator.SetBool("Fall", false); // Evitamos que la caída bloquee el salto
+        _animator.SetBool("Jump", false); 
 
+        // 2. Disparamos el Trigger
+        _animator.SetTrigger("DoubleJump"); 
+
+        // Lógica de física...
         float chargePercent = _chargeTimeCounter / _maxChargeTime;
         float finalJumpHeight = _jumpHeight + (_extraJumpForce * chargePercent);
-        
         _playerGravity.y = Mathf.Sqrt(finalJumpHeight * -2f * _gravity);
-        
     }
 
     void Gravity2()
@@ -249,6 +253,9 @@ public class PlayerController : MonoBehaviour
 
         if (grounded)
         {
+            _animator.SetBool("isDoubleJumpCharging", false); 
+            _isChargingJump = false; // También reseteamos la lógica por si acaso
+
             _fallTimeOutDelta = fallTimeOut;
             _animator.SetBool("Jump", false);
             _animator.SetBool("Fall", false);
