@@ -33,7 +33,7 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear, IKnockbackeable
     [Header("Ranged Attack")]
     public GameObject laserBeam;
     public Transform shootPoint;
-    private float attackDamage = 30;
+    private float attackDamage = 1;
     public float fireRate = 2f;
     private float fireTimer;
 

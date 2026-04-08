@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/MainMenu.unity
     guid: 6dcacac4b71462d48a6f7486be525615
   - enabled: 1
+    path: Assets/Scenes/Niveles/Fabrica.unity
+    guid: 437da6b8970f50d46965f8553eef5024
+  - enabled: 1
     path: Assets/Scenes/Niveles/Mazmorra_1.unity
     guid: 8a97aa6df1fcfd3489ca0a34538e041a
   - enabled: 1

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Golem
+  - DeathZone
   layers:
   - Default
   - TransparentFX
