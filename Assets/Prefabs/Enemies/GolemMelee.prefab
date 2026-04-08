@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3804265c0e43e5141a1d7a4fb10c40b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyMaxHealth: 100
+  EnemyMaxHealth: 3
 --- !u!114 &7092657158574963092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,8 +181,8 @@ MonoBehaviour:
   attackCooldown: 1.5
   stoppingDistanceBuffer: 0.5
   attackHitbox: {fileID: 2147775653972857179}
-  attackHitboxRange: 0
-  attackDamage: 0
+  attackHitboxRange: 1
+  attackDamage: 1
   comboStep: 0
   comboResetTime: 3.5
 --- !u!1001 &204693678075213047

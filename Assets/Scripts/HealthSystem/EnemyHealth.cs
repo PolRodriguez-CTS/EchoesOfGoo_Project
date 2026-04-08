@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyHealth : HealthSystem
 {
-[SerializeField] private float EnemyMaxHealth = 3;
+public float EnemyMaxHealth = 3;
 private Animator animator;
 
     void Awake()

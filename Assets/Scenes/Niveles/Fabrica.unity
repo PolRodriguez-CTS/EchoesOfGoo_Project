@@ -3750,10 +3750,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 317107321}
     m_Modifications:
-    - target: {fileID: 3684216843033058288, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: EnemyMaxHealth
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5493675962421069789, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -197.14218
@@ -3793,14 +3789,6 @@ PrefabInstance:
     - target: {fileID: 5493675962421069789, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7092657158574963092, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: attackDamage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7092657158574963092, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: attackHitboxRange
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9216251804642370661, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_Name
@@ -4976,10 +4964,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 317107321}
     m_Modifications:
-    - target: {fileID: 3684216843033058288, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: EnemyMaxHealth
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5493675962421069789, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -197.14218
@@ -5019,14 +5003,6 @@ PrefabInstance:
     - target: {fileID: 5493675962421069789, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7092657158574963092, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: attackDamage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7092657158574963092, guid: c69939197122122429ebac69a49048c7, type: 3}
-      propertyPath: attackHitboxRange
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9216251804642370661, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_Name
@@ -6190,10 +6166,6 @@ PrefabInstance:
     - target: {fileID: 165222623123704221, guid: 4339ce2ef31b73b4b907baaec9a27079, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1261912082863078275, guid: 4339ce2ef31b73b4b907baaec9a27079, type: 3}
-      propertyPath: EnemyMaxHealth
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2988577936941259413, guid: 4339ce2ef31b73b4b907baaec9a27079, type: 3}
       propertyPath: m_Name

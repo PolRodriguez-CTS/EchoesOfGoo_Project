@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3804265c0e43e5141a1d7a4fb10c40b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyMaxHealth: 100
+  EnemyMaxHealth: 3
 --- !u!114 &6458600018592061684
 MonoBehaviour:
   m_ObjectHideFlags: 0
