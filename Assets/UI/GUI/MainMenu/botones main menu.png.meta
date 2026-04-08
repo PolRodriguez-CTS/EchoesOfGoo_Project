@@ -113,12 +113,12 @@ TextureImporter:
       name: botones main menu_0
       rect:
         serializedVersion: 2
-        x: 10
+        x: 3
         y: 736
-        width: 940
-        height: 240
+        width: 943
+        height: 245
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -135,12 +135,12 @@ TextureImporter:
       name: botones main menu_3
       rect:
         serializedVersion: 2
-        x: 973
-        y: 736
+        x: 961
+        y: 733
         width: 943
-        height: 240
+        height: 236
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -154,6 +154,292 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: botones main menu_5
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 488
+        width: 953
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4334a45caf1384142991107f5d782aa2
+      internalID: -1508411043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_9
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 483
+        width: 921
+        height: 235
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c20775bbf34fa324e84da1378369279b
+      internalID: -627211208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_12
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 241
+        width: 941
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 263eede365e63f54fb95bbcb48c8e61f
+      internalID: 918815823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_17
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 241
+        width: 922
+        height: 233
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66412da63dd407848be8ebb74a6d5cd1
+      internalID: 1869153925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_20
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 1
+        width: 934
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c60f6281738f4bc44aff099fd3f7f95f
+      internalID: -1442038081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_22
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 235
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ded574c479e734c4c823e5d5983ac5a1
+      internalID: -1279952009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_23
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 109
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 182807f992d6a2e4388fb1d38caa7183
+      internalID: -12297372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_24
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 0
+        width: 935
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 080e31cdc3e152f489a97cd67c58e520
+      internalID: -565396753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_25
+      rect:
+        serializedVersion: 2
+        x: 1904
+        y: 113
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5be03d804805eb046bcea9b4432c0e39
+      internalID: -1984507422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_1
+      rect:
+        serializedVersion: 2
+        x: 1052
+        y: 971
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 996edac835dd04a4d9bca05f282981af
+      internalID: 1158051852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_2
+      rect:
+        serializedVersion: 2
+        x: 947
+        y: 849
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9fc68c38b4649149b9f241aecdd623e
+      internalID: 741211269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_4
+      rect:
+        serializedVersion: 2
+        x: 1905
+        y: 849
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 518db2ef1fd2db64994d324c6d1dc833
+      internalID: 18246173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_6
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 719
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8981a2601af5fed409f571f2551167c1
+      internalID: -900432853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: botones main menu_7
       rect:
         serializedVersion: 2
@@ -162,14 +448,14 @@ TextureImporter:
         width: 5
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a176ea5cec23cea4685e0f36c11d4ffb
+      spriteID: fabac0a46c9ca3749a9255e20fd197be
       internalID: -445922690
       vertices: []
       indices: 
@@ -184,15 +470,213 @@ TextureImporter:
         width: 5
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f50257c55772bcc41b64593671b0fb0f
+      spriteID: 214ad5f537f6bec4c915150f1ed223e8
       internalID: -1648648124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_10
+      rect:
+        serializedVersion: 2
+        x: 1911
+        y: 600
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c94ee6fa0cd034f42a0a52a8d2c2a57c
+      internalID: -267818111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_11
+      rect:
+        serializedVersion: 2
+        x: 1900
+        y: 598
+        width: 10
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 421d9c0ca87449e47ab9878873c88bde
+      internalID: -10441963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_13
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 481
+        width: 4
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21deb699bef5abc4f94f91d2221b0798
+      internalID: 211817536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_14
+      rect:
+        serializedVersion: 2
+        x: 1052
+        y: 476
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cd4a1ab14b2b57489f292bbeb2d1836
+      internalID: -989402252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_15
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 349
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6faa277ada662cc468a8a5b80a0cf45c
+      internalID: 1101719801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_16
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 357
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b84d80424e44454f8a3b253c391583e
+      internalID: -720819562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_18
+      rect:
+        serializedVersion: 2
+        x: 1899
+        y: 354
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd3f112a57386c4faa2febba8c5d64f
+      internalID: -1654026506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_19
+      rect:
+        serializedVersion: 2
+        x: 1908
+        y: 356
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a70214e5980b4604daffae993f73a296
+      internalID: 1575336174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: botones main menu_21
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 237
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e264244bfed064c4d97f1f5e20971eb7
+      internalID: -933638018
       vertices: []
       indices: 
       edges: []

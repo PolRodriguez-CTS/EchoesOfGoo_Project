@@ -297,11 +297,6 @@ MonoBehaviour:
   _attackHitBox: {fileID: 5839242992566194303}
   _attackRadius: 1
   _timerDuration: 1
-  Slime: {fileID: 0}
-  Bate: {fileID: 0}
-  Glove: {fileID: 0}
-  Hammer: {fileID: 0}
-  Anchor: {fileID: 0}
   _comboResetTime: 0.8
 --- !u!114 &223295425980013077
 MonoBehaviour:

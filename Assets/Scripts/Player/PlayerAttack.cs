@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,13 +29,6 @@ public class PlayerAttack : MonoBehaviour
     private float heavyAttackTimer;
     private float heavyAttackCooldown = 1.5f;
 
-    [Header("Weapons")]
-    [SerializeField] private GameObject Slime;
-    [SerializeField] private GameObject Bate;
-    [SerializeField] private GameObject Glove;
-    [SerializeField] private GameObject Hammer;
-    [SerializeField] private GameObject Anchor;
-
     [Header("ComboStep")]
     private int _comboCount = 0;
     private float _lastClickTime;
@@ -52,16 +46,8 @@ public class PlayerAttack : MonoBehaviour
         _playerMovementScript = GetComponent<PlayerController>();
         animator = GetComponentInChildren<Animator>();
         _weaponReferences = GetComponentInChildren<WeaponReferences>();
-    }
 
-    void Start()
-    {
-        /*
-        Hide(_weaponReferences.anchorParts);
-        Hide(_weaponReferences.gloveParts);
-        Hide(_weaponReferences.hammerParts);
-        Hide(_weaponReferences.bateParts);
-        */
+        OnlyShowSlime();
     }
 
     void Update()
@@ -91,11 +77,11 @@ public class PlayerAttack : MonoBehaviour
 
         if(_heavyATKAction.IsPressed() && heavyAttackTimer >= heavyAttackCooldown)
         {
-            //Show(_weaponReferences.hammerParts);
+            WeaponHeavyAttack();
             Attack(_hATKDmg);
             animator.SetTrigger("ExecuteHeavy");
             heavyAttackTimer = 0;
-            //Hide(_weaponReferences.hammerParts);
+            StartCoroutine(ReturnFromAttack());
         }
     }
 
@@ -103,6 +89,8 @@ public class PlayerAttack : MonoBehaviour
     {
         // Bloqueo: Si el Animator está en transición, ignoramos el click para no repetir Atk1
         if (animator.IsInTransition(0)) return;
+
+        WeaponBaseAttack();
 
         // 1. Limpiamos triggers acumulados del spam
         animator.ResetTrigger("Attack");
@@ -119,6 +107,8 @@ public class PlayerAttack : MonoBehaviour
 
         _comboTimer = _comboResetTime; 
         attackTimer = 0; // El cooldown (0.1) ahora empezará DESDE aquí
+
+        StartCoroutine(ReturnFromAttack());
     }
 
     private void Attack(int DmgDealed)
@@ -168,6 +158,140 @@ public class PlayerAttack : MonoBehaviour
         foreach (var part in _weapon)
         {
             part.SetActive(false);
+        }
+    }
+
+    private IEnumerator ReturnFromAttack()
+    {
+        yield return new WaitForSeconds(2.5f);
+        OnlyShowSlime();
+    }
+
+    void HideAll()
+    {
+        foreach (var part in _weaponReferences.slimeParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.anchorParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.gloveParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.hammerParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.bateParts)
+        {
+            part.SetActive(false);
+        }
+    }
+
+    void OnlyShowSlime()
+    {
+        foreach (var part in _weaponReferences.slimeParts)
+        {
+            part.SetActive(true);
+        }
+        foreach (var part in _weaponReferences.anchorParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.gloveParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.hammerParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.bateParts)
+        {
+            part.SetActive(false);
+        }
+    }
+
+    void WeaponHeavyAttack()
+    {
+        foreach (var part in _weaponReferences.slimeParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.anchorParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.gloveParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.hammerParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.bateParts)
+        {
+            part.SetActive(false);
+        }
+
+        int randomWeapon = Random.Range(0, 2);
+        if(randomWeapon == 0)
+        {
+            foreach (var part in _weaponReferences.anchorParts)
+            {
+                part.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (var part in _weaponReferences.hammerParts)
+            {
+                part.SetActive(true);
+            }
+        }
+    }
+
+    void WeaponBaseAttack()
+    {
+        foreach (var part in _weaponReferences.slimeParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.anchorParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.gloveParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.hammerParts)
+        {
+            part.SetActive(false);
+        }
+        foreach (var part in _weaponReferences.bateParts)
+        {
+            part.SetActive(false);
+        }
+
+        int randomWeapon = Random.Range(0, 2);
+        if(randomWeapon == 0)
+        {
+            foreach (var part in _weaponReferences.gloveParts)
+            {
+                part.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (var part in _weaponReferences.bateParts)
+            {
+                part.SetActive(true);
+            }
         }
     }
 

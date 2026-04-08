@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 312bc34d0e346214bbd3c6ad192b744e
+guid: bca0f8f000683854f9ef101dc6ee862c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +7,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: interfaz cargar_0
+      name: interfaz cargar select_0
       rect:
         serializedVersion: 2
         x: 115
@@ -118,15 +118,15 @@ TextureImporter:
         width: 3650
         height: 860
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 551fd4d8110fd9e48b012f56d364a25c
-      internalID: 1564404005
+      spriteID: 4ad3c1147f083904e802e7c18e63a810
+      internalID: 717355741
       vertices: []
       indices: 
       edges: []
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      interfaz cargar_0: 1564404005
+      interfaz cargar select_0: 717355741
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

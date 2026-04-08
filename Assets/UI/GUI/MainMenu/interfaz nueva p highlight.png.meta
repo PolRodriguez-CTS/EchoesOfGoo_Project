@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 312bc34d0e346214bbd3c6ad192b744e
+guid: 9612a53e14d82124493a4b9ef397eabb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -7,7 +7,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -49,7 +49,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 110, y: 620, z: 70, w: 650}
+  spriteBorder: {x: 70, y: 580, z: 110, w: 680}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: interfaz cargar_0
+      name: interfaz nueva p select_0
       rect:
         serializedVersion: 2
-        x: 115
-        y: 647
+        x: 71
+        y: 588
         width: 3650
-        height: 860
+        height: 886
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 551fd4d8110fd9e48b012f56d364a25c
-      internalID: 1564404005
+      spriteID: edd4b3b4a82356647a89e455c2e94df0
+      internalID: 95390227
       vertices: []
       indices: 
       edges: []
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      interfaz cargar_0: 1564404005
+      interfaz nueva p select_0: 95390227
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
