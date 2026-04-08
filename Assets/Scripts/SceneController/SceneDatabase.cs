@@ -8,8 +8,10 @@ public static class SceneDatabase
 
         //public const string Session = "Session";
         public const string Fabrica = "Fabrica";
-        public const string Mazmorra_1 = "Mazmorra_1";
-        public const string Mazmorra_2 = "Mazmorra_2";
+        public const string Dungeon_1 = "Dungeon_1";
+        public const string Dungeon_2 = "Dungeon_2";
+        public const string Dungeon_3 = "Dungeon_3";
+        public const string Dungeon_4 = "Dungeon_4";
     }
 
     public class Scenes
@@ -17,7 +19,9 @@ public static class SceneDatabase
         public const string MainMenu = "MainMenu";
         //public const string Session = "Session";
         public const string Fabrica = "Fabrica";
-        public const string Mazmorra_1 = "Mazmorra_1";
-        public const string Mazmorra_2 = "Mazmorra_2";
+        public const string Dungeon_1 = "Dungeon_1";
+        public const string Dungeon_2 = "Dungeon_2";
+        public const string Dungeon_3 = "Dungeon_3";
+        public const string Dungeon_4 = "Dungeon_4";
     }
 }

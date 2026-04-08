@@ -20,9 +20,9 @@ public class Mazmorra_1Manager : MonoBehaviour
     {
         SceneController.Instance
             .NewTransition()
-            .Unload(SceneDatabase.Slots.Mazmorra_1, SceneDatabase.Scenes.Mazmorra_1)
+            .Unload(SceneDatabase.Slots.Dungeon_1, SceneDatabase.Scenes.Dungeon_1)
             .WithOverlay()
-            .Load(SceneDatabase.Slots.Mazmorra_2, SceneDatabase.Scenes.Mazmorra_2)
+            .Load(SceneDatabase.Slots.Dungeon_2, SceneDatabase.Scenes.Dungeon_2)
             .Perform();
     }
 }

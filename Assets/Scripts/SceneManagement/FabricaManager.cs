@@ -22,7 +22,7 @@ public class FabricaManager : MonoBehaviour
             .NewTransition()
             .Unload(SceneDatabase.Slots.Fabrica, SceneDatabase.Scenes.Fabrica)
             .WithOverlay()
-            .Load(SceneDatabase.Slots.Mazmorra_1, SceneDatabase.Scenes.Mazmorra_1)
+            .Load(SceneDatabase.Slots.Dungeon_1, SceneDatabase.Scenes.Dungeon_1)
             .Perform();
     }
 }
