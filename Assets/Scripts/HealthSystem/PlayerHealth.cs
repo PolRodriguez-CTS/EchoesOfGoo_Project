@@ -8,17 +8,15 @@ public class PlayerHealth : HealthSystem
     void Start()
     {
         InitialHealth(playerMaxHealth);
-    }
-
-    void Update()
-    {
-        //Debug.Log("Vida player:" + currentHealth);
+        UpdateVisuals();
     }
 
     
     public void Damaged(float damage)
     {
         TakeDamage(damage);
+
+        UpdateVisuals();
 
         if(currentHealth <= 0)
         {
@@ -31,6 +29,14 @@ public class PlayerHealth : HealthSystem
         Respawn();
 
         FullHeal();
+    }
+
+    private void UpdateVisuals()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.UpdateHealthUI(currentHealth);
+        }
     }
 
     public void Respawn()

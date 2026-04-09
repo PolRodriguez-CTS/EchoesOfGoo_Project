@@ -173,6 +173,13 @@ public class PlayerController : MonoBehaviour
     {
         float rate = _isButtonHeld ? -_energyConsumptionRate : _energyRecoveryRate;
         _currentEnergy = Mathf.Clamp(_currentEnergy + rate * Time.deltaTime, 0, _maxDashEnergy);
+
+
+        if (GameManager.Instance != null)
+        {
+            // Pasamos _isButtonHeld como tercer parámetro
+            GameManager.Instance.UpdateTurboUI(_currentEnergy, _maxDashEnergy, _isButtonHeld);
+        }
     }
     #endregion
 

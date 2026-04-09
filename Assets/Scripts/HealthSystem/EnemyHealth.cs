@@ -14,12 +14,6 @@ private Animator animator;
     {
         InitialHealth(EnemyMaxHealth);
     }
-
-    void Update()
-    {
-        Debug.Log("Vida enemigo:" + currentHealth);
-    }
-
     
     public void Damaged(float damage)
     {
