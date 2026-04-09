@@ -80,6 +80,7 @@ public class PlayerAttack : MonoBehaviour
             WeaponHeavyAttack();
             Attack(_hATKDmg);
             animator.SetTrigger("ExecuteHeavy");
+            SoundManager.PlaySound(SoundType.Heavy1, 1);
             heavyAttackTimer = 0;
             StartCoroutine(ReturnFromAttack());
         }
@@ -94,6 +95,7 @@ public class PlayerAttack : MonoBehaviour
 
         // 1. Limpiamos triggers acumulados del spam
         animator.ResetTrigger("Attack");
+        SoundManager.PlaySound(SoundType.Attack1, 1);
 
         // 2. Aplicamos daño
         Attack(_bATKDmg);

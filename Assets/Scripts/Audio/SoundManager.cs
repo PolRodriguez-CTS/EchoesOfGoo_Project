@@ -1,23 +1,19 @@
 using UnityEngine;
 public enum SoundType
 {
-    Player,
-    Golems,
-    UI
-}
-
-public enum UISoundType
-{
-    Select,
-    Interact,
-    Close
+    Attack1,
+    Attack2,
+    Attack3,
+    Heavy1,
+    Heavy2,
+    Jump,
+    Boost
 }
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] private AudioClip[] audioClips;
-    [SerializeField] private AudioClip[] uiAudioClips;
     private static SoundManager Instance;
     private AudioSource audioSource;
 
@@ -31,10 +27,5 @@ public class SoundManager : MonoBehaviour
     public static void PlaySound(SoundType sound, float volume = 1)
     {
         Instance.audioSource.PlayOneShot(Instance.audioClips[(int)sound], volume);
-    }
-
-    public static void PlayUISound(UISoundType uiSound, float volume = 1)
-    {
-        Instance.audioSource.PlayOneShot(Instance.uiAudioClips[(int)uiSound], volume);
     }
 }

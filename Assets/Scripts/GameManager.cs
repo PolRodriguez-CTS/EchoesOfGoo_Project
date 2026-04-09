@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Health UI")]
     [SerializeField] private GameObject[] _healthSlots;
+
+    [Header("Main Canvas Reference")]
+    [SerializeField] private GameObject _hudCanvas; // Arrastra el objeto "HUD" aquí
+
+    [Header("Scene Settings")]
+    [SerializeField] private string _mainMenuSceneName = "MainMenu"; // Nombre exacto de tu escena de menú
+    [SerializeField] private string _coreSceneName = "Core"; // <--- Nueva variable
     
     private float _animTimer;
     private int _currentFrame;
@@ -83,6 +91,36 @@ public class GameManager : MonoBehaviour
         foreach (var img in _turboVisuals)
         {
             if (img != null) img.SetActive(state);
+        }
+    }
+
+    private void OnEnable()
+    {
+        // Nos suscribimos al evento de carga de escena
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        // Nos desuscribimos para evitar errores de memoria
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // Este método se ejecuta automáticamente cada vez que cambia la escena
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (_hudCanvas == null) return;
+
+        // Comprobamos si la escena cargada es cualquiera de las excluidas
+        bool isNonGameplayScene = scene.name == _mainMenuSceneName || scene.name == _coreSceneName;
+
+        if (isNonGameplayScene)
+        {
+            _hudCanvas.SetActive(false);
+        }
+        else
+        {
+            _hudCanvas.SetActive(true);
         }
     }
 }

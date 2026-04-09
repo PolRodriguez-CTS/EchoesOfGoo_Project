@@ -211,51 +211,16 @@ public class PlayerController : MonoBehaviour
                 //_animator.SetBool("isDoubleJumpCharging", true);
             }
         }
-/*
-        // 2. PROCESAR LA CARGA (Mientras se mantiene presionado)
-        if (_isChargingJump)
-        {
-            // Si el jugador suelta el botón o llega al tiempo máximo
-            if (_jumpAction.IsPressed() && _chargeTimeCounter < _maxChargeTime)
-            {
-                _chargeTimeCounter += Time.deltaTime;
-                // Flotación durante carga
-                _playerGravity.y = Mathf.Lerp(_playerGravity.y, _gravity * _chargeGravityScale, Time.deltaTime * 10f);
-            }
-            else
-            {
-                ReleaseChargedJump();
-            }
-        }
-*/
+
     }
 
     void Jump(float height)
     {
+        SoundManager.PlaySound(SoundType.Jump, 1f);
         _animator.SetBool("Jump", true);
         _animator.SetBool("Fall", false);
         _playerGravity.y = Mathf.Sqrt(height * -2f * _gravity);
     }
-
-/*    void ReleaseChargedJump()
-    {
-        if (!_isChargingJump) return;
-        _isChargingJump = false;
-
-        // 1. Limpiamos estados contradictorios
-        _animator.SetBool("isDoubleJumpCharging", false);
-        _animator.SetBool("Fall", false); // Evitamos que la caída bloquee el salto
-        _animator.SetBool("Jump", false); 
-
-        // 2. Disparamos el Trigger
-        _animator.SetTrigger("DoubleJump"); 
-
-        // Lógica de física...
-        float chargePercent = _chargeTimeCounter / _maxChargeTime;
-        float finalJumpHeight = _jumpHeight + (_extraJumpForce * chargePercent);
-        _playerGravity.y = Mathf.Sqrt(finalJumpHeight * -2f * _gravity);
-    }
-*/
 
     void Gravity2()
     {
