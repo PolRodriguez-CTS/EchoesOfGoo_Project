@@ -115,12 +115,16 @@ public class PlayerController : MonoBehaviour
         {
             _isButtonHeld = true;
             _animator.SetBool("isDashing", true);
+
+            SoundManager.PlayLoop(SoundType.Boost, 0.7f);
         }
 
         if (_dashAction.WasReleasedThisFrame() || _currentEnergy <= 0)
         {
             _isButtonHeld = false;
             _animator.SetBool("isDashing", false);
+
+            SoundManager.StopLoop();
         }
     }
 

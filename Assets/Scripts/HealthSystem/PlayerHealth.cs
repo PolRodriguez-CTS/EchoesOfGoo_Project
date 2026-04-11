@@ -28,7 +28,6 @@ public class PlayerHealth : HealthSystem
     {
         Respawn();
 
-        FullHeal();
     }
 
     private void UpdateVisuals()
@@ -40,6 +39,27 @@ public class PlayerHealth : HealthSystem
     }
 
     public void Respawn()
+    {
+        currentHealth = playerMaxHealth;
+        if(spawnPoint != null)
+        {
+            CharacterController _playerScript = GetComponent<CharacterController>();
+            if(_playerScript != null)
+            {
+                _playerScript.enabled = false;
+            }
+
+            transform.position = spawnPoint.position;
+
+            if(_playerScript != null)
+            {
+                _playerScript.enabled = true;
+            }
+        }
+        UpdateVisuals();
+    }
+
+    public void ReturnToCheckpoint()
     {
         if(spawnPoint != null)
         {
@@ -56,10 +76,5 @@ public class PlayerHealth : HealthSystem
                 _playerScript.enabled = true;
             }
         }
-    }
-
-    public void FullHeal()
-    {
-        currentHealth = playerMaxHealth;
     }
 }

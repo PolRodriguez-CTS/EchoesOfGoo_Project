@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &162355422933005123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2247287799279949936}
+  m_Layer: 0
+  m_Name: HeavyHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2247287799279949936
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162355422933005123}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.302, z: 0.854}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3703449444109166025}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &952259041255765212
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5839242992566194303}
   m_Layer: 0
-  m_Name: Hitbox
+  m_Name: BaseHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,6 +243,7 @@ Transform:
   m_Children:
   - {fileID: 3177802249364112381}
   - {fileID: 5839242992566194303}
+  - {fileID: 2247287799279949936}
   - {fileID: 6901770724051596551}
   - {fileID: 3660459330335697422}
   - {fileID: 6245387673003900478}
@@ -296,6 +328,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   _attackHitBox: {fileID: 5839242992566194303}
   _attackRadius: 1
+  _heavyAttackHitBox: {fileID: 2247287799279949936}
+  _heavyAttackRadius: 1.37
   _timerDuration: 1
   _comboResetTime: 0.8
 --- !u!114 &223295425980013077

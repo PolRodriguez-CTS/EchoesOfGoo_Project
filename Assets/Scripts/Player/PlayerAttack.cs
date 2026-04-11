@@ -14,13 +14,13 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform _attackHitBox;
     [SerializeField] private float _attackRadius;
 
-    private int _bATKDmg = 20;
+    [SerializeField] private Transform _heavyAttackHitBox;
+    [SerializeField] private float _heavyAttackRadius;
+
+    private int _bATKDmg = 1;
 
     [Header("Heavy ATK")]
-    private int _hATKDmg = 40;
-    [SerializeField] private float _timerDuration = 1f;
-    private float _timer = 0;
-    private bool isCharging = false;
+    private int _hATKDmg = 2;
 
     [Header("Timer")]
     private float attackTimer;
@@ -31,10 +31,8 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("ComboStep")]
     private int _comboCount = 0;
-    private float _lastClickTime;
-    private float _comboTimer; // El contador local
+    private float _comboTimer;
     [SerializeField] private float _comboResetTime = 1f;
-
 
     private WeaponReferences _weaponReferences;
 
@@ -63,14 +61,14 @@ public class PlayerAttack : MonoBehaviour
         {
             _comboCount = 0;
             animator.SetInteger("ComboStep", 0);
-            Debug.Log("Combo reseteado por inactividad");
+            //Debug.Log("Combo reseteado por inactividad");
         }
     }
 
     // 2. Manejo del Cooldown de Ataque
     attackTimer += Time.deltaTime;
 
-    if(_basicATKAction.WasPressedThisFrame() && !isCharging && attackTimer >= attackCooldown)
+    if(_basicATKAction.WasPressedThisFrame() && attackTimer >= attackCooldown)
     {
         ExecuteBasicAttack();
     }
@@ -78,7 +76,7 @@ public class PlayerAttack : MonoBehaviour
         if(_heavyATKAction.IsPressed() && heavyAttackTimer >= heavyAttackCooldown)
         {
             WeaponHeavyAttack();
-            Attack(_hATKDmg);
+            Attack(_hATKDmg, _heavyAttackHitBox, _heavyAttackRadius);
             animator.SetTrigger("ExecuteHeavy");
             SoundManager.PlaySound(SoundType.Heavy1, 1);
             heavyAttackTimer = 0;
@@ -98,7 +96,7 @@ public class PlayerAttack : MonoBehaviour
         SoundManager.PlaySound(SoundType.Attack1, 1);
 
         // 2. Aplicamos daño
-        Attack(_bATKDmg);
+        Attack(_bATKDmg, _attackHitBox, _attackRadius);
         
         // 3. Seteamos el paso ANTES del trigger
         animator.SetInteger("ComboStep", _comboCount);
@@ -113,9 +111,9 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(ReturnFromAttack());
     }
 
-    private void Attack(int DmgDealed)
+    private void Attack(int DmgDealed, Transform hitBox, float radius)
     {
-        Collider[] enemies = Physics.OverlapSphere(_attackHitBox.position, _attackRadius);
+        Collider[] enemies = Physics.OverlapSphere(hitBox.position, radius);
         foreach(var item in enemies)
         {
             if(item.gameObject.layer == 6)
@@ -301,5 +299,8 @@ public class PlayerAttack : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_attackHitBox.position, _attackRadius);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(_heavyAttackHitBox.position, _heavyAttackRadius);
     }
 }

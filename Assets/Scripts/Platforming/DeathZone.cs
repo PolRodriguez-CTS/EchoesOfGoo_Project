@@ -16,7 +16,8 @@ public class DeathZone : MonoBehaviour
             if(health != null)
             {
                 Debug.Log("Script PlayerHealth encontrado. Aplicando daño...");
-                health.Damaged(999f); // Usamos un número alto para asegurar la muerte
+                health.Damaged(1); // Usamos un número alto para asegurar la muerte
+                health.ReturnToCheckpoint();
             }
             else
             {

@@ -4,7 +4,7 @@ using System.Collections;
 public class WallBreaking : MonoBehaviour
 {
     private Rigidbody rigidbodyBox;
-    [SerializeField] float forceAmount = 10f; // Ajusta esto si es muy poco
+    //[SerializeField] float forceAmount = 10f; // Ajusta esto si es muy poco
 
     void Awake()
     {
