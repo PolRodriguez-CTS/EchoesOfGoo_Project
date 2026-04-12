@@ -485,6 +485,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1436871244156348197, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
   m_PrefabInstance: {fileID: 845977798}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1075495673 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1400152903188738074, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
+  m_PrefabInstance: {fileID: 845977798}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1078189579
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,6 +759,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 788861429}
     - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
+      propertyPath: _turboVisuals.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
       propertyPath: '_healthSlots.Array.data[0]'
       value: 
       objectReference: {fileID: 845977806}
@@ -781,6 +790,10 @@ PrefabInstance:
       propertyPath: '_turboVisuals.Array.data[2]'
       value: 
       objectReference: {fileID: 845977800}
+    - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
+      propertyPath: '_turboVisuals.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1075495673}
     - target: {fileID: 2658901607882445678, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
       propertyPath: m_LocalPosition.x
       value: -520.252
