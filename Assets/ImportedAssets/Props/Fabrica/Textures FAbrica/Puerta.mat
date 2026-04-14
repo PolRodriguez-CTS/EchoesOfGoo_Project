@@ -61,7 +61,7 @@ Material:
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1
     - _MetallicRemapMin: 0.71020395
-    - _SmoothnessRemapMin: 0.8489796
+    - _SmoothnessRemapMin: 0.57821035
     - _UseEmissiveIntensity: 0
     m_Colors:
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}

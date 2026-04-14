@@ -1,9 +1,12 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerHealth : HealthSystem
 {
     public float playerMaxHealth = 4;
     [SerializeField] private Transform spawnPoint;
+    private float knockDuration;
+    private Vector3 knockForce;
 
     void Start()
     {
@@ -14,6 +17,8 @@ public class PlayerHealth : HealthSystem
     
     public void Damaged(float damage)
     {
+        StartCoroutine(ApplyKnockback(knockForce, knockDuration));
+
         TakeDamage(damage);
 
         UpdateVisuals();
@@ -75,6 +80,18 @@ public class PlayerHealth : HealthSystem
             {
                 _playerScript.enabled = true;
             }
+        }
+    }
+
+    private IEnumerator ApplyKnockback(Vector3 force, float duration)
+    {
+        float elapsed = 0;
+        while(elapsed < duration)
+        {
+            Vector3 knockForce = Vector3.Lerp(force, Vector3.zero, elapsed / duration);
+            transform.position += knockForce * Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
         }
     }
 }
