@@ -46,12 +46,12 @@ public class PlayerController : MonoBehaviour
     private float _fallTimeOutDelta;
 
     [Header("Sustained Boost")]
-    [SerializeField] private float _maxDashEnergy = 100;
+    [SerializeField] private float _maxDashEnergy = /*100*/ 50f;
     [SerializeField] private float _energyConsumptionRate = 40f;
     [SerializeField] private float _energyRecoveryRate = 20f;
     private float _currentEnergy;
-    [SerializeField] private float _acceleration = 50f;
-    [SerializeField] private float _topSpeed = 25f;
+    [SerializeField] private float _acceleration = /*50f*/ 30f;
+    [SerializeField] private float _topSpeed = /*25*/ 100f;
     private bool _isButtonHeld = false;
 
     [Header("External Boost")]
