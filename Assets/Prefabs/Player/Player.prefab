@@ -308,7 +308,7 @@ MonoBehaviour:
   _energyConsumptionRate: 40
   _energyRecoveryRate: 20
   _acceleration: 30
-  _topSpeed: 100
+  _topSpeed: 65
   _impulseDeceleration: 5
   _thirdPersonCamera: {fileID: 0}
   _baseFOV: 60

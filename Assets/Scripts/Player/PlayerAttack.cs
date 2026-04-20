@@ -8,8 +8,6 @@ public class PlayerAttack : MonoBehaviour
     private InputAction _basicATKAction;
     private InputAction _heavyATKAction;
 
-    private PlayerController _playerMovementScript;
-
     [Header("Hitbox")]
     [SerializeField] private Transform _attackHitBox;
     [SerializeField] private float _attackRadius;
@@ -41,7 +39,6 @@ public class PlayerAttack : MonoBehaviour
         _basicATKAction = InputSystem.actions["Attack1"];
         _heavyATKAction = InputSystem.actions["Attack2"];
 
-        _playerMovementScript = GetComponent<PlayerController>();
         animator = GetComponentInChildren<Animator>();
         _weaponReferences = GetComponentInChildren<WeaponReferences>();
 
@@ -86,29 +83,12 @@ public class PlayerAttack : MonoBehaviour
 
     void ExecuteBasicAttack()
     {
-        // Bloqueo: Si el Animator está en transición, ignoramos el click para no repetir Atk1
         if (animator.IsInTransition(0)) return;
 
-        WeaponBaseAttack();
-
-        // 1. Limpiamos triggers acumulados del spam
-        animator.ResetTrigger("Attack");
-        SoundManager.PlaySound(SoundType.Attack1, 1);
-
-        // 2. Aplicamos daño
+        attackTimer = 0;
         Attack(_bATKDmg, _attackHitBox, _attackRadius);
-        
-        // 3. Seteamos el paso ANTES del trigger
-        animator.SetInteger("ComboStep", _comboCount);
+    
         animator.SetTrigger("Attack");
-
-        // 4. Lógica de tiempos y contador
-        _comboCount = (_comboCount + 1) % 2;
-
-        _comboTimer = _comboResetTime; 
-        attackTimer = 0; // El cooldown (0.1) ahora empezará DESDE aquí
-
-        StartCoroutine(ReturnFromAttack());
     }
 
     private void Attack(int DmgDealed, Transform hitBox, float radius)
