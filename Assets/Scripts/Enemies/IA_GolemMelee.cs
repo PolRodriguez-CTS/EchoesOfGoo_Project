@@ -44,12 +44,17 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     public float comboResetTime = 3.5f;
     private float lastAttackTime;
 
+    private Rigidbody _rigidBody;
+
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
         originPoint = transform.position;
+
+        _rigidBody = GetComponent<Rigidbody>();
+        _rigidBody.isKinematic = true;
     }
 
     void Start()
@@ -313,8 +318,20 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     {
         currentState = State.Stunned;
         stunTimer = duration;
+
         _agent.enabled = false;
-        StartCoroutine(ApplyKnockback(force, duration));
+
+        _rigidBody.isKinematic = false;
+        _rigidBody.useGravity = true;
+
+        _rigidBody.AddForce(force, ForceMode.Impulse);
+
+        //Animacion de recibir daño
+
+        //Antigua manera de aplicar el impulso
+        //StartCoroutine(ApplyKnockback(force, duration));
+
+
     }
 
     private IEnumerator ApplyKnockback(Vector3 force, float duration)
@@ -327,6 +344,27 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
             elapsed += Time.deltaTime;
             yield return null;
         }
+    }
+
+    private IEnumerator RecoverySequence(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        bool grounded = false;
+        while(!grounded)
+        {
+            grounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 0.8f);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        _rigidBody.isKinematic = true;
+        _rigidBody.useGravity = false;
+
+        //Animacion de recuperarse
+        yield return new WaitForSeconds(1.0f);
+
+        _agent.enabled = true;
+        currentState = State.Chase;
     }
 
     void UpdateAnimator()

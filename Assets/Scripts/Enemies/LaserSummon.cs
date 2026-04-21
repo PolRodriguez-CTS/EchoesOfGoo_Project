@@ -11,7 +11,7 @@ public class LaserSummon : MonoBehaviour
 
         if (scriptPadre == null)
         {
-            Debug.LogWarning($"¡Ojo! No encontré ninguna IA con IAtacante en el padre de {gameObject.name}");
+            //Debug.LogWarning($"¡Ojo! No encontré ninguna IA con IAtacante en el padre de {gameObject.name}");
         }
     }
 

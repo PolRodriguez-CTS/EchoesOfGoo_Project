@@ -23,15 +23,8 @@ public class PlayerAttack : MonoBehaviour
     [Header("Timer")]
     private float attackTimer;
     private float attackCooldown = 0.3f;
-
     private float heavyAttackTimer;
     private float heavyAttackCooldown = 1.5f;
-
-    [Header("ComboStep")]
-    private int _comboCount = 0;
-    private float _comboTimer;
-    [SerializeField] private float _comboResetTime = 1f;
-
     private WeaponReferences _weaponReferences;
 
     void Awake()
@@ -49,18 +42,6 @@ public class PlayerAttack : MonoBehaviour
     {
         //Ataque fuerte
         heavyAttackTimer += Time.deltaTime;
-
-        // 1. Manejo del Reset del Combo
-    if (_comboCount > 0)
-    {
-        _comboTimer -= Time.deltaTime;
-        if (_comboTimer <= 0)
-        {
-            _comboCount = 0;
-            animator.SetInteger("ComboStep", 0);
-            //Debug.Log("Combo reseteado por inactividad");
-        }
-    }
 
     // 2. Manejo del Cooldown de Ataque
     attackTimer += Time.deltaTime;
@@ -111,8 +92,12 @@ public class PlayerAttack : MonoBehaviour
                 direction.y = 0;
                 direction = direction.normalized;
 
+                Vector3 verticalForce = Vector3.up * 0.2f;
+
+                direction = (direction + verticalForce).normalized;
+
                 float force = 30f;
-                float duration = 0.2f;
+                float duration = 2f;
 
                 knockbackeable.GetKnockedBack(direction * force, duration);
             }
