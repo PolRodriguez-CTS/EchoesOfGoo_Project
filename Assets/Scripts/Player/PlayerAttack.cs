@@ -40,26 +40,28 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if(!LocalLevelLock.CanAttack) return;
+
         //Ataque fuerte
         heavyAttackTimer += Time.deltaTime;
 
-    // 2. Manejo del Cooldown de Ataque
-    attackTimer += Time.deltaTime;
+        // 2. Manejo del Cooldown de Ataque
+        attackTimer += Time.deltaTime;
 
-    if(_basicATKAction.WasPressedThisFrame() && attackTimer >= attackCooldown)
-    {
-        ExecuteBasicAttack();
-    }
-
-        if(_heavyATKAction.IsPressed() && heavyAttackTimer >= heavyAttackCooldown)
+        if(_basicATKAction.WasPressedThisFrame() && attackTimer >= attackCooldown)
         {
-            WeaponHeavyAttack();
-            Attack(_hATKDmg, _heavyAttackHitBox, _heavyAttackRadius);
-            animator.SetTrigger("ExecuteHeavy");
-            SoundManager.PlaySound(SoundType.Heavy1, 1);
-            heavyAttackTimer = 0;
-            StartCoroutine(ReturnFromAttack());
+            ExecuteBasicAttack();
         }
+
+            if(_heavyATKAction.IsPressed() && heavyAttackTimer >= heavyAttackCooldown)
+            {
+                WeaponHeavyAttack();
+                Attack(_hATKDmg, _heavyAttackHitBox, _heavyAttackRadius);
+                animator.SetTrigger("ExecuteHeavy");
+                SoundManager.PlaySound(SoundType.Heavy1, 1);
+                heavyAttackTimer = 0;
+                StartCoroutine(ReturnFromAttack());
+            }
     }
 
     void ExecuteBasicAttack()
@@ -96,7 +98,7 @@ public class PlayerAttack : MonoBehaviour
 
                 direction = (direction + verticalForce).normalized;
 
-                float force = 30f;
+                float force = 15f;
                 float duration = 2f;
 
                 knockbackeable.GetKnockedBack(direction * force, duration);

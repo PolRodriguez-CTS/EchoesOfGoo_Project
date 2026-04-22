@@ -111,6 +111,12 @@ public class PlayerController : MonoBehaviour
     #region Movement & Dash
     void HandleDashInput()
     {
+        if (!LocalLevelLock.CanDash) return;
+        if(GameManager.Instance != null && !GameManager.Instance.canDash)
+        {
+            _isButtonHeld = false;
+            return;
+        }
         if (_dashAction.WasPressedThisFrame() && _currentEnergy > 10f)
         {
             _isButtonHeld = true;

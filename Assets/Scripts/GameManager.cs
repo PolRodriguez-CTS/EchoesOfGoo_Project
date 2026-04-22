@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     private float _animTimer;
     private int _currentFrame;
 
+    public bool canDash = true;
+    public bool canAttack = true;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); }
@@ -33,6 +36,20 @@ public class GameManager : MonoBehaviour
 
         // Escondemos las imágenes al empezar
         ToggleTurboVisuals(false);
+    }
+
+    void Start()
+    {
+        if(SceneManager.GetActiveScene().name == "Fabrica")
+        {
+            canDash = false;
+            canAttack = false;
+        }
+        else
+        {
+            canDash = true;
+            canAttack = true;
+        }
     }
 
     public void UpdateHealthUI(float currentHealth)
