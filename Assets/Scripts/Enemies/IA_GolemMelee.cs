@@ -45,6 +45,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     private float lastAttackTime;
 
     private Rigidbody _rigidBody;
+    public bool IsStunned => currentState == State.Stunned;
 
     void Awake()
     {
@@ -315,144 +316,71 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     }
 
     public void GetKnockedBack(Vector3 force, float duration)
-{
-    if (currentState == State.Stunned) return; // Evitar acumular si ya está volando
-
-    currentState = State.Stunned;
-    stunTimer = duration;
-
-    // 1. DESACTIVAR AGENTE (IMPORTANTE)
-    _agent.enabled = false;
-
-    // 2. ACTIVAR FÍSICAS "ALOCADAS"
-    _rigidBody.isKinematic = false;
-    _rigidBody.useGravity = true;
-    
-    // Aplicamos un impulso explosivo
-    _rigidBody.AddForce(force, ForceMode.Impulse);
-    
-    // 3. ANIMACIÓN
-    animator.SetBool("isStunned", true); // Una animación de "bolita" o dolor
-    
-    StartCoroutine(RecoverySequence(duration));
-}
-
-private IEnumerator RecoverySequence(float duration)
-{
-    yield return new WaitForSeconds(duration);
-
-    // 4. ESPERAR A QUE TOQUE EL SUELO
-    // Mientras la velocidad sea alta o no esté en el suelo, esperamos
-    bool grounded = false;
-    while (!grounded)
     {
-        // Lanzamos un rayo pequeño hacia abajo para ver si estamos cerca del suelo
-        grounded = Physics.Raycast(transform.position + Vector3.up * 0.5f, Vector3.down, 0.8f);
-        yield return new WaitForSeconds(0.1f);
-    }
-
-    // 5. VOLVER A PONERSE EN PIE
-    _rigidBody.isKinematic = true; // Devolvemos el control al script
-    _rigidBody.useGravity = false;
-    
-    animator.SetBool("isStunned", false); // Dispara tu animación de levantarse
-    
-    yield return new WaitForSeconds(1.0f); // Tiempo que tarda la animación de levantarse
-
-    // 6. REACTIVAR IA
-    _agent.enabled = true;
-    currentState = State.Chase;
-}
-
-    /*
-    public void GetKnockedBack(Vector3 force, float duration)
-    {
-        if(currentState == State.Stunned) return;
+        StopAllCoroutines();
 
         currentState = State.Stunned;
+        stunTimer = duration;
 
-        //stunTimer = duration;
-        
-        _agent.velocity = Vector3.zero;
-        _agent.isStopped = true;
         _agent.enabled = false;
 
-        _rigidBody.isKinematic = false;
-        _rigidBody.useGravity = true;
-
-        //_rigidBody.linearDamping = 0.5f;
-        //_rigidBody.angularDamping = 0.5f;
-
-        _rigidBody.AddForce(force, ForceMode.Impulse);
-        _rigidBody.AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
-
-        //Animacion de recibir daño
-        animator.SetBool("isStunned", true);
-
-        //Antigua manera de aplicar el impulso
-        //StartCoroutine(ApplyKnockback(force, duration));
-
-        StartCoroutine(RecoverySequence(duration));
-    }
-    */
-
-    /*
-    private IEnumerator ApplyKnockback(Vector3 force, float duration)
-    {
-        float elapsed = 0;
-        while(elapsed < duration)
+        if(force.magnitude > 0.1f)
         {
-            Vector3 knockForce = Vector3.Lerp(force, Vector3.zero, elapsed / duration);
-            transform.position += knockForce * Time.deltaTime;
-            elapsed += Time.deltaTime;
-            yield return null;
+            _rigidBody.isKinematic = false;
+            _rigidBody.useGravity = true;
+
+            _rigidBody.AddForce(force, ForceMode.Impulse);
+            
+            animator.SetBool("isStunned", true);    
+            StartCoroutine(RecoverySequence(duration));
+        }
+        else
+        {
+            _rigidBody.isKinematic = true;
+            _rigidBody.linearVelocity = Vector3.zero;
+
+            animator.SetBool("isStunned", true);
+            StartCoroutine(StaticStunSequence(duration));
         }
     }
-    */
 
-    /*
+    private IEnumerator StaticStunSequence(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        if(currentState == State.Stunned && _rigidBody.isKinematic)
+        {
+            currentState = State.Chase;
+            _agent.enabled = true;
+        }
+    }
+
     private IEnumerator RecoverySequence(float duration)
     {
         yield return new WaitForSeconds(duration);
 
+        // 4. ESPERAR A QUE TOQUE EL SUELO
+        // Mientras la velocidad sea alta o no esté en el suelo, esperamos
         bool grounded = false;
-        float timer = 0;
-
-        while(!grounded || timer < duration)
+        while (!grounded)
         {
-            timer += Time.deltaTime;
-
-            grounded = Physics.Raycast(transform.position + Vector3.up, Vector3.down, 0.4f);
-
-            if(grounded && _rigidBody.linearVelocity.magnitude < 0.2f && timer >= duration) break;
-            //yield return new WaitForSeconds(0.1f);
-
-            yield return null;
+            // Lanzamos un rayo pequeño hacia abajo para ver si estamos cerca del suelo
+            grounded = Physics.Raycast(transform.position + Vector3.up * 0.5f, Vector3.down, 0.8f);
+            yield return new WaitForSeconds(0.1f);
         }
 
-        animator.SetBool("isStunned", false);
-
-        _rigidBody.linearVelocity = Vector3.zero;
-        _rigidBody.angularVelocity = Vector3.zero;
-        _rigidBody.isKinematic = true;
+        // 5. VOLVER A PONERSE EN PIE
+        _rigidBody.isKinematic = true; // Devolvemos el control al script
         _rigidBody.useGravity = false;
+        
+        animator.SetBool("isStunned", false); // Dispara tu animación de levantarse
+        
+        yield return new WaitForSeconds(1.0f); // Tiempo que tarda la animación de levantarse
 
-        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-
-        //Animacion de recuperarse
-        yield return new WaitForSeconds(1.0f);
-
-        NavMeshHit hit;
-        if(NavMesh.SamplePosition(transform.position, out hit, 3.0f, NavMesh.AllAreas))
-        {
-            transform.position = hit.position;
-        }
-
+        // 6. REACTIVAR IA
         _agent.enabled = true;
         currentState = State.Chase;
     }
-    */
-
     void UpdateAnimator()
     {
         if (animator == null) return;

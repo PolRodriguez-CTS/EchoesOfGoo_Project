@@ -42,14 +42,21 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear, IKnockbackeable
     private float waitTimer;
     private bool isWaiting;
 
-    void Start()
+    public bool IsStunned => currentState == State.Stunned;
+
+    void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
         originPoint = transform.position;
 
+        _rigidBody = GetComponent<Rigidbody>();
+        _rigidBody.isKinematic = true;
+    }
+
+    void Start()
+    {
         _agent.updateRotation = false; 
         _agent.acceleration = 60f; 
         
@@ -274,22 +281,69 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear, IKnockbackeable
 
     public void GetKnockedBack(Vector3 force, float duration)
     {
+        StopAllCoroutines();
+
         currentState = State.Stunned;
         stunTimer = duration;
+
         _agent.enabled = false;
-        StartCoroutine(ApplyKnockback(force, duration));
+
+        if(force.magnitude > 0.1f)
+        {
+            _rigidBody.isKinematic = false;
+            _rigidBody.useGravity = true;
+
+            _rigidBody.AddForce(force, ForceMode.Impulse);
+            
+            animator.SetBool("isStunned", true);    
+            StartCoroutine(RecoverySequence(duration));
+        }
+        else
+        {
+            _rigidBody.isKinematic = true;
+            _rigidBody.linearVelocity = Vector3.zero;
+
+            animator.SetBool("isStunned", true);
+            StartCoroutine(StaticStunSequence(duration));
+        }
     }
 
-    private IEnumerator ApplyKnockback(Vector3 force, float duration)
+    private IEnumerator StaticStunSequence(float duration)
     {
-        float elapsed = 0;
-        while(elapsed < duration)
+        yield return new WaitForSeconds(duration);
+
+        if(currentState == State.Stunned && _rigidBody.isKinematic)
         {
-            Vector3 knockForce = Vector3.Lerp(force, Vector3.zero, elapsed / duration);
-            transform.position += knockForce * Time.deltaTime;
-            elapsed += Time.deltaTime;
-            yield return null;
+            currentState = State.Chase;
+            _agent.enabled = true;
         }
+    }
+
+    private IEnumerator RecoverySequence(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        // 4. ESPERAR A QUE TOQUE EL SUELO
+        // Mientras la velocidad sea alta o no esté en el suelo, esperamos
+        bool grounded = false;
+        while (!grounded)
+        {
+            // Lanzamos un rayo pequeño hacia abajo para ver si estamos cerca del suelo
+            grounded = Physics.Raycast(transform.position + Vector3.up * 0.5f, Vector3.down, 0.8f);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        // 5. VOLVER A PONERSE EN PIE
+        _rigidBody.isKinematic = true; // Devolvemos el control al script
+        _rigidBody.useGravity = false;
+        
+        animator.SetBool("isStunned", false); // Dispara tu animación de levantarse
+        
+        yield return new WaitForSeconds(1.0f); // Tiempo que tarda la animación de levantarse
+
+        // 6. REACTIVAR IA
+        _agent.enabled = true;
+        currentState = State.Chase;
     }
 
     void UpdateAnimator()

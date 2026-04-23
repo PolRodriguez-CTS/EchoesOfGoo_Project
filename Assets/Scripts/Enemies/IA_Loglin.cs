@@ -35,6 +35,8 @@ public class IALoglin : MonoBehaviour, IRageable, IAtacante, IKnockbackeable
     [SerializeField] private float attackHitboxRange;
     [SerializeField] private float attackDamage;
 
+    //temporal hasta implementar stun aquí
+    public bool IsStunned => currentState == State.Stunned;
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
