@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: 
   profile:
-    scatteringDistance: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    scatteringDistanceMultiplier: 1
-    transmissionTint: {r: 0.08962262, g: 1, b: 0.40420923, a: 1}
-    texturingMode: 0
-    smoothnessMultipliers: {x: 1, y: 1}
-    lobeMix: 0.5
-    diffuseShadingPower: 1
+    scatteringDistance: {r: 0, g: 0.3366016, b: 0.43203577, a: 1}
+    scatteringDistanceMultiplier: 1.93
+    transmissionTint: {r: 0, g: 0.14180243, b: 0.41509432, a: 1}
+    texturingMode: 1
+    smoothnessMultipliers: {x: 1, y: 1.2631578}
+    lobeMix: 0.97
+    diffuseShadingPower: 2.59
     transmissionMode: 1
-    thicknessRemap: {x: 0, y: 5.000003}
+    thicknessRemap: {x: 0, y: 50}
     worldScale: 1
-    ior: 1.4
+    ior: 1.333
     hash: 1077622425
   m_Version: 2
