@@ -22,8 +22,8 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear, IKnockbackeable
     public float attackRange = 10f;   
     public float safeDistance = 5f;   
     public float rotationSpeed = 15f;
-    public float walkSpeed = 2f;
-    public float runSpeed = 4f;
+    public float walkSpeed = 4f;
+    public float runSpeed = 8f;
 
     [Header("Detection & FOV")]
     public float eyeHeight = 1.6f;
@@ -231,24 +231,24 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear, IKnockbackeable
     {
         if (laserBeam != null && shootPoint != null)
         {
-        // 1. Instanciamos y guardamos la referencia
-        GameObject tempLaser = Instantiate(laserBeam, shootPoint.position, shootPoint.rotation);
-        
-        // 2. Lógica de DAÑO inmediata (Raycast)
-        RaycastHit hit;
-        // Usamos la misma lógica que tu CanSeePlayer pero para hacer daño
-        if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit, attackRange - 1))
-        {
-            if (hit.collider.CompareTag("Player"))
+            // 1. Instanciamos y guardamos la referencia
+            GameObject tempLaser = Instantiate(laserBeam, shootPoint.position, shootPoint.rotation);
+            
+            // 2. Lógica de DAÑO inmediata (Raycast)
+            RaycastHit hit;
+            // Usamos la misma lógica que tu CanSeePlayer pero para hacer daño
+            if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit, attackRange - 1))
             {
-                // Buscamos el script de vida del jugador
-                PlayerHealth _playerHealthScript = hit.collider.GetComponent<PlayerHealth>();
-                if (_playerHealthScript != null)
+                if (hit.collider.CompareTag("Player"))
                 {
-                    _playerHealthScript.Damaged(attackDamage);
+                    // Buscamos el script de vida del jugador
+                    PlayerHealth _playerHealthScript = hit.collider.GetComponent<PlayerHealth>();
+                    if (_playerHealthScript != null)
+                    {
+                        _playerHealthScript.Damaged(attackDamage);
+                    }
                 }
             }
-        }
             // 3. Destruimos la COPIA (tempLaser), no el prefab (laserBeam)
             Destroy(tempLaser, 1.5f);
         }

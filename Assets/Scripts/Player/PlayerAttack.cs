@@ -80,7 +80,7 @@ public class PlayerAttack : MonoBehaviour
     void ExecuteHeavyAttack()
     {
         WeaponHeavyAttack();
-        Attack(_hATKDmg, _heavyAttackHitBox, _heavyAttackRadius);
+        Stun(_hATKDmg, _heavyAttackHitBox, _heavyAttackRadius);
 
         animator.SetTrigger("ExecuteHeavy");
         SoundManager.PlaySound(SoundType.Heavy1, 1);
@@ -90,7 +90,7 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(ReturnFromAttack());
     }
 
-    private void Attack(int DmgDealed, Transform hitBox, float radius)
+    private void Stun(int DmgDealed, Transform hitBox, float radius)
     {
         Collider[] enemies = Physics.OverlapSphere(hitBox.position, radius);
         foreach(var item in enemies)
@@ -100,19 +100,13 @@ public class PlayerAttack : MonoBehaviour
                 EnemyHealth _enemyHealthScript = item.gameObject.GetComponent<EnemyHealth>();
                 if(_enemyHealthScript != null)
                 {
-                    _enemyHealthScript.Damaged(DmgDealed);
+                    //_enemyHealthScript.Damaged(DmgDealed);
                 }
             }
             
             if(item.TryGetComponent(out IKnockbackeable knockbackeable))
             {
-                Vector3 direction = (item.transform.position - transform.position);
-                direction.y = 0;
-                direction = direction.normalized;
-
-                Vector3 verticalForce = Vector3.up * 0.2f;
-
-                direction = (direction + verticalForce).normalized;
+                Vector3 direction = (item.transform.position - transform.position).normalized;
 
                 //float force = 0f;
                 float duration = 4f;
@@ -135,18 +129,29 @@ public class PlayerAttack : MonoBehaviour
         {
             if(item.TryGetComponent(out IKnockbackeable knockbackeable))
             {
-                Vector3 direction = (item.transform.position - transform.position);
+                Vector3 direction = (item.transform.position - transform.position).normalized;
                 direction.y = 0;
-                direction = direction.normalized;
 
-                Vector3 verticalForce = Vector3.up * 0.2f;
+                float forceMultiplier =  1f;
+                float duration = 1.2f;
 
-                direction = (direction + verticalForce).normalized;
+                if (knockbackeable.IsStunned)
+                {
+                    forceMultiplier = 10f; // Fuerza de "remate" mucho mayor
+                    duration = 2.0f;       // Más tiempo volando
+                }
+                else
+                {
+                    forceMultiplier = 1.2f; // Impulso normal/pequeño
+                    duration = 0.5f;
+                }
+                float baseForce = 300;
+                Vector3 forceVector = (direction + Vector3.up * 0.3f) * (baseForce * forceMultiplier);
+                //Vector3 verticalForce = Vector3.up * 0.2f;
 
-                float force = 2500f;
-                float duration = 2f;
+                //direction = (direction + verticalForce).normalized;
 
-                knockbackeable.GetKnockedBack(direction * force, duration);
+                knockbackeable.GetKnockedBack(/*direction * baseForce*/forceVector, duration);
             }
         }
     }

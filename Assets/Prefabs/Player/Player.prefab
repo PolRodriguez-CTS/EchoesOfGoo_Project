@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 162355422933005123}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.302, z: 1.512}
+  m_LocalPosition: {x: 0, y: -0.302, z: 0.662}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -171,7 +171,7 @@ Transform:
   m_GameObject: {fileID: 7192304710328051871}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.187, z: 0.829}
+  m_LocalPosition: {x: 0, y: 0.187, z: 1.255}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -327,10 +327,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
   _attackHitBox: {fileID: 5839242992566194303}
-  _attackRadius: 1
+  _attackRadius: 1.31
   _heavyAttackHitBox: {fileID: 2247287799279949936}
-  _heavyAttackRadius: 1.37
-  _comboResetTime: 0.8
+  _heavyAttackRadius: 2.5
 --- !u!114 &223295425980013077
 MonoBehaviour:
   m_ObjectHideFlags: 0

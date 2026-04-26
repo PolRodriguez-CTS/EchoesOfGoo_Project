@@ -18,8 +18,8 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     public float chaseRange = 15f;
     public float attackRange = 3f; 
     public float rotationSpeed = 15f; // Giro rápido y fluido
-    public float walkSpeed = 2f;
-    public float runSpeed = 4.0f;
+    public float walkSpeed = 4f;
+    public float runSpeed = 8f;
 
     [Header("Detection & FOV")]
     public float eyeHeight = 1.6f;
@@ -294,10 +294,30 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         {
             if(col.CompareTag("Player"))
             {
+                // 1. Daño (Tu lógica actual)
                 PlayerHealth _playerHealthScript = col.gameObject.GetComponent<PlayerHealth>();
                 if(_playerHealthScript != null)
                 {
                     _playerHealthScript.Damaged(attackDamage);
+                }
+
+                // 2. Knockback (NUEVO)
+                PlayerController player = col.GetComponent<PlayerController>();
+                if(player != null)
+                {
+                    // Calculamos dirección desde el enemigo al jugador
+                    Vector3 knockDir = (col.transform.position - transform.position);
+                    knockDir.y = 0; // Limpiamos Y para normalizar
+                    knockDir = knockDir.normalized;
+
+                    // Definimos la fuerza: 
+                    // Un poco de XZ para empujar y un poco de Y para "levantar" ligeramente
+                    float horizontalForce = 15f;
+                    float verticalLift = 2f; 
+                    
+                    Vector3 finalForce = (knockDir * horizontalForce) + (Vector3.up * verticalLift);
+
+                    player.ApplyKnockback(finalForce);
                 }
             }
         }

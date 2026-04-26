@@ -174,8 +174,8 @@ MonoBehaviour:
   attackRange: 10
   safeDistance: 5
   rotationSpeed: 15
-  walkSpeed: 2
-  runSpeed: 4
+  walkSpeed: 4
+  runSpeed: 8
   eyeHeight: 1.6
   viewAngle: 200
   forwardOffset: 0.6

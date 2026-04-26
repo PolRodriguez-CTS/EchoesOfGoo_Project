@@ -301,12 +301,12 @@ public class PlayerController : MonoBehaviour
     }
 */
 
-public void ApplyExternalImpulse(Vector3 force)
-{
-    // Sumamos la fuerza (esto permite acumular turbos si entras en varios seguidos)
-    _externalImpulse += force;
-    _isImpulseActive = true; // Activamos el efecto de cámara (FOV)
-}
+    public void ApplyExternalImpulse(Vector3 force)
+    {
+        // Sumamos la fuerza (esto permite acumular turbos si entras en varios seguidos)
+        _externalImpulse += force;
+        _isImpulseActive = true; // Activamos el efecto de cámara (FOV)
+    }
 
     public void ApplyBounce(float bounceHeight, bool resetDoubleJump)
     {
@@ -330,6 +330,19 @@ public void ApplyExternalImpulse(Vector3 force)
         {
             _canDoubleJump = true;
         }
+    }
+
+    public void ApplyKnockback(Vector3 force)
+    {
+    // Inyectamos la fuerza directamente al sistema de impulsos que ya tienes
+    _externalImpulse = force;
+    _isImpulseActive = true; // Esto activará el efecto de FOV si quieres que se note el impacto
+    
+    // Si quieres que el knockback anule el movimiento vertical (que te levante del suelo)
+    if (force.y > 0)
+    {
+        _playerGravity.y = Mathf.Sqrt(force.y * -2f * _gravity);
+    }
     }
 
     #region Gizmos
