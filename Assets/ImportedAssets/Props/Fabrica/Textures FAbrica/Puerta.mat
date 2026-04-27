@@ -55,13 +55,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AORemapMax: 0.8163265
-    - _AORemapMin: 0.5102041
+    - _AORemapMax: 0.84506196
+    - _AORemapMin: 0.6452615
     - _DoubleSidedGIMode: 0
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1
-    - _MetallicRemapMin: 0.71020395
-    - _SmoothnessRemapMin: 0.8489796
+    - _MetallicRemapMax: 0.95977014
+    - _MetallicRemapMin: 0.7619281
+    - _SmoothnessRemapMax: 0.8591954
+    - _SmoothnessRemapMin: 0.70341086
     - _UseEmissiveIntensity: 0
     m_Colors:
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
