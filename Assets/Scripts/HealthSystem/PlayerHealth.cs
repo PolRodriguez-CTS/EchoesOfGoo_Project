@@ -77,4 +77,9 @@ public class PlayerHealth : HealthSystem
             }
         }
     }
+
+    public void UpdateSpawnPoint(Transform newSpawn)
+    {
+        spawnPoint = newSpawn;
+    }
 }
