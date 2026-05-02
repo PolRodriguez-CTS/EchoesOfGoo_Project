@@ -652,6 +652,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7092657158574963092, guid: c69939197122122429ebac69a49048c7, type: 3}
+      propertyPath: _explosionPrefab
+      value: 
+      objectReference: {fileID: 6996666849242096705, guid: aab6129d2fe7b8a4689908d4d28a011f, type: 3}
     - target: {fileID: 9216251804642370661, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_Name
       value: GolemMelee
@@ -8047,6 +8051,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7092657158574963092, guid: c69939197122122429ebac69a49048c7, type: 3}
+      propertyPath: _explosionPrefab
+      value: 
+      objectReference: {fileID: 6996666849242096705, guid: aab6129d2fe7b8a4689908d4d28a011f, type: 3}
     - target: {fileID: 9216251804642370661, guid: c69939197122122429ebac69a49048c7, type: 3}
       propertyPath: m_Name
       value: GolemMelee
@@ -10079,6 +10087,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GolemRanged
       objectReference: {fileID: 0}
+    - target: {fileID: 6458600018592061684, guid: 4339ce2ef31b73b4b907baaec9a27079, type: 3}
+      propertyPath: _explosionPrefab
+      value: 
+      objectReference: {fileID: 6996666849242096705, guid: aab6129d2fe7b8a4689908d4d28a011f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

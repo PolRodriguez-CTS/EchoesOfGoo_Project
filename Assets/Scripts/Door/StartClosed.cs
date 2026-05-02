@@ -1,11 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 public class StartClosed : MonoBehaviour
 {
     private Animator animator;
 
-    void Awake()
+    IEnumerator Start()
     {
+        yield return null;
         animator = GetComponent<Animator>();
         animator.SetBool("isClosed", true);
     }

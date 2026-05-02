@@ -44,6 +44,12 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear, IKnockbackeable
 
     public bool IsStunned => currentState == State.Stunned;
 
+    [Header("Explosion Settings")]
+    [SerializeField] private GameObject _explosionPrefab;
+    [SerializeField] private float _collisionForceThreshold = 10f; // Velocidad mínima para explotar
+    [SerializeField] private int _explosionDamage = 50;
+    [SerializeField] private float _explosionRadius = 5f;
+
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -350,6 +356,47 @@ public class IA_GolemRanged : MonoBehaviour, IAtacante, ILasear, IKnockbackeable
     {
         if (animator != null)
             animator.SetFloat("Speed", _agent.velocity.magnitude);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Solo explotamos si estamos stuneados (en el aire por un golpe)
+        if (currentState == State.Stunned)
+        {
+            // Calculamos la fuerza del impacto basada en la velocidad relativa
+            float impactForce = collision.relativeVelocity.magnitude;
+
+            if (impactForce > _collisionForceThreshold)
+            {
+                Explode();
+            }
+        }
+    }
+
+    private void Explode()
+    {
+        // 1. Instanciar el efecto visual de explosión
+        if (_explosionPrefab != null)
+        {
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        }
+
+        // 2. Opcional: Dañar a otros enemigos cercanos (Daño de área)
+        Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position, _explosionRadius);
+        foreach (Collider col in nearbyEnemies)
+        {
+            // Evitamos dañarnos a nosotros mismos antes de morir
+            if (col.gameObject == this.gameObject) continue;
+
+            if (col.TryGetComponent(out EnemyHealth health))
+            {
+                health.Damaged(_explosionDamage);
+            }
+        }
+
+        // 3. Destruir al enemigo
+        // Puedes llamar a una función de muerte o simplemente destruir el objeto
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
