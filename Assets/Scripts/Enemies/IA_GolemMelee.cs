@@ -49,9 +49,10 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     [Header("Explosion Settings")]
     [SerializeField] private GameObject _explosionPrefab;
-    [SerializeField] private float _collisionForceThreshold = 10f; // Velocidad mínima para explotar
+    [SerializeField] private float _collisionForceThreshold = 10f;
     [SerializeField] private int _explosionDamage = 50;
     [SerializeField] private float _explosionRadius = 5f;
+    [SerializeField] private float _maxAirTime = 2.0f;
 
     void Awake()
     {
@@ -267,8 +268,8 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
             }
         }
     }
-    return false;
-}
+        return false;
+    }
 
     void Attack()
     {
@@ -341,30 +342,42 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         }
     }
 
+    private IEnumerator AutoExplodeSequence(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        // Si llegados a este punto el enemigo sigue volando (Stunned), explota
+        if (currentState == State.Stunned)
+        {
+            Explode();
+        }
+    }
+
     public void GetKnockedBack(Vector3 force, float duration)
     {
-        StopAllCoroutines();
+        StopAllCoroutines(); // Detiene recuperaciones y auto-explosiones previas
 
         currentState = State.Stunned;
         stunTimer = duration;
-
         _agent.enabled = false;
 
         if(force.magnitude > 0.1f)
         {
             _rigidBody.isKinematic = false;
             _rigidBody.useGravity = true;
-
             _rigidBody.AddForce(force, ForceMode.Impulse);
             
             animator.SetBool("isStunned", true);    
-            StartCoroutine(RecoverySequence(duration));
+            
+            // --- INICIAMOS AMBOS CAMINOS ---
+            StartCoroutine(RecoverySequence(duration)); // Intento de recuperarse
+            StartCoroutine(AutoExplodeSequence(_maxAirTime)); // Mecha de explosión por tiempo
         }
         else
         {
+            // Stun estático (sin explosión por tiempo)
             _rigidBody.isKinematic = true;
             _rigidBody.linearVelocity = Vector3.zero;
-
             animator.SetBool("isStunned", true);
             StartCoroutine(StaticStunSequence(duration));
         }
@@ -407,7 +420,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         _agent.enabled = true;
         currentState = State.Chase;
     }
-    
+
     void UpdateAnimator()
     {
         if (animator == null) return;
@@ -415,12 +428,10 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         animator.SetFloat("Speed", _agent.velocity.magnitude);
     }
 
-    private void OnCollisionEnter(Collision collision)
+   private void OnCollisionEnter(Collision collision)
     {
-        // Solo explotamos si estamos stuneados (en el aire por un golpe)
         if (currentState == State.Stunned)
         {
-            // Calculamos la fuerza del impacto basada en la velocidad relativa
             float impactForce = collision.relativeVelocity.magnitude;
 
             if (impactForce > _collisionForceThreshold)
@@ -432,17 +443,19 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     private void Explode()
     {
-        // 1. Instanciar el efecto visual de explosión
+        // 1. Audio de explosión
+        // SoundManager.Instance.PlaySound("ExplosionEnemy", transform.position); // <-- LINEA DE AUDIO
+
+        // 2. Instanciar el efecto visual
         if (_explosionPrefab != null)
         {
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         }
 
-        // 2. Opcional: Dañar a otros enemigos cercanos (Daño de área)
+        // 3. Daño de área
         Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position, _explosionRadius);
         foreach (Collider col in nearbyEnemies)
         {
-            // Evitamos dañarnos a nosotros mismos antes de morir
             if (col.gameObject == this.gameObject) continue;
 
             if (col.TryGetComponent(out EnemyHealth health))
@@ -451,8 +464,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
             }
         }
 
-        // 3. Destruir al enemigo
-        // Puedes llamar a una función de muerte o simplemente destruir el objeto
+        // 4. Destruir al enemigo
         Destroy(gameObject);
     }
 

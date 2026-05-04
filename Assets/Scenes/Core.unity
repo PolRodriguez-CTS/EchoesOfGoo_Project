@@ -163,6 +163,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec84c07475b4eb42bc5061d20cab21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &77945546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7755446892407211099, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
+  m_PrefabInstance: {fileID: 845977798}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &314775459 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1587275619052078662, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
@@ -395,10 +406,6 @@ PrefabInstance:
     - target: {fileID: 1587275619052078662, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587275619052078662, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1736139739723094754, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
       propertyPath: m_LocalPosition.x
@@ -745,6 +752,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1699465147}
     m_Modifications:
     - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
+      propertyPath: _coinText
+      value: 
+      objectReference: {fileID: 77945546}
+    - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
       propertyPath: _hudCanvas
       value: 
       objectReference: {fileID: 314775459}
@@ -752,10 +763,6 @@ PrefabInstance:
       propertyPath: _energyBarImage
       value: 
       objectReference: {fileID: 788861429}
-    - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
-      propertyPath: _turboVisuals.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
       propertyPath: '_healthSlots.Array.data[0]'
       value: 

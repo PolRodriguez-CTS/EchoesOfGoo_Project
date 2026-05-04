@@ -365,7 +365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3702576417864556820, guid: e5466fc9b2d756346b747c2d5b144cf6, type: 3}
       propertyPath: m_Name
-      value: Glowing Shard (1)
+      value: Glowing Shard
       objectReference: {fileID: 0}
     - target: {fileID: 5090489901627371640, guid: e5466fc9b2d756346b747c2d5b144cf6, type: 3}
       propertyPath: useVolumetric
@@ -446,7 +446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 888445204216708984, guid: 7427203da8a09fe41afd845d2fd2af75, type: 3}
       propertyPath: m_Name
-      value: HongoMuerto (1)
+      value: HongoMuerto
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6080,7 +6080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3702576417864556820, guid: e5466fc9b2d756346b747c2d5b144cf6, type: 3}
       propertyPath: m_Name
-      value: Glowing Shard (2)
+      value: Glowing Shard
       objectReference: {fileID: 0}
     - target: {fileID: 5090489901627371640, guid: e5466fc9b2d756346b747c2d5b144cf6, type: 3}
       propertyPath: useVolumetric
@@ -6483,7 +6483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 888445204216708984, guid: 7427203da8a09fe41afd845d2fd2af75, type: 3}
       propertyPath: m_Name
-      value: HongoMuerto (2)
+      value: HongoMuerto
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10143,7 +10143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3702576417864556820, guid: e5466fc9b2d756346b747c2d5b144cf6, type: 3}
       propertyPath: m_Name
-      value: Glowing Shard (3)
+      value: Glowing Shard
       objectReference: {fileID: 0}
     - target: {fileID: 5090489901627371640, guid: e5466fc9b2d756346b747c2d5b144cf6, type: 3}
       propertyPath: useVolumetric

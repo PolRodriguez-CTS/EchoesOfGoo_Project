@@ -78,6 +78,21 @@ public class PlayerHealth : HealthSystem
         }
     }
 
+    public float GetCurrentHealth() { return currentHealth; }
+
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+
+        // Si la vida actual supera el máximo, la igualamos al máximo
+        if (currentHealth > playerMaxHealth)
+        {
+            currentHealth = playerMaxHealth;
+        }
+
+        Debug.Log("Curado. Vida actual: " + currentHealth);
+    }
+
     public void UpdateSpawnPoint(Transform newSpawn)
     {
         spawnPoint = newSpawn;

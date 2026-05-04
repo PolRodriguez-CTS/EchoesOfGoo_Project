@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     public bool canDash = true;
     public bool canAttack = true;
 
+    [Header("Coin UI")]
+    [SerializeField] private Text _coinText;
+    private int _totalCoins = 0;
+
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); }
@@ -49,6 +53,21 @@ public class GameManager : MonoBehaviour
         {
             canDash = true;
             canAttack = true;
+        }
+    }
+
+    public void AddCoins(int amount)
+    {
+        _totalCoins += amount;
+        UpdateCoinUI();
+    }
+
+    private void UpdateCoinUI()
+    {
+        if (_coinText != null)
+        {
+            // Actualizamos el texto legacy
+            _coinText.text = _totalCoins.ToString();
         }
     }
 
@@ -139,5 +158,7 @@ public class GameManager : MonoBehaviour
         {
             _hudCanvas.SetActive(true);
         }
+
+        UpdateCoinUI();
     }
 }
