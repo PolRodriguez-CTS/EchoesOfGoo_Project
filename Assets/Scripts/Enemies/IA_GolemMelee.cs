@@ -113,39 +113,44 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     private void UpdateWanderingState(float distanceToPlayer)
     {
-        _agent.isStopped = false;
-        _agent.speed = walkSpeed;
-        _agent.stoppingDistance = 0.2f; // Permitir que llegue al punto exacto
-
-        // Detectar jugador
-        if (CanSeePlayer(distanceToPlayer))
+        if (_agent.enabled && _agent.isOnNavMesh)
         {
-            isWaiting = false;
-            currentState = State.Chase;
-            return;
-        }
+            _agent.isStopped = false;
+            _agent.speed = walkSpeed;
+            _agent.stoppingDistance = 0.2f; // Permitir que llegue al punto exacto
 
-        // Lógica de patrulla con espera
-        if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
-        {
-            if (!isWaiting)
-            {
-                isWaiting = true;
-                waitTimer = 0f;
-            }
-
-            waitTimer += Time.deltaTime;
-
-            if (waitTimer >= waitTime)
+            // Detectar jugador
+            if (CanSeePlayer(distanceToPlayer))
             {
                 isWaiting = false;
-                PickRandomPoint();
+                currentState = State.Chase;
+                return;
+            }
+
+            // Lógica de patrulla con espera
+            if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
+            {
+                if (!isWaiting)
+                {
+                    isWaiting = true;
+                    waitTimer = 0f;
+                }
+
+                waitTimer += Time.deltaTime;
+
+                if (waitTimer >= waitTime)
+                {
+                    isWaiting = false;
+                    PickRandomPoint();
+                }
             }
         }
     }
 
     private void UpdateChaseState(float distanceToPlayer)
     {
+        if (!_agent.enabled || !_agent.isOnNavMesh) return;
+
         _agent.isStopped = false;
         _agent.speed = runSpeed;
         _agent.stoppingDistance = attackRange - 0.5f; 
@@ -167,6 +172,11 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     private void UpdateAttackState(float distanceToPlayer)
     {
+        if (_agent.enabled && _agent.isOnNavMesh)
+        {
+            _agent.isStopped = true;
+        }
+
         // Clavar los pies mientras esté en rango de ataque
         if (distanceToPlayer <= attackRange)
             _agent.isStopped = true;
@@ -292,7 +302,10 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         comboStep = (comboStep + 1) % 2;
     }
 
-    void ReturnToOrigin() { currentState = State.Wandering; _agent.SetDestination(originPoint); }
+    void ReturnToOrigin()
+    {
+        currentState = State.Wandering; _agent.SetDestination(originPoint);
+    }
 
     public void PlayerDamage()
     {
@@ -423,6 +436,13 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     void UpdateAnimator()
     {
+        if (animator != null)
+        {
+            // Si el agente está apagado (volando), usamos la velocidad del Rigidbody
+            float currentSpeed = (_agent.enabled) ? _agent.velocity.magnitude : _rigidBody.linearVelocity.magnitude;
+            animator.SetFloat("Speed", currentSpeed);
+        }
+        
         if (animator == null) return;
         // El parámetro "Speed" debe mover el Blend Tree de Idle a Run
         animator.SetFloat("Speed", _agent.velocity.magnitude);
