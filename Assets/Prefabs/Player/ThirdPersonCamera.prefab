@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 8765603615862594497}
   - component: {fileID: 506116166224156082}
   - component: {fileID: 7700770071946182557}
-  - component: {fileID: 5499401854764819172}
   - component: {fileID: 1237470362881066578}
   - component: {fileID: 8459982912630579380}
-  - component: {fileID: 912473046863189372}
+  - component: {fileID: 8203650125214570419}
   m_Layer: 0
   m_Name: ThirdPersonCamera
   m_TagString: Untagged
@@ -96,12 +95,12 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: 1.6, z: 0}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 0, y: 0, z: 0}
+    PositionDamping: {x: 0.1, y: 0.1, z: 0.1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   OrbitStyle: 0
-  Radius: 4
+  Radius: 3
   Orbits:
     Top:
       Radius: 2
@@ -115,7 +114,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: 0
+    Value: 90
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -159,10 +158,10 @@ MonoBehaviour:
   Composition:
     ScreenPosition: {x: 0, y: 0.5}
     DeadZone:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 0.8, y: 0.8}
     HardLimits:
-      Enabled: 1
+      Enabled: 0
       Size: {x: 1, y: 1}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
@@ -173,23 +172,6 @@ MonoBehaviour:
     Time: 0
     Smoothing: 5.7
     IgnoreY: 1
---- !u!114 &5499401854764819172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4429600246108935475}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a076c17fe76165e4f8ed21498b877bf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFreeLookModifier
-  Easing: 0
-  Modifiers: []
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &1237470362881066578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,15 +237,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4429600246108935475}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbe43d662878a7c43bcd44d43c9e2094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CollideAgainst:
     serializedVersion: 2
-    m_Bits: 8
-  IgnoreTag: 
+    m_Bits: 128
+  IgnoreTag: Player
   TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -272,13 +254,13 @@ MonoBehaviour:
     Enabled: 1
     DistanceLimit: 0
     MinimumOcclusionTime: 0
-    CameraRadius: 0.4
+    CameraRadius: 0.1
     UseFollowTarget:
-      Enabled: 0
+      Enabled: 1
       YOffset: 0
-    Strategy: 0
+    Strategy: 2
     MaximumEffort: 4
-    SmoothingTime: 0
+    SmoothingTime: 0.25
     Damping: 0.4
     DampingWhenOccluded: 0.2
   ShotQualityEvaluation:
@@ -287,7 +269,7 @@ MonoBehaviour:
     NearLimit: 5
     FarLimit: 30
     MaxQualityBoost: 0.2
---- !u!114 &912473046863189372
+--- !u!114 &8203650125214570419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,18 +278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4429600246108935475}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Script: {fileID: 11500000, guid: a08d6732a12460047a8ab520bb932645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ApplyAfter: 2
-  ChannelMask: 1
-  Gain: 1
-  Use2DDistance: 0
-  UseCameraSpace: 1
-  SignalCombinationMode: 0
-  ReactionSettings:
-    m_SecondaryNoise: {fileID: 0}
-    AmplitudeGain: 1
-    FrequencyGain: 1
-    Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+  recoverySpeed: 5
