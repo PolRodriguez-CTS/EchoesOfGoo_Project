@@ -90,6 +90,7 @@ public class PlayerHealth : HealthSystem
             currentHealth = playerMaxHealth;
         }
 
+        UpdateVisuals();
         Debug.Log("Curado. Vida actual: " + currentHealth);
     }
 

@@ -109,7 +109,7 @@ public class PlayerAttack : MonoBehaviour
                 Vector3 direction = (item.transform.position - transform.position).normalized;
 
                 //float force = 0f;
-                float duration = 4f;
+                float duration = 4.5f;
 
                 knockbackeable.GetKnockedBack(Vector3.zero, duration);
             }
@@ -138,7 +138,7 @@ public class PlayerAttack : MonoBehaviour
                 if (knockbackeable.IsStunned)
                 {
                     forceMultiplier = 10f; // Fuerza de "remate" mucho mayor
-                    duration = 2.0f;       // Más tiempo volando
+                    duration = 4.5f;       // Más tiempo volando
                 }
                 else
                 {

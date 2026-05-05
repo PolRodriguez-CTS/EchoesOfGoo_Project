@@ -175,7 +175,7 @@ MonoBehaviour:
   walkSpeed: 4
   runSpeed: 8
   eyeHeight: 1.6
-  viewAngle: 180
+  viewAngle: 270
   forwardOffset: 0.6
   waitTime: 2
   attackCooldown: 1.5
@@ -186,7 +186,7 @@ MonoBehaviour:
   comboStep: 0
   comboResetTime: 3.5
   _explosionPrefab: {fileID: 6996666849242096705, guid: aab6129d2fe7b8a4689908d4d28a011f, type: 3}
-  _collisionForceThreshold: 10
+  _collisionForceThreshold: 4
   _explosionDamage: 50
   _explosionRadius: 5
   _maxAirTime: 4

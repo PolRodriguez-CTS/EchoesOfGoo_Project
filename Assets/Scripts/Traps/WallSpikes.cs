@@ -4,7 +4,7 @@ public class WallSpikes : MonoBehaviour
 {
     [Header("Ajustes de Empuje")]
     [SerializeField] private float _pushForce = 25f; // Fuerza hacia afuera
-    [SerializeField] private float _verticalLift = 5f; // Fuerza hacia arriba
+    //[SerializeField] private float _verticalLift = 5f; // Fuerza hacia arriba
 
     private void OnTriggerEnter(Collider other)
     {

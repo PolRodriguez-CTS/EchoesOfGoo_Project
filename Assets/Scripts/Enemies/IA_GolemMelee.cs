@@ -49,7 +49,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     [Header("Explosion Settings")]
     [SerializeField] private GameObject _explosionPrefab;
-    [SerializeField] private float _collisionForceThreshold = 10f;
+    [SerializeField] private float _collisionForceThreshold = 4f;
     [SerializeField] private int _explosionDamage = 50;
     [SerializeField] private float _explosionRadius = 5f;
     [SerializeField] private float _maxAirTime = 2.0f;
@@ -154,7 +154,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         _agent.isStopped = false;
         _agent.speed = runSpeed;
         _agent.stoppingDistance = attackRange - 0.5f; 
-        _agent.SetDestination(player.position);
+        SafeSetDestination(player.position);
 
         // Atacar de inmediato si entra en rango
         if (distanceToPlayer <= attackRange)
@@ -236,49 +236,49 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randomDirection, out hit, wanderingRadius, NavMesh.AllAreas))
         {
-            _agent.SetDestination(hit.position);
+            SafeSetDestination(hit.position);
         }
     }
 
     bool CanSeePlayer(float dist)
-{
-    if (dist > chaseRange) return false;
-
-    Vector3 dirToPlayer = (player.position - transform.position).normalized;
-
-    // USAMOS EL ÁNGULO
-    float angle = Vector3.Angle(transform.forward, dirToPlayer);
-
-    if (angle < viewAngle / 2f)
     {
-        // AJUSTE CRÍTICO: El targetPos debe ser el centro del Player, no los pies.
-        // Si player.position es la base (pies), el rayo al suelo suele fallar.
-        Vector3 startPos = transform.position + (Vector3.up * eyeHeight) + (transform.forward * forwardOffset);
-        
-        // Apuntamos a 1 metro sobre la base del player (el pecho/cabeza)
-        Vector3 targetPos = player.position + Vector3.up * 1.2f; 
-        Vector3 direction = (targetPos - startPos).normalized;
+        if (dist > chaseRange) return false;
 
-        RaycastHit hit;
+        Vector3 dirToPlayer = (player.position - transform.position).normalized;
 
-        // Lanzamos el rayo
-        if (Physics.Raycast(startPos, direction, out hit, chaseRange))
+        // USAMOS EL ÁNGULO
+        float angle = Vector3.Angle(transform.forward, dirToPlayer);
+
+        if (angle < viewAngle / 2f)
         {
-            // Debug para ver el rayo en tiempo real
-            Debug.DrawLine(startPos, hit.point, Color.red);
+            // AJUSTE CRÍTICO: El targetPos debe ser el centro del Player, no los pies.
+            // Si player.position es la base (pies), el rayo al suelo suele fallar.
+            Vector3 startPos = transform.position + (Vector3.up * eyeHeight) + (transform.forward * forwardOffset);
+            
+            // Apuntamos a 1 metro sobre la base del player (el pecho/cabeza)
+            Vector3 targetPos = player.position + Vector3.up * 1.2f; 
+            Vector3 direction = (targetPos - startPos).normalized;
 
-            if (hit.collider.CompareTag("Player")) 
+            RaycastHit hit;
+
+            // Lanzamos el rayo
+            if (Physics.Raycast(startPos, direction, out hit, chaseRange))
             {
-                return true; 
-            }
-            else 
-            {
-                // Si choca con otra cosa, imprime qué es para saber qué lo bloquea
-                // Debug.Log("Bloqueado por: " + hit.collider.name);
+                // Debug para ver el rayo en tiempo real
+                Debug.DrawLine(startPos, hit.point, Color.red);
+
+                if (hit.collider.CompareTag("Player")) 
+                {
+                    return true; 
+                }
+                else 
+                {
+                    // Si choca con otra cosa, imprime qué es para saber qué lo bloquea
+                    // Debug.Log("Bloqueado por: " + hit.collider.name);
+                }
             }
         }
-    }
-        return false;
+            return false;
     }
 
     void Attack()
@@ -304,7 +304,16 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
     void ReturnToOrigin()
     {
-        currentState = State.Wandering; _agent.SetDestination(originPoint);
+        currentState = State.Wandering; SafeSetDestination(originPoint);
+    }
+
+    private void SafeSetDestination(Vector3 target)
+    {
+        // Solo si el agente está encendido, activo en la jerarquía y tocando el NavMesh
+        if (_agent != null && _agent.enabled && _agent.isOnNavMesh)
+        {
+            _agent.SetDestination(target);
+        }
     }
 
     public void PlayerDamage()
@@ -411,27 +420,26 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     {
         yield return new WaitForSeconds(duration);
 
-        // 4. ESPERAR A QUE TOQUE EL SUELO
-        // Mientras la velocidad sea alta o no esté en el suelo, esperamos
         bool grounded = false;
         while (!grounded)
         {
-            // Lanzamos un rayo pequeño hacia abajo para ver si estamos cerca del suelo
+            if (this == null) yield break;
+            
+            // Solo intentamos recuperarnos si estamos tocando el suelo DE VERDAD
             grounded = Physics.Raycast(transform.position + Vector3.up * 0.5f, Vector3.down, 0.8f);
+            
             yield return new WaitForSeconds(0.1f);
         }
 
-        // 5. VOLVER A PONERSE EN PIE
-        _rigidBody.isKinematic = true; // Devolvemos el control al script
+        // SOLO después de estar en el suelo cambiamos el estado
+        _rigidBody.isKinematic = true;
         _rigidBody.useGravity = false;
+        animator.SetBool("isStunned", false);
         
-        animator.SetBool("isStunned", false); // Dispara tu animación de levantarse
-        
-        yield return new WaitForSeconds(1.0f); // Tiempo que tarda la animación de levantarse
+        yield return new WaitForSeconds(1.0f);
 
-        // 6. REACTIVAR IA
         _agent.enabled = true;
-        currentState = State.Chase;
+        currentState = State.Chase; // <--- El estado cambia SOLO al final de todo
     }
 
     void UpdateAnimator()
@@ -488,7 +496,6 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         Destroy(gameObject);
     }
 
-    // Opcional: Para ver el rango en el editor
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

@@ -28,9 +28,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
 
     [Header("Double Jump Loaded")]
-    [SerializeField] private float _maxChargeTime = 0.6f;     
-    [SerializeField] private float _extraJumpForce = 1f;    
-    [SerializeField] private float _chargeGravityScale = 0.15f; 
     private float _chargeTimeCounter;
     private bool _canDoubleJump = false;
     private bool _isChargingJump = false;
