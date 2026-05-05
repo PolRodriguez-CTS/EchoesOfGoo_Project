@@ -2,8 +2,15 @@ using UnityEngine;
 
 public class SpeedBoost : MonoBehaviour
 {
+    private Animator animator;
+
     [Header("Settings")]
     [SerializeField] private float _boostForce = 15f; // Fuerza adicional
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,6 +19,8 @@ public class SpeedBoost : MonoBehaviour
         {
             // Calculamos la dirección (en este caso, hacia donde mira el objeto turbo)
             Vector3 boostDirection = transform.forward;
+            
+            animator.SetTrigger("airDash");
             
             // Llamamos a un método público en el player
             player.ApplyExternalImpulse(boostDirection * _boostForce);

@@ -10,14 +10,9 @@ public class Axe : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             PlayerHealth _playerHealthScript = collision.gameObject.GetComponent<PlayerHealth>();
-
-            if(_playerHealthScript != null)
-            {
-                _playerHealthScript.Damaged(1);
-            }
-            
             PlayerController _playerControllerScript = collision.gameObject.GetComponent<PlayerController>();
-            if(_playerControllerScript != null)
+            
+            if(_playerControllerScript != null && _playerHealthScript != null)
             {
                 // 1. Calculamos la dirección del empuje
                 // OPCIÓN A: Empuje desde el centro de la trampa hacia afuera
@@ -32,11 +27,8 @@ public class Axe : MonoBehaviour
                 // 3. Aplicamos al Player
 
                 _playerControllerScript.ApplyKnockback(finalForce);
-                // 4. Opcional: Si la trampa quita vida
-                /*
-                PlayerHealth health = other.GetComponent<PlayerHealth>();
-                if(health != null) health.Damaged(10);
-                */
+                
+                _playerHealthScript.Damaged(1);
             }
         }
     }
