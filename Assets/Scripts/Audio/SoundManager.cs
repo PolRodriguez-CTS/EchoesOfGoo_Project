@@ -7,7 +7,14 @@ public enum SoundType
     Heavy1,
     Heavy2,
     Jump,
-    Boost
+    Boost,
+    ArgylDamaged,
+    ArgylDeath,
+    GolemHit,
+    GolemExplode,
+    GolemStun,
+    Coin,
+    Potion
 }
 
 [RequireComponent(typeof(AudioSource))]

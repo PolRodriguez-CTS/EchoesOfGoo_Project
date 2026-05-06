@@ -151,6 +151,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dede50753758ba8418dac099d238ab82, type: 3}
   - {fileID: 8300000, guid: 6922eda779fbefc40ad1830d44483f56, type: 3}
   - {fileID: 8300000, guid: 281e3679272c670459bb3ff2d8f20008, type: 3}
+  - {fileID: 8300000, guid: 380b3ef9fa2a3144ab19bbe4dd448725, type: 3}
+  - {fileID: 8300000, guid: 2b0dbf558355f3348aef1355b99d3d65, type: 3}
+  - {fileID: 8300000, guid: 5ca25d66aeb0ccb479d7d6d5ab4e64e8, type: 3}
+  - {fileID: 8300000, guid: 92a2705a5694f914992dfce0420e227f, type: 3}
+  - {fileID: 8300000, guid: 47258ccf8027a95428d0d3d8ce2e362e, type: 3}
+  - {fileID: 8300000, guid: ba4b1a312ebc51142a66200f09543922, type: 3}
+  - {fileID: 8300000, guid: 62f1a72fb35070f4bb134e211c3a36e9, type: 3}
   loopSource: {fileID: 4559723861786137368}
 --- !u!82 &4559723861786137368
 AudioSource:

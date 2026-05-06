@@ -29,7 +29,7 @@ public class Coin : MonoBehaviour
         {
             GameManager.Instance.AddCoins(_coinValue);
         }
-        SoundManager.PlaySound(SoundType.Attack1);
+        SoundManager.PlaySound(SoundType.Coin);
         Destroy(gameObject);
     }
 }

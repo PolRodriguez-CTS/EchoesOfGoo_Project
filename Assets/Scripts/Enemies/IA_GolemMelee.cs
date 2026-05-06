@@ -346,6 +346,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
                     
                     Vector3 finalForce = (knockDir * horizontalForce) + (Vector3.up * verticalLift);
 
+                    SoundManager.PlaySound(SoundType.GolemHit, 0.5f);
                     player.ApplyKnockback(finalForce);
                 }
             }
@@ -378,7 +379,7 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     public void GetKnockedBack(Vector3 force, float duration)
     {
         StopAllCoroutines(); // Detiene recuperaciones y auto-explosiones previas
-
+        SoundManager.PlaySound(SoundType.GolemStun, 0.3f);
         currentState = State.Stunned;
         stunTimer = duration;
         _agent.enabled = false;
@@ -491,6 +492,9 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
                 health.Damaged(_explosionDamage);
             }
         }
+
+        //Sonido de explotar
+        SoundManager.PlaySound(SoundType.GolemExplode);
 
         // 4. Destruir al enemigo
         Destroy(gameObject);

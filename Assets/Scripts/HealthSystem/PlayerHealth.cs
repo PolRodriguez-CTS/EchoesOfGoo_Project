@@ -14,6 +14,7 @@ public class PlayerHealth : HealthSystem
     
     public void Damaged(float damage)
     {
+        SoundManager.PlaySound(SoundType.ArgylDamaged, 0.5f);
         TakeDamage(damage);
 
         UpdateVisuals();
@@ -26,8 +27,8 @@ public class PlayerHealth : HealthSystem
 
     public void Death()
     {
+        SoundManager.PlaySound(SoundType.ArgylDeath, 0.75f);
         Respawn();
-
     }
 
     private void UpdateVisuals()
