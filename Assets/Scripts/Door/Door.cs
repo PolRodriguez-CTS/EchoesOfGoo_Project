@@ -19,6 +19,6 @@ public class Door : MonoBehaviour
     public void OpenAnimation()
     {
         animator.SetBool("isClosed", false);
-        SoundManager.PlaySound(SoundType.OpenDoor, 0.3f);
+        SoundManager.PlaySound(SoundType.OpenDoor, 0.6f);
     }
 }

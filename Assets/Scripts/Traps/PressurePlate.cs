@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class PressurePlate : MonoBehaviour
 {
-    //Variables
     private Animator animator;
-    private bool _isPlayerOver = false;
-
+    public DoorManager manager; // ASIGNAR EN EL INSPECTOR
+    private bool _isPressed = false;
 
     void Awake()
     {
@@ -14,15 +13,22 @@ public class PressurePlate : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && !_isPressed)
         {
+            _isPressed = true;
             animator.SetBool("isPressed", true);
-            //Llamar funcion desde evento de animación
+            manager.PlateActivated(); // Avisamos al gestor
         }
     }
-
-    void Activate()
+/*
+    void OnTriggerExit(Collider other)
     {
-        //Funciones situacionales dependiendo de que queremos que haga la placa de presión
+        if(other.CompareTag("Player") && _isPressed)
+        {
+            _isPressed = false;
+            animator.SetBool("isPressed", false);
+            manager.PlateDeactivated(); // Avisamos que se liberó
+        }
     }
+*/
 }
