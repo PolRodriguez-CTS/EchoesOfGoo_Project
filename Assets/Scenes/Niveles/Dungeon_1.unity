@@ -7237,7 +7237,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5356224489742758762, guid: 1c5ebce5d8a20e0499de42f28948d7f3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1243496624}
   m_SourcePrefab: {fileID: 100100000, guid: 1c5ebce5d8a20e0499de42f28948d7f3, type: 3}
 --- !u!4 &262944426 stripped
 Transform:
@@ -30685,6 +30688,38 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1243496620 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5356224489742758762, guid: 1c5ebce5d8a20e0499de42f28948d7f3, type: 3}
+  m_PrefabInstance: {fileID: 262944425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1243496624
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243496620}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!43 &1244446053
 Mesh:
   m_ObjectHideFlags: 0
@@ -55140,10 +55175,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1399294052}
     m_Modifications:
-    - target: {fileID: 1969856551223854702, guid: 7fb5642b26f21ce40ae9f426b0d6b820, type: 3}
-      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
-      value: 0.027777778
-      objectReference: {fileID: 0}
     - target: {fileID: 8559599630510435191, guid: 7fb5642b26f21ce40ae9f426b0d6b820, type: 3}
       propertyPath: m_Name
       value: Cofre-
