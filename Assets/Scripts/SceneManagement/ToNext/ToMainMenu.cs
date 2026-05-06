@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ToMainMenu : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    public void FinishDemo()
     {
         Mazmorra_4Manager.Instance.ReturnMainMenu();
-    }
+    } 
 }

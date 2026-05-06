@@ -13,10 +13,12 @@ public class Door : MonoBehaviour
     public void CloseAnimation()
     {
         animator.SetBool("isClosed", true);
+        SoundManager.PlaySound(SoundType.CloseDoor, 0.6f);
     }
 
     public void OpenAnimation()
     {
         animator.SetBool("isClosed", false);
+        SoundManager.PlaySound(SoundType.OpenDoor, 0.3f);
     }
 }

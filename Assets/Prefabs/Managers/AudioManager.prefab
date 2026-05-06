@@ -158,6 +158,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 47258ccf8027a95428d0d3d8ce2e362e, type: 3}
   - {fileID: 8300000, guid: ba4b1a312ebc51142a66200f09543922, type: 3}
   - {fileID: 8300000, guid: 62f1a72fb35070f4bb134e211c3a36e9, type: 3}
+  - {fileID: 8300000, guid: 555dae4e20fc0fe468c6618e8fca6c4e, type: 3}
+  - {fileID: 8300000, guid: b6ccb504e8597244c8b7143fd102717d, type: 3}
+  - {fileID: 8300000, guid: a820ec072d9cd8b46b8d5eba4815af48, type: 3}
   loopSource: {fileID: 4559723861786137368}
 --- !u!82 &4559723861786137368
 AudioSource:

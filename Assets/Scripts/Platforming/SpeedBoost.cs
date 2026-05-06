@@ -21,6 +21,7 @@ public class SpeedBoost : MonoBehaviour
             Vector3 boostDirection = transform.forward;
             
             animator.SetTrigger("airDash");
+            SoundManager.PlaySound(SoundType.PortalDash);
             
             // Llamamos a un método público en el player
             player.ApplyExternalImpulse(boostDirection * _boostForce);

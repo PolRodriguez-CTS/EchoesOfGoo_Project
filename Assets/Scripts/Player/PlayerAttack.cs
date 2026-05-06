@@ -114,10 +114,18 @@ public class PlayerAttack : MonoBehaviour
                 knockbackeable.GetKnockedBack(Vector3.zero, duration);
             }
 
+            /*
             if(item.TryGetComponent(out IRageable rageable))
             {
                 IALoglin loglinScript = item.gameObject.GetComponent<IALoglin>();
                 loglinScript.Raged();
+            }
+            */
+
+            if(item.gameObject.CompareTag("Chains"))
+            {
+                Eslabon _chainScript = item.gameObject.GetComponent<Eslabon>();
+                _chainScript.RecibirGolpe();
             }
         }
     }
@@ -152,6 +160,12 @@ public class PlayerAttack : MonoBehaviour
                 //direction = (direction + verticalForce).normalized;
 
                 knockbackeable.GetKnockedBack(/*direction * baseForce*/forceVector, duration);
+            }
+
+            if(item.gameObject.CompareTag("Chains"))
+            {
+                Eslabon _chainScript = item.gameObject.GetComponent<Eslabon>();
+                _chainScript.RecibirGolpe();
             }
         }
     }

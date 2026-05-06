@@ -14,7 +14,11 @@ public enum SoundType
     GolemExplode,
     GolemStun,
     Coin,
-    Potion
+    Potion,
+    OpenDoor,
+    CloseDoor,
+    PortalDash,
+    DefensorScream
 }
 
 [RequireComponent(typeof(AudioSource))]

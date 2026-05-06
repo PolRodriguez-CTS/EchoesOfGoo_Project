@@ -7,6 +7,7 @@ TagManager:
   - Golem
   - DeathZone
   - Metal
+  - Chains
   layers:
   - Default
   - TransparentFX

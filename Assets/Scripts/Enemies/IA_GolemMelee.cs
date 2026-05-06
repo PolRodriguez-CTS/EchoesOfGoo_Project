@@ -54,6 +54,11 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     [SerializeField] private float _explosionRadius = 5f;
     [SerializeField] private float _maxAirTime = 2.0f;
 
+    [Header("Levitation Audio")]
+    [SerializeField] private AudioSource levitationAudioSource; // El AudioSource que tendrá el loop
+    [SerializeField] private float maxLevitationVolume = 0.5f;   // Volumen máximo al correr
+    [SerializeField] private float volumeLerpSpeed = 5f;        // Suavidad del cambio de volumen
+
     void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -73,6 +78,13 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
         currentState = State.Wandering;
         PickRandomPoint();
+
+        if (levitationAudioSource != null)
+        {
+            levitationAudioSource.loop = true;
+            levitationAudioSource.volume = 0;
+            levitationAudioSource.Play();
+        }
     }
 
     void Update()
@@ -109,6 +121,8 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         
         // Actualizamos las animaciones
         UpdateAnimator();
+
+        UpdateLevitationSound();
     }
 
     private void UpdateWanderingState(float distanceToPlayer)
@@ -518,5 +532,22 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(attackHitbox.position, attackHitboxRange);
+    }
+
+    private void UpdateLevitationSound()
+    {
+        if (levitationAudioSource == null) return;
+
+        // Calculamos la velocidad actual (agente o rigidbody)
+        float currentSpeed = (_agent.enabled) ? _agent.velocity.magnitude : _rigidBody.linearVelocity.magnitude;
+
+        // Si está aturdido o casi quieto, el volumen objetivo es 0
+        float targetVolume = (currentState == State.Stunned || currentSpeed < 0.1f) ? 0f : (currentSpeed / runSpeed) * maxLevitationVolume;
+
+        // Suavizamos el cambio de volumen para que no se escuche un "clic" brusco
+        levitationAudioSource.volume = Mathf.Lerp(levitationAudioSource.volume, targetVolume, Time.deltaTime * volumeLerpSpeed);
+
+        // Opcional: Variar un poco el pitch según la velocidad para darle dinamismo
+        levitationAudioSource.pitch = Mathf.Lerp(0.8f, 1.2f, currentSpeed / runSpeed);
     }
 }
