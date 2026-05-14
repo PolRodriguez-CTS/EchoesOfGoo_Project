@@ -389,7 +389,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 61318393104105728, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
   m_PrefabInstance: {fileID: 845977798}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1709940777}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -743,6 +743,11 @@ Transform:
   - {fileID: 1781270029}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1709940777 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3908031401056097536, guid: 3d8d6447d311ece4ebc4d422e4e3a489, type: 3}
+  m_PrefabInstance: {fileID: 845977798}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1781270028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -763,6 +768,10 @@ PrefabInstance:
       propertyPath: _energyBarImage
       value: 
       objectReference: {fileID: 788861429}
+    - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
+      propertyPath: _turboUIContainer
+      value: 
+      objectReference: {fileID: 1709940777}
     - target: {fileID: 1890942619520977055, guid: 87a4ac4550bb2f14fabc8506de031d97, type: 3}
       propertyPath: '_healthSlots.Array.data[0]'
       value: 

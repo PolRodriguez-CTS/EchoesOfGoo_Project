@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text _coinText;
     private int _totalCoins = 0;
 
+    [Header("UI Settings")]
+[SerializeField] private GameObject _turboUIContainer; // Arrastra aquí el objeto de la barra azul
+
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); }
@@ -161,4 +166,12 @@ public class GameManager : MonoBehaviour
 
         UpdateCoinUI();
     }
+
+    public void SetTurboUIVisibility(bool visible)
+{
+    if (_turboUIContainer != null && _turboUIContainer.activeSelf != visible)
+    {
+        _turboUIContainer.SetActive(visible);
+    }
+}
 }

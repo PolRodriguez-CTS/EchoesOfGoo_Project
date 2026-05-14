@@ -35,4 +35,6 @@ public class LocalLevelLock : MonoBehaviour
         CanDash = dash;
         CanAttack = attack;
     }
+
+    
 }
