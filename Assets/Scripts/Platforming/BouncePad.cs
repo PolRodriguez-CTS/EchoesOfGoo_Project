@@ -15,6 +15,7 @@ public class BouncePad : MonoBehaviour
             player.ApplyBounce(_bounceHeight, _resetDoubleJump);
             
             // Opcional: Aquí podrías reproducir un sonido o una animación de la cama elástica
+            SoundManager.PlaySound(SoundType.Mushroom, 0.7f);
         }
     }
 

@@ -3,6 +3,8 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     [SerializeField] private int _coinValue = 1;
+    [SerializeField] private GameObject _coinVFXPrefab;
+    [SerializeField] private Transform _vfxSpawnPoint;
     private float _spawnTime;
 
     void Start()
@@ -29,6 +31,8 @@ public class Coin : MonoBehaviour
         {
             GameManager.Instance.AddCoins(_coinValue);
         }
+
+        GameObject vfx = Instantiate(_coinVFXPrefab, _vfxSpawnPoint.position, _vfxSpawnPoint.rotation);
         SoundManager.PlaySound(SoundType.Coin);
         Destroy(gameObject);
     }

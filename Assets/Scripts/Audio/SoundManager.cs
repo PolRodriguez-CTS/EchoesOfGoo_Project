@@ -18,7 +18,9 @@ public enum SoundType
     OpenDoor,
     CloseDoor,
     PortalDash,
-    DefensorScream
+    DefensorScream,
+    Chest,
+    Mushroom
 }
 
 [RequireComponent(typeof(AudioSource))]
