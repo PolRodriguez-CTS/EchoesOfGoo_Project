@@ -160,6 +160,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5830497467631455548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2795111003188858986}
+  m_Layer: 0
+  m_Name: VFXSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2795111003188858986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5830497467631455548}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1.5759964, z: -0.018997194}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5493675962421069789}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9216251804642370661
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +228,7 @@ Transform:
   - {fileID: 386622019653702428}
   - {fileID: 2147775653972857179}
   - {fileID: 1602733690552164743}
+  - {fileID: 2795111003188858986}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &1276848938817616070
@@ -323,6 +355,8 @@ MonoBehaviour:
   levitationAudioSource: {fileID: 0}
   maxLevitationVolume: 0.5
   volumeLerpSpeed: 5
+  _VFXPrefab: {fileID: 1936488993998635378, guid: 88b14fae91f3b5345abdc3e7a5f29793, type: 3}
+  _vfxSpawnPoint: {fileID: 2795111003188858986}
 --- !u!1001 &204693678075213047
 PrefabInstance:
   m_ObjectHideFlags: 0

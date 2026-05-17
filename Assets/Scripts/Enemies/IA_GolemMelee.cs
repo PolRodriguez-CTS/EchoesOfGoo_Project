@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -58,6 +59,10 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     [SerializeField] private AudioSource levitationAudioSource; // El AudioSource que tendrá el loop
     [SerializeField] private float maxLevitationVolume = 0.5f;   // Volumen máximo al correr
     [SerializeField] private float volumeLerpSpeed = 5f;        // Suavidad del cambio de volumen
+
+    [Header("VFX stun")]
+    [SerializeField] private GameObject _VFXPrefab;
+    [SerializeField] private Transform _vfxSpawnPoint;
 
     void Awake()
     {
@@ -397,6 +402,8 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
         currentState = State.Stunned;
         stunTimer = duration;
         _agent.enabled = false;
+
+        Instantiate(_VFXPrefab, _vfxSpawnPoint.position, _vfxSpawnPoint.rotation);
 
         if(force.magnitude > 0.1f)
         {
