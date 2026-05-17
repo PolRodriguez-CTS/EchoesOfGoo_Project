@@ -2,37 +2,26 @@ using UnityEngine;
 
 public class TutorialTrigger : MonoBehaviour
 {
-    public enum TipoTutorial { Controles, MiniTutorial, Dialogo, Lore }
-    
-    [Header("Configuración del Trigger")]
-    [SerializeField] private TipoTutorial tipo;
-    [SerializeField] private float duracion = 5f;
+    [Header("Configuración del Control")]
+    // Aquí arrastrarás el panel específico de la mecánica desde tu Canvas
+    [SerializeField] private GameObject panelDeEstaMecanica; 
+    [SerializeField] private float duracion = 4f;
 
-    [Header("Contenido (Rellenar según el tipo)")]
-    [SerializeField] private Sprite imagenParaMostrar;
-    [TextArea(3, 5)] [SerializeField] private string textoParaMostrar;
-
-    private void OnTriggerEnter(Collider other) // Usa OnTriggerEnter2D si es un juego 2D
+    private void OnTriggerEnter(Collider other) // O OnTriggerEnter2D si es 2D
     {
         if (other.CompareTag("Player"))
         {
-            switch (tipo)
+            if (panelDeEstaMecanica != null)
             {
-                case TipoTutorial.Controles:
-                    UIManager.Instance.MostrarControles(duracion);
-                    break;
-                case TipoTutorial.MiniTutorial:
-                    UIManager.Instance.MostrarMiniTutorial(imagenParaMostrar, duracion);
-                    break;
-                case TipoTutorial.Dialogo:
-                    UIManager.Instance.MostrarDialogo(textoParaMostrar);
-                    break;
-                case TipoTutorial.Lore:
-                    UIManager.Instance.MostrarLore(textoParaMostrar);
-                    break;
+                // Le enviamos al UIManager el panel exacto de este trigger
+                UIManager.Instance.MostrarControlMecanica(panelDeEstaMecanica, duracion);
+            }
+            else
+            {
+                Debug.LogWarning($"¡Ojo! El trigger {gameObject.name} no tiene ningún panel asignado.");
             }
 
-            // Destruimos este trigger para que solo salte una vez
+            // Se destruye para que no vuelva a salir
             Destroy(gameObject);
         }
     }
