@@ -7038,7 +7038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &749497592
 Transform:
   m_ObjectHideFlags: 0
@@ -9570,10 +9570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f41573f47bd934195f9359c955e4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipo: 0
+  panelDeEstaMecanica: {fileID: 0}
   duracion: 4
-  imagenParaMostrar: {fileID: 0}
-  textoParaMostrar: 
 --- !u!65 &1189761927
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14440,7 +14438,7 @@ VideoPlayer:
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
-  - 1
+  - 0.5
   m_Url: 
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00

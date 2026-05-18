@@ -17,7 +17,7 @@ public class Coin : MonoBehaviour
         //if (Time.time < _spawnTime + 0.2f) return;
 
         // Esto te dirá en la Consola quién tocó la moneda
-        Debug.Log("La moneda fue tocada por: " + other.name + " con el Tag: " + other.tag);
+        //Debug.Log("La moneda fue tocada por: " + other.name + " con el Tag: " + other.tag);
 
         if (other.CompareTag("Player"))
         {
