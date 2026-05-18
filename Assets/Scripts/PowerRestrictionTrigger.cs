@@ -16,7 +16,7 @@ public class PowerRestrictionTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             LocalLevelLock.SetPowers(_canDashInside, _canAttackInside);
-            Debug.Log("Has entrado en zona restringida");
+            //Debug.Log("Has entrado en zona restringida");
         }
     }
 
