@@ -12181,6 +12181,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8273319390492729742, guid: e49d745bfd2540e4aa72bd85fb1fda15, type: 3}
   m_PrefabInstance: {fileID: 429602610}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &431680562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431680564}
+  - component: {fileID: 431680563}
+  m_Layer: 0
+  m_Name: LorePanelDelay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &431680563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431680562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82cf5f32c5ab19499e8117d4014fc08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiempoTotalEspera: 5
+  idDelLore: 0
+  personaje: {fileID: 999849857}
+--- !u!4 &431680564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431680562}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &444930248
 Mesh:
   m_ObjectHideFlags: 0
@@ -25582,6 +25629,11 @@ Transform:
 --- !u!4 &999849856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3703449444109166025, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
+  m_PrefabInstance: {fileID: 999849854}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &999849857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8540872907346609697, guid: 83c20f049559f1b42b380e93286ea3b7, type: 3}
   m_PrefabInstance: {fileID: 999849854}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1003525656
@@ -56777,3 +56829,4 @@ SceneRoots:
   - {fileID: 443975534008999576}
   - {fileID: 696002676}
   - {fileID: 1670626665}
+  - {fileID: 431680564}

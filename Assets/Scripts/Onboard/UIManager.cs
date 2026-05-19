@@ -130,27 +130,28 @@ public class UIManager : MonoBehaviour
 
     public void MostrarPanelLoreConPausa(int id)
     {
-        // Usamos el catálogo de imágenes explicativas o el que prefieras para el Lore
-        if (id < 0 || id >= panelesImagenesExplicativas.Length)
+        // 🕵️‍♂️ ¡EL CHIVATO! Esto nos dirá en la consola exactamente cuándo se ejecuta esto
+        Debug.LogWarning($"[RUSTREO PAUSA] ¡Ojo! Alguien ha llamado a MostrarPanelLoreConPausa con el ID {id}. " +
+                        $"Escena Activa: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+
+        if (id < 0 || id >= panelesLore.Length)
         {
             Debug.LogError($"El ID de lore {id} no existe en el catálogo.");
             return;
         }
 
-        // Aseguramos que el padre esté activo
-        if (panelesImagenesExplicativas[id].transform.parent != null)
+        if (panelesLore[id].transform.parent != null)
         {
-            panelesImagenesExplicativas[id].transform.parent.gameObject.SetActive(true);
+            panelesLore[id].transform.parent.gameObject.SetActive(true);
         }
 
-        panelLorePausado = panelesImagenesExplicativas[id];
+        panelLorePausado = panelesLore[id];
         panelLorePausado.SetActive(true);
 
-        // Activamos el Fade In si tienes el script UIFadeHandler en él
         UIFadeHandler fade = panelLorePausado.GetComponent<UIFadeHandler>();
         if (fade != null) fade.Aparecer(0.3f);
 
-        Time.timeScale = 0f; 
+        //Time.timeScale = 0f;
     }
 
     public void DespausarYQuitarLore()
@@ -170,7 +171,19 @@ public class UIManager : MonoBehaviour
             panelLorePausado = null;
         }
 
-        Time.timeScale = 1f;
+        // 🌟 EL PASO 3 DE SEGURIDAD AQUÍ:
+        // Buscamos el retardador que congeló al jugador y le pedimos que lo desbloquee
+        RetardadorLoreInicio retardador = FindFirstObjectByType<RetardadorLoreInicio>();
+        if (retardador != null)
+        {
+            retardador.DesbloquearAlJugador();
+            Debug.Log("[UIManager] Lore cerrado. Solicitando desbloqueo de inputs al jugador.");
+        }
+        else
+        {
+            // Por si acaso estás en un nivel donde no hay retardador, aseguramos el tiempo normal
+            Time.timeScale = 1f;
+        }
     }
 
     private IEnumerator CerrarLoreTrasTiempo(GameObject panelLore, float tiempo)
@@ -181,5 +194,13 @@ public class UIManager : MonoBehaviour
         // Apagamos el panel y devolvemos el juego a la normalidad
         panelLore.SetActive(false);
         Time.timeScale = 1f; 
+    }
+
+    private void OnDestroy()
+    {
+        // 🌟 SEGURO ANTIBLOQUEO: Si el UIManager se destruye para cambiar de nivel,
+        // nos aseguramos al 100% de que el tiempo vuelve a 1 para la pantalla de carga.
+        Time.timeScale = 1f;
+        Debug.Log("[UIManager] Escena destruida. Forzando TimeScale a 1f.");
     }
 }
