@@ -43,6 +43,11 @@ public class UIManager : MonoBehaviour
         }
 
         GameObject panelAActivar = catalogo[id];
+        if (panelAActivar.transform.parent != null)
+        {
+            panelAActivar.transform.parent.gameObject.SetActive(true);
+        }
+        
         UIWaitCoroutine = StartCoroutine(PanelTemporalCoroutine(panelAActivar, tiempo));
     }
 
