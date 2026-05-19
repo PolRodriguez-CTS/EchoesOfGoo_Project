@@ -17,7 +17,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject[] panelesLore; 
 
     private Coroutine UIWaitCoroutine;
-    private GameObject panelActivoTemporal; 
+    private GameObject panelActivoTemporal;
+
+    [Header("Configuración del Fade")]
+    [SerializeField] private float duracionFadeIn = 0.5f;
+    [SerializeField] private float duracionFadeOut = 0.5f;
 
     private void Awake()
     {
@@ -29,6 +33,25 @@ public class UIManager : MonoBehaviour
     public void MostrarPanelTemporal(int id, float tiempo, bool esImagenExplicativa)
     {
         GameObject[] catalogo = esImagenExplicativa ? panelesImagenesExplicativas : panelesControles;
+
+        // Si ya había un panel activo y el jugador pisa OTRO trigger...
+        if (UIWaitCoroutine != null) 
+        {
+            StopCoroutine(UIWaitCoroutine); // Frenamos el temporizador del anterior
+            
+            if (panelActivoTemporal != null) 
+            {
+                // Opción A: Lo apagamos de golpe para que no estorbe
+                panelActivoTemporal.SetActive(false); 
+                
+                // Opción B (Más pro): Si quieres que haga fade out rápido en lugar de apagarse de golpe:
+                // UIFadeHandler oldFade = panelActivoTemporal.GetComponent<UIFadeHandler>();
+                // if(oldFade != null) oldFade.Desaparecer(0.1f);
+            }
+        }
+
+        // Guardamos la referencia del NUEVO panel que se va a encender
+        panelActivoTemporal = catalogo[id];
 
         if (id < 0 || id >= catalogo.Length)
         {
@@ -47,17 +70,40 @@ public class UIManager : MonoBehaviour
         {
             panelAActivar.transform.parent.gameObject.SetActive(true);
         }
+
+        // Primero, encendemos el objeto (SetActive)
+        panelAActivar.SetActive(true);
+
+        // Segundo, si tiene el ayudante de fade, le pedimos que haga el Fade In
+        UIFadeHandler fadeHelper = panelAActivar.GetComponent<UIFadeHandler>();
+        if (fadeHelper != null)
+        {
+            fadeHelper.Aparecer(duracionFadeIn);
+        }
         
         UIWaitCoroutine = StartCoroutine(PanelTemporalCoroutine(panelAActivar, tiempo));
     }
 
     private IEnumerator PanelTemporalCoroutine(GameObject panel, float tiempo)
     {
-        panelActivoTemporal = panel;
-        panelActivoTemporal.SetActive(true);
         yield return new WaitForSeconds(tiempo);
-        panelActivoTemporal.SetActive(false);
+
         panelActivoTemporal = null;
+
+        // Buscamos el ayudante de fade
+        UIFadeHandler fadeHelper = panel.GetComponent<UIFadeHandler>();
+        if (fadeHelper != null)
+        {
+            // Le pedimos que desaparezca
+            fadeHelper.Desaparecer(duracionFadeOut);
+            
+            // El propio UIFadeHandler se encargará de hacer el SetActive(false) al terminar el fade
+        }
+        else
+        {
+            // Si no tiene fade, lo apagamos de golpe como antes
+            panel.SetActive(false);
+        }
     }
 
     // --- GESTIÓN DE LORE (Pausa el juego y enciende el panel elegido) ---
@@ -78,6 +124,53 @@ public class UIManager : MonoBehaviour
 
         // Iniciamos la cuenta atrás en tiempo real
         StartCoroutine(CerrarLoreTrasTiempo(panelLoreAActivar, tiempoDuracion));
+    }
+
+    private GameObject panelLorePausado;
+
+    public void MostrarPanelLoreConPausa(int id)
+    {
+        // Usamos el catálogo de imágenes explicativas o el que prefieras para el Lore
+        if (id < 0 || id >= panelesImagenesExplicativas.Length)
+        {
+            Debug.LogError($"El ID de lore {id} no existe en el catálogo.");
+            return;
+        }
+
+        // Aseguramos que el padre esté activo
+        if (panelesImagenesExplicativas[id].transform.parent != null)
+        {
+            panelesImagenesExplicativas[id].transform.parent.gameObject.SetActive(true);
+        }
+
+        panelLorePausado = panelesImagenesExplicativas[id];
+        panelLorePausado.SetActive(true);
+
+        // Activamos el Fade In si tienes el script UIFadeHandler en él
+        UIFadeHandler fade = panelLorePausado.GetComponent<UIFadeHandler>();
+        if (fade != null) fade.Aparecer(0.3f);
+
+        Time.timeScale = 0f; 
+    }
+
+    public void DespausarYQuitarLore()
+    {
+        if (panelLorePausado != null)
+        {
+            UIFadeHandler fade = panelLorePausado.GetComponent<UIFadeHandler>();
+            if (fade != null)
+            {
+                fade.Desaparecer(0.3f); // El propio fade lo desactivará al terminar
+            }
+            else
+            {
+                panelLorePausado.SetActive(false);
+            }
+            
+            panelLorePausado = null;
+        }
+
+        Time.timeScale = 1f;
     }
 
     private IEnumerator CerrarLoreTrasTiempo(GameObject panelLore, float tiempo)

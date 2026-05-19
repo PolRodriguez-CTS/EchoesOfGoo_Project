@@ -43150,6 +43150,51 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.01730574, y: 0.022592494, z: 0.060016874}
   m_Center: {x: 0.00028615724, y: -0.0027547101, z: 0.029991575}
+--- !u!1 &1670626663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1670626665}
+  - component: {fileID: 1670626664}
+  m_Layer: 0
+  m_Name: LevelLoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1670626664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670626663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4516278dd19c765459ccc61cf2211c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idDelLoreEnElUIManager: 0
+--- !u!4 &1670626665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670626663}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -38.604176, y: -6.7160063, z: -8.882477}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1674435688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56753,3 +56798,4 @@ SceneRoots:
   - {fileID: 1833233695}
   - {fileID: 443975534008999576}
   - {fileID: 696002676}
+  - {fileID: 1670626665}
