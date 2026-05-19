@@ -3606,8 +3606,7 @@ MonoBehaviour:
   - {fileID: 345707416}
   - {fileID: 1445096526}
   - {fileID: 589908443}
-  panelesImagenesExplicativas:
-  - {fileID: 491375636}
+  panelesImagenesExplicativas: []
   panelesLore:
   - {fileID: 491375636}
   duracionFadeIn: 0.5
