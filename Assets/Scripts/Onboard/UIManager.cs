@@ -30,28 +30,15 @@ public class UIManager : MonoBehaviour
     }
 
     // --- GESTIÓN DE CONTROLES E IMÁGENES (Paneles temporales sin pausa) ---
+    // --- GESTIÓN DE CONTROLES E IMÁGENES (Modificado para permitir Ataque + Stun) ---
     public void MostrarPanelTemporal(int id, float tiempo, bool esImagenExplicativa)
     {
+        // 🌟 CONFIGURA AQUÍ LOS IDS REALES DE TU INSPECTOR:
+        int idAtaque = 3; // Cambia por el ID real de tu panel de Ataque
+        int idStun = 4;   // Cambia por el ID real de tu panel de Stun
+        bool catalogoDeLosDos = false; // Pon 'true' si están en Imágenes Explicativas, o 'false' si son de Controles
+
         GameObject[] catalogo = esImagenExplicativa ? panelesImagenesExplicativas : panelesControles;
-
-        // Si ya había un panel activo y el jugador pisa OTRO trigger...
-        if (UIWaitCoroutine != null) 
-        {
-            StopCoroutine(UIWaitCoroutine); // Frenamos el temporizador del anterior
-            
-            if (panelActivoTemporal != null) 
-            {
-                // Opción A: Lo apagamos de golpe para que no estorbe
-                panelActivoTemporal.SetActive(false); 
-                
-                // Opción B (Más pro): Si quieres que haga fade out rápido en lugar de apagarse de golpe:
-                // UIFadeHandler oldFade = panelActivoTemporal.GetComponent<UIFadeHandler>();
-                // if(oldFade != null) oldFade.Desaparecer(0.1f);
-            }
-        }
-
-        // Guardamos la referencia del NUEVO panel que se va a encender
-        panelActivoTemporal = catalogo[id];
 
         if (id < 0 || id >= catalogo.Length)
         {
@@ -59,11 +46,25 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (UIWaitCoroutine != null) 
+        // 🌟 REGLA DE EXCEPCIÓN INTEGRADA:
+        // Si el panel que vamos a encender AHORA es Ataque o Stun, y el que YA estaba puesto era su compañero,
+        // nos SALTAMOS el apagado de seguridad para que convivan en pantalla.
+        bool esCombinacionEspecial = (!esImagenExplicativa && !catalogoDeLosDos) && 
+                                     ((id == idAtaque && panelActivoTemporal == catalogo[idStun]) || 
+                                      (id == idStun && panelActivoTemporal == catalogo[idAtaque]));
+
+        if (UIWaitCoroutine != null && !esCombinacionEspecial) 
         {
-            StopCoroutine(UIWaitCoroutine);
-            if (panelActivoTemporal != null) panelActivoTemporal.SetActive(false);
+            StopCoroutine(UIWaitCoroutine); // Solo frenamos el temporizador si NO es la combinación especial
+            
+            if (panelActivoTemporal != null) 
+            {
+                panelActivoTemporal.SetActive(false); // Apagamos el panel viejo normal
+            }
         }
+
+        // Guardamos la referencia del nuevo panel que se enciende
+        panelActivoTemporal = catalogo[id];
 
         GameObject panelAActivar = catalogo[id];
         if (panelAActivar.transform.parent != null)
@@ -71,17 +72,24 @@ public class UIManager : MonoBehaviour
             panelAActivar.transform.parent.gameObject.SetActive(true);
         }
 
-        // Primero, encendemos el objeto (SetActive)
         panelAActivar.SetActive(true);
 
-        // Segundo, si tiene el ayudante de fade, le pedimos que haga el Fade In
         UIFadeHandler fadeHelper = panelAActivar.GetComponent<UIFadeHandler>();
         if (fadeHelper != null)
         {
             fadeHelper.Aparecer(duracionFadeIn);
         }
         
-        UIWaitCoroutine = StartCoroutine(PanelTemporalCoroutine(panelAActivar, tiempo));
+        // Si es la combinación especial, lanzamos una rutina que apague este elemento en concreto, 
+        // evitando sobreescribir la rutina global para que el otro panel termine su tiempo de forma independiente.
+        if (esCombinacionEspecial)
+        {
+            StartCoroutine(PanelTemporalCoroutine(panelAActivar, tiempo));
+        }
+        else
+        {
+            UIWaitCoroutine = StartCoroutine(PanelTemporalCoroutine(panelAActivar, tiempo));
+        }
     }
 
     private IEnumerator PanelTemporalCoroutine(GameObject panel, float tiempo)
