@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 357945534526126832}
   - component: {fileID: 2536166411890810087}
   - component: {fileID: 2424591725251139053}
+  - component: {fileID: 2811697247859117593}
   m_Layer: 0
   m_Name: Potion
   m_TagString: Untagged
@@ -71,6 +72,28 @@ MonoBehaviour:
   healAmount: 1
   _coinVFXPrefab: {fileID: 1399491476850481373, guid: 7e691a0229efacd4cba2922df3888456, type: 3}
   _vfxSpawnPoint: {fileID: 1156311694748121650}
+--- !u!95 &2811697247859117593
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198852822196147064}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ed69ab52f07d0c846b7b9c33f69e0a76, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8778992034085646628
 GameObject:
   m_ObjectHideFlags: 0
