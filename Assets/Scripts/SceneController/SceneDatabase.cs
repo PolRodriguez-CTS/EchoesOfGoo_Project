@@ -12,6 +12,7 @@ public static class SceneDatabase
         public const string Dungeon_2 = "Dungeon_2";
         public const string Dungeon_3 = "Dungeon_3";
         public const string Dungeon_4 = "Dungeon_4";
+        public const string Credits = "Credits";
     }
 
     public class Scenes
@@ -23,5 +24,6 @@ public static class SceneDatabase
         public const string Dungeon_2 = "Dungeon_2";
         public const string Dungeon_3 = "Dungeon_3";
         public const string Dungeon_4 = "Dungeon_4";
+        public const string Credits = "Credits";
     }
 }

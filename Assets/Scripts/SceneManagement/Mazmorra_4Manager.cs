@@ -25,4 +25,14 @@ public class Mazmorra_4Manager : MonoBehaviour
             .Load(SceneDatabase.Slots.Menu, SceneDatabase.Scenes.MainMenu)
             .Perform();
     }
+
+    public void GoToCredits()
+    {
+        SceneController.Instance
+            .NewTransition()
+            .Unload(SceneDatabase.Slots.Dungeon_4, SceneDatabase.Scenes.Dungeon_4)
+            .WithOverlay()
+            .Load(SceneDatabase.Slots.Credits, SceneDatabase.Scenes.Credits)
+            .Perform();
+    }
 }

@@ -178,6 +178,20 @@ public class PlayerController : MonoBehaviour
 
     void HandleEnergy()
     {
+        // --- CONTROL DE INTERFAZ ---
+        if (GameManager.Instance != null)
+        {
+            // La visibilidad de la barra depende de si el Dash está permitido
+            GameManager.Instance.SetTurboUIVisibility(LocalLevelLock.CanDash);
+        }
+
+        // Si el dash no está permitido, no seguimos con los cálculos de energía
+        if (!LocalLevelLock.CanDash) 
+        {
+            _isButtonHeld = false; // Seguridad: apaga el dash si estaba activo
+            return; 
+        }
+
         float rate = _isButtonHeld ? -_energyConsumptionRate : _energyRecoveryRate;
         _currentEnergy = Mathf.Clamp(_currentEnergy + rate * Time.deltaTime, 0, _maxDashEnergy);
 

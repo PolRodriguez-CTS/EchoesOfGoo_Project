@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -58,6 +59,11 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     [SerializeField] private AudioSource levitationAudioSource; // El AudioSource que tendrá el loop
     [SerializeField] private float maxLevitationVolume = 0.5f;   // Volumen máximo al correr
     [SerializeField] private float volumeLerpSpeed = 5f;        // Suavidad del cambio de volumen
+
+    [Header("VFX stun")]
+    [SerializeField] private GameObject _VFXPrefab;
+    private GameObject _currentStunVFX;
+    [SerializeField] private Transform _vfxSpawnPoint;
 
     void Awake()
     {
@@ -393,10 +399,30 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
     public void GetKnockedBack(Vector3 force, float duration)
     {
         StopAllCoroutines(); // Detiene recuperaciones y auto-explosiones previas
+
+        // LIMPIEZA BRUTA: Busca si quedó algún clon suelto por la escena con el mismo nombre y lo borra
+        if (_currentStunVFX != null) Destroy(_currentStunVFX);
+    
+        // Esto buscará en toda la escena cualquier objeto que se llame como tu prefab clonado y lo fulminará
+        GameObject ghostVFX = GameObject.Find(_VFXPrefab.name + "(Clone)");
+        if (ghostVFX != null) Destroy(ghostVFX);
+
         SoundManager.PlaySound(SoundType.GolemStun, 0.3f);
         currentState = State.Stunned;
         stunTimer = duration;
         _agent.enabled = false;
+
+
+        if (_VFXPrefab != null && _currentStunVFX == null)
+        {
+            // Calculamos una posición un poco por encima del Golem (ej. 2 metros arriba)
+            Vector3 spawnPosition = transform.position + Vector3.up * 2f;
+
+            // INSTANTIATE CON PADRE: Prefab, Posición, Rotación y transform (el padre)
+            _currentStunVFX = Instantiate(_VFXPrefab, spawnPosition, Quaternion.identity, transform);
+        }
+
+        Instantiate(_VFXPrefab, _vfxSpawnPoint.position, _vfxSpawnPoint.rotation);
 
         if(force.magnitude > 0.1f)
         {
@@ -429,6 +455,22 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
             currentState = State.Chase;
             _agent.enabled = true;
         }
+
+        if (_currentStunVFX != null)
+        {
+            // Si tu prefab tiene un ParticleSystem, puedes pararlo primero para que se desvanezca
+            if (_currentStunVFX.TryGetComponent(out ParticleSystem ps))
+            {
+                ps.Stop();
+                Destroy(_currentStunVFX, 1f); // Espera 1 segundo a que desaparezcan las últimas partículas
+            }
+            else
+            {
+                Destroy(_currentStunVFX); // Si no, se destruye de golpe
+            }
+            
+            _currentStunVFX = null; // Vaciamos la referencia
+        }
     }
 
     private IEnumerator RecoverySequence(float duration)
@@ -455,6 +497,22 @@ public class IA_GolemMelee : MonoBehaviour, IAtacante, IKnockbackeable
 
         _agent.enabled = true;
         currentState = State.Chase; // <--- El estado cambia SOLO al final de todo
+
+         if (_currentStunVFX != null)
+        {
+            // Si tu prefab tiene un ParticleSystem, puedes pararlo primero para que se desvanezca
+            if (_currentStunVFX.TryGetComponent(out ParticleSystem ps))
+            {
+                ps.Stop();
+                Destroy(_currentStunVFX, 1f); // Espera 1 segundo a que desaparezcan las últimas partículas
+            }
+            else
+            {
+                Destroy(_currentStunVFX); // Si no, se destruye de golpe
+            }
+            
+            _currentStunVFX = null; // Vaciamos la referencia
+        }
     }
 
     void UpdateAnimator()
